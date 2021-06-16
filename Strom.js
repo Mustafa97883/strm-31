@@ -121,3 +121,23 @@ client.on("userUpdate", async function(oldUser, newUser) {
 
 //----------------------------------------------------- TAG ROL ------------------------------------------------\\
 
+
+const http = require("http");
+const express = require("express");
+const app = express();
+    function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) { 
+    if ((new Date().getTime() - start) > milliseconds){         //// 7-24 AÇIK KALMASINI SAĞLAYAN KOMUT BİRŞEY DEĞİŞTİRMEYİN
+      break;
+    }
+  }    
+}
+app.get("/", (request, response) => {
+  console.log(Date.now() + " Ping tamamdır.");  ///VIDEOLU ANLATIM https://www.youtube.com/watch?v=K2eTdYkvnm0
+  response.sendStatus(200);
+});
+app.listen(process.env.PORT);
+setInterval(() => {
+  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);   //// 7-24 AÇIK KALMASINI SAĞLAYAN KOMUT BİRŞEY DEĞİŞTİRMEYİN
+}, 3000);
