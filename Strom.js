@@ -53,7 +53,7 @@ client.on("guildMemberAdd", member => {
             '7': `7`,
             '8': `8`,
             '9': `9`}[d];})}
-    const kanal = member.guild.channels.cache.find(r => r.id === (ayarlar.hosgeldinKanal)); // HOŞGELDİNİZ KANAL İD
+    const kanal = member.guild.channels.cache.find(r => r.id === (ayarlar.hosgeldinKanal)); 841401443131064342
     let user = client.users.cache.get(member.id);
     require("moment-duration-format");
       const kurulus = new Date().getTime() - user.createdAt.getTime();  
@@ -65,7 +65,7 @@ client.on("guildMemberAdd", member => {
   
 member.roles.add(ayarlar.kayıtsızRol)
 member.roles.add(ayarlar.kayıtsızRol)
-member.roles.add(ayarlar.kayıtsızRol)//Shadow Oracle Zed#0001
+member.roles.add(ayarlar.kayıtsızRol)
   
     kanal.send(`
 Sunucumuza hoş geldin, <@`+ member + `>! Sayende sunucumuz **`+üyesayısı+`** kişi. 
@@ -76,7 +76,7 @@ Ayrıca hesabın 15 günden fazla bir süredir Discord'da bulunmalı.
 
 `+kontrol+`
     
-Ceza işlemlerin <#KURALLAR KANALI ID> kanalını okuduğun varsayılarak uygulanır. ( <@&HOS GELDİN MESAJ YETKİLİ ROL ID> )`)});
+Ceza işlemlerin <#818504308273709107> kanalını okuduğun varsayılarak uygulanır. ( <@&819602002065358859> )`)});
 
 client.login(process.env.TOKEN)
 
