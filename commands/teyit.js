@@ -7,7 +7,7 @@ module.exports.run = async (client, message, args) => {
 
     const etiketlenenKişi = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.author
 
-const mattheEmbed = new Discord.MessageEmbed()
+const MessageEmbed = new Discord.MessageEmbed()
 .setColor("RANDOM")
 .setDescription(`${client.emojis.cache.get(ayarlar.yes)} ${etiketlenenKişi} kullanıcısının
 ${db.fetch(`kadinTeyit.${etiketlenenKişi.id}`) || 0} kadın,
@@ -21,7 +21,7 @@ kaydı var.
 
 message.react(client.emojis.cache.get(ayarlar.yes))
 
-message.channel.send(mattheEmbed)
+message.channel.send(MessageEmbed)
 
 }
 exports.config = {

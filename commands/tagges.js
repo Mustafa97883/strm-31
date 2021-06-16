@@ -7,19 +7,19 @@ module.exports.run = async (client, message, args) => {
     const etiketlenenKişi = message.mentions.members.first() || message.guild.members.cache.get(args[0])
 if(!etiketlenenKişi) return message.channel.send(`${client.emojis.cache.get(ayarlar.no)} **Tag rolü vermek için bir kişi etiketlemelisin!**`).then(message.react(client.emojis.cache.get(ayarlar.no)))
 
-const mattheEmbed = new Discord.MessageEmbed()
+const MessageEmbed = new Discord.MessageEmbed()
 .setColor("RANDOM")
 .setFooter(ayarlar.footer)
 .setAuthor(message.member.displayName, message.author.avatarURL({dynamic: true}))
 .setTimestamp()
 
-if(etiketlenenKişi.roles.cache.has(ayarlar.tagRol)) return message.channel.send(mattheEmbed.setDescription(`Kullanıcıdan başarıyla taglı <@&${ayarlar.tagRol}> rolü alındı!`)).then(etiketlenenKişi.roles.remove(ayarlar.tagRol))
+if(etiketlenenKişi.roles.cache.has(ayarlar.tagRol)) return message.channel.send(MessageEmbed.setDescription(`Kullanıcıdan başarıyla taglı <@&${ayarlar.tagRol}> rolü alındı!`)).then(etiketlenenKişi.roles.remove(ayarlar.tagRol))
 
 etiketlenenKişi.roles.add(ayarlar.tagRol)
 
 message.react(client.emojis.cache.get(ayarlar.yes))
 
-message.channel.send(mattheEmbed.setDescription(`Kullanıcıya başarıyla taglı <@&${ayarlar.tagRol}> rolü verildi!`))
+message.channel.send(MessageEmbed.setDescription(`Kullanıcıya başarıyla taglı <@&${ayarlar.tagRol}> rolü verildi!`))
 
 }
 exports.config = {

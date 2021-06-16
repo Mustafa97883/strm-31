@@ -1,10 +1,7 @@
   {
-    "OKUMADANGECME" : "Aşağıdaki tamamen boş bırakılan yerlere ID girin OKUDUKTAN SONRA burayı silebilirsiniz + Olarak emojileri ID olarak koymazsanız çalışmaz",
-    "OKUMADANGECME2" : "TOKEN .env kısmında TOKEN yazan yerin karşısına tokeninizi yapıstırınız.",
-    "OKUMADANGECME3" : "BOT BAZEN HATA ÇIKARDIĞI İÇİN HOŞ GELDİN EMOJİLERİ KALDIRILMIŞTIR.",
 
     "sahip" : "846736343593779230",
-    "prefix" : "#",
+    "prefix" : "'",
     "footer" : "Strom ❤️ Bedirhan Budak",
 
     "tag" : "ℬ",
@@ -19,12 +16,12 @@
     "kadınRol1" : "818220084866187304",
     "kadınRol2" : "822869085405839380",
 
-    "tagRol" : "TAG ROL ID",
+    "tagRol" : "",
 
     "hosgeldinKanal" : "HOS GELDİN KANAL ID",
     "sohbetKanal" : "SOHBET KANALI ID", 
     "botSesKanal" : "BOT SES KANALI ID",
   
-    "yes" : "ONAY EMOJİSİ ID",
-    "no" : "RED EMOJİSİ ID"
+    "yes" : "823900091143159828",
+    "no" : "823900096492077086"
 }

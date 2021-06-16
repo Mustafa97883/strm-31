@@ -9,7 +9,7 @@ if(!etiketlenenKişi) return message.channel.send(`${client.emojis.cache.get(aya
 
 if(message.member.roles.highest.position <= etiketlenenKişi.roles.highest.position) return message.channel.send(`${client.emojis.cache.get(ayarlar.no)} **Senden üstte/aynı pozisyonda bir kişiyi kayıtsıza atamazsın!**`).then(message.react(client.emojis.cache.get(ayarlar.no)))
 
-const mattheEmbed = new Discord.MessageEmbed()
+const MessageEmbed = new Discord.MessageEmbed()
 .setColor("RANDOM")
 .setFooter(ayarlar.footer)
 .setAuthor(message.member.displayName, message.author.avatarURL({dynamic: true}))
@@ -20,7 +20,7 @@ etiketlenenKişi.setNickname(`${ayarlar.tag} İsim ${ayarlar.sembol} Yaş`)
 
 message.react(client.emojis.cache.get(ayarlar.yes))
 
-message.channel.send(mattheEmbed.setDescription(`Kullanıcı başarıyla kayıtsıza (<@&${ayarlar.kayıtsızRol}>) atıldı!`))
+message.channel.send(MessageEmbed.setDescription(`Kullanıcı başarıyla kayıtsıza (<@&${ayarlar.kayıtsızRol}>) atıldı!`))
 
 }
 exports.config = {

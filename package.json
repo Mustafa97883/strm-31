@@ -1,11 +1,11 @@
 {
-  "//1": "Matthe Register Bot",
+  "//1": "Strom Register Bot",
   "name": "hello-express",
   "version": "0.0.1",
-  "description": "Matthe Register Bot",
-  "main": "matthe.js",
+  "description": "Strom Register Bot",
+  "main": "Strom.js",
   "scripts": {
-    "start": "node matthe.js"
+    "start": "node Strom.js"
   },
   "dependencies": {
     "express": "^4.17.1",

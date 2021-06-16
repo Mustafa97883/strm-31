@@ -1,9 +1,9 @@
-// Sorununz olursa Matthe#0001 ulaşınız. https://discord.gg/vAKkqEqgfE
+
 
 const Discord = require("discord.js")
 const client = new Discord.Client()
 const ayarlar = require("./ayarlar.json")
-const moment = require("moment")//Matthe#0001
+const moment = require("moment")//Shadow Oracle Zed#0001
 const fs = require("fs")
 const db = require("quick.db")
 const chalk = require("chalk")
@@ -13,7 +13,7 @@ client.commands = new Discord.Collection()
 client.aliases = new Discord.Collection()
 fs.readdir('./commands/', (err, files) => { 
   if (err) console.error(err);               
-  console.log(`${files.length} komut yüklenecek.`)//Youtube Matthe
+  console.log(`${files.length} komut yüklenecek.`)//Shadow Oracle Zed#0001
   files.forEach(f => {                    
     let props = require(`./commands/${f}`)
     console.log(`${props.config.name} komutu yüklendi.`)
@@ -27,7 +27,7 @@ fs.readdir('./commands/', (err, files) => {
 client.on('message', async message => {
   
   if(message.content === '.tag') {
-    message.channel.send(`\`${ayarlar.tag}\``)//Youtube Matthe
+    message.channel.send(`\`${ayarlar.tag}\``)//Shadow Oracle Zed#0001
   }
   })
 
@@ -67,7 +67,7 @@ client.on("guildMemberAdd", member => {
   
 member.roles.add(ayarlar.kayıtsızRol)
 member.roles.add(ayarlar.kayıtsızRol)
-member.roles.add(ayarlar.kayıtsızRol)//Youtube Matthe
+member.roles.add(ayarlar.kayıtsızRol)//Shadow Oracle Zed#0001
   
     kanal.send(`
 Sunucumuza hoş geldin, <@`+ member + `>! Sayende sunucumuz **`+üyesayısı+`** kişi. 
@@ -85,21 +85,21 @@ client.login(process.env.TOKEN)
 client.on("ready", () => {
   client.channels.cache.get(ayarlar.botSesKanal).join();
   });
-//Youtube Matthe
+//Shadow Oracle Zed#0001
 //----------------------------------------------------- TAG ROL ------------------------------------------------\\
 
 // tag rol kodu bana ait değildir, geliştirip sizlere sundum.
 client.on("userUpdate", async function(oldUser, newUser) { 
-    const guildID = "847733452643368990"// sunucu ıd
-    const roleID = "847741789019963394"// taglı rolünüzün ıd
-    const tag = "Force"// tagınız
-    const chat = '847743477516075009'// chat kanalı ıd
-    const taglog = '847744584075444226' // log kanalı ıd
+    const guildID = "796388765257695273"// sunucu ıd
+    const roleID = "819601987590815779"// taglı rolünüzün ıd
+    const tag = "ℬ"// tagınız
+    const chat = '841390806320545842'// chat kanalı ıd
+    const taglog = '843934124480790529' // log kanalı ıd
   
     const guild = client.guilds.cache.get(guildID)
     const role = guild.roles.cache.find(roleInfo => roleInfo.id === roleID)
     const member = guild.members.cache.get(newUser.id)
-    const embed = new Discord.MessageEmbed().setAuthor(member.displayName, member.user.avatarURL({ dynamic: true })).setColor('#ff0010').setTimestamp().setFooter('Matthe was here!');
+    const embed = new Discord.MessageEmbed().setAuthor(member.displayName, member.user.avatarURL({ dynamic: true })).setColor('#ff0010').setTimestamp().setFooter('Strom was here!');
     if (newUser.username !== oldUser.username) {
         if (oldUser.username.includes(tag) && !newUser.username.includes(tag)) {
             member.roles.remove(roleID)

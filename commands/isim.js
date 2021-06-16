@@ -18,14 +18,14 @@ etiketlenenKişi.setNickname(`${ayarlar.tag} ${isim} ${ayarlar.sembol} ${yaş}`)
 
 message.react(client.emojis.cache.get(ayarlar.yes))
 
-const mattheEmbed = new Discord.MessageEmbed()
+const MessageEmbed = new Discord.MessageEmbed()
 .setColor("RANDOM")
 .setDescription(`Kullanıcının ismi \`${ayarlar.tag} ${isim} ${ayarlar.sembol} ${yaş}\` olarak değiştirildi!`)
 .setFooter(ayarlar.footer)
 .setAuthor(message.member.displayName, message.author.avatarURL({dynamic: true}))
 .setTimestamp()
 
-message.channel.send(mattheEmbed)
+message.channel.send(MessageEmbed)
 
 db.push(`isimler.${etiketlenenKişi.id}`, {
 İsim: isim,
