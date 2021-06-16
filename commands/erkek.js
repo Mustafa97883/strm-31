@@ -25,7 +25,7 @@ const mattheEmbed = new Discord.MessageEmbed()
 .setColor("RANDOM")
 .setDescription(`Kullanıcının ismi \`${ayarlar.tag} ${isim} ${ayarlar.sembol} ${yaş}\` olarak değiştirildi ve <@&${ayarlar.erkekRol1}>, <@&${ayarlar.erkekRol2}> rolleri verildi!`)
 .setFooter(ayarlar.footer)
-.setAuthor(message.member.displayName, message.author.avatarURL({dynamic: true})) //Youtube Matthe
+.setAuthor(message.member.displayName, message.author.avatarURL({dynamic: true})) 
 .setTimestamp()
 
 message.channel.send(mattheEmbed)

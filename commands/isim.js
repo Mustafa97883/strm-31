@@ -20,7 +20,7 @@ message.react(client.emojis.cache.get(ayarlar.yes))
 
 const mattheEmbed = new Discord.MessageEmbed()
 .setColor("RANDOM")
-.setDescription(`Kullanıcının ismi \`${ayarlar.tag} ${isim} ${ayarlar.sembol} ${yaş}\` olarak değiştirildi!`)//Youtube Matthe
+.setDescription(`Kullanıcının ismi \`${ayarlar.tag} ${isim} ${ayarlar.sembol} ${yaş}\` olarak değiştirildi!`)
 .setFooter(ayarlar.footer)
 .setAuthor(message.member.displayName, message.author.avatarURL({dynamic: true}))
 .setTimestamp()

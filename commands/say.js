@@ -1,8 +1,8 @@
 const Discord = require("discord.js");
 exports.run= async (client, message, args) => {       
 
-let Tag = "Force" // İSİM TAGINIZ.
-let Etiket = "1110" // ETİKET TAGINIZ #'SİZ YAZINIZ.
+let Tag = "ℬ" // İSİM TAGINIZ.
+let Etiket = "0001" // ETİKET TAGINIZ #'SİZ YAZINIZ.
 
    let TotalMember = message.guild.memberCount
           let Online = message.guild.members.cache.filter(off => off.presence.status !== 'offline').size;
