@@ -53,7 +53,7 @@ client.on("guildMemberAdd", member => {
             '7': `7`,
             '8': `8`,
             '9': `9`}[d];})}
-    const kanal = member.guild.channels.cache.find(r => r.id === (ayarlar.hosgeldinKanal)); 841401443131064342
+    const kanal = member.guild.channels.cache.find(r => r.id === (ayarlar.hosgeldinKanal)); 
     let user = client.users.cache.get(member.id);
     require("moment-duration-format");
       const kurulus = new Date().getTime() - user.createdAt.getTime();  
