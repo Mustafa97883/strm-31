@@ -1,5 +1,3 @@
-
-
 const Discord = require("discord.js")
 const client = new Discord.Client()
 const ayarlar = require("./ayarlar.json")
@@ -82,9 +80,7 @@ Ceza işlemlerin <#KURALLAR KANALI ID> kanalını okuduğun varsayılarak uygula
 
 client.login(process.env.TOKEN)
 
-client.on("ready", () => {
-  client.channels.cache.get(ayarlar.botSesKanal).join();
-  });
+
 //Shadow Oracle Zed#0001
 //----------------------------------------------------- TAG ROL ------------------------------------------------\\
 
@@ -111,10 +107,10 @@ client.on("userUpdate", async function(oldUser, newUser) {
         }
     }
    if (newUser.discriminator !== oldUser.discriminator) {
-        if (oldUser.discriminator == "1110" && newUser.discriminator !== "1110") {
+        if (oldUser.discriminator == "0001" && newUser.discriminator !== "0001") {
             member.roles.remove(roleID)
             client.channels.cache.get(taglog).send(embed.setDescription(`${newUser} Kullanıcısı etiket tagımızı çıkardığı için taglı rolü alındı!`))
-        } else if (oldUser.discriminator !== "1110" && newUser.discriminator == "1110") {
+        } else if (oldUser.discriminator !== "0001" && newUser.discriminator == "0001") {
             member.roles.add(roleID)-
             client.channels.cache.get(taglog).send(embed.setDescription(`${newUser} Kullanıcısı etiket tagımızı aldığı için taglı rolü verildi!`))
             client.channels.cache.get(chat).send(`**Mükemmel! ${newUser} Etiket tagımızı alarak ailemize katıldı!**`)
@@ -124,3 +120,4 @@ client.on("userUpdate", async function(oldUser, newUser) {
   })
 
 //----------------------------------------------------- TAG ROL ------------------------------------------------\\
+
