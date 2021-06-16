@@ -68,9 +68,9 @@ member.roles.add(ayarlar.kayıtsızRol)
 member.roles.add(ayarlar.kayıtsızRol)
   
     kanal.send(`
-Sunucumuza hoş geldin, <@`+ member + `>! Sayende sunucumuz **`+üyesayısı+`** kişi. 
+<a:pin:823900118213853184> Sunucumuza hoş geldin, <@`+ member + `>! Sayende sunucumuz **`+üyesayısı+`** kişi. <a:pin:823900118213853184>
     
-Sunucumuza kayıt olmak için soldaki ses kanallarından birine girmelisin!
+<a:maden:823900106645831680> Sunucumuza kayıt olmak için soldaki ses kanallarından birine girmelisin! <a:maden:823900106645831680> 
 
 Ayrıca hesabın 15 günden fazla bir süredir Discord'da bulunmalı.
 
