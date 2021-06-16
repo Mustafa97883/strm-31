@@ -72,11 +72,11 @@ member.roles.add(ayarlar.kayıtsızRol)
     
 <a:maden:823900106645831680> Sunucumuza kayıt olmak için soldaki ses kanallarından birine girmelisin! <a:maden:823900106645831680> 
 
-Ayrıca hesabın 15 günden fazla bir süredir Discord'da bulunmalı.
+<a:dance:823900180499660800>  Ayrıca hesabın 15 günden fazla bir süredir Discord'da bulunmalı.<a:dance:823900180499660800> 
 
 `+kontrol+`
     
-Ceza işlemlerin <#818504308273709107> kanalını okuduğun varsayılarak uygulanır. ( <@&819602002065358859> )`)});
+<a:alarm:823900110144012321> Ceza işlemlerin <#818504308273709107> kanalını okuduğun varsayılarak uygulanır. ( <@&819602002065358859> )`)});
 
 client.login(process.env.TOKEN)
 
