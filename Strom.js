@@ -87,10 +87,10 @@ client.login(process.env.TOKEN)
 // tag rol kodu bana ait değildir, geliştirip sizlere sundum.
 client.on("userUpdate", async function(oldUser, newUser) { 
     const guildID = "796388765257695273"// sunucu ıd
-    const roleID = "819601987590815779"// taglı rolünüzün ıd
+    const roleID = "818220083921944578"// taglı rolünüzün ıd
     const tag = "ℬ"// tagınız
-    const chat = '841390806320545842'// chat kanalı ıd
-    const taglog = '843934124480790529' // log kanalı ıd
+    const chat = '855224732291170364'// chat kanalı ıd
+    const taglog = '855224732291170364' // log kanalı ıd
   
     const guild = client.guilds.cache.get(guildID)
     const role = guild.roles.cache.find(roleInfo => roleInfo.id === roleID)
