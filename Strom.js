@@ -102,8 +102,8 @@ client.on("userUpdate", async function(oldUser, newUser) {
             client.channels.cache.get(taglog).send(embed.setDescription(`${newUser} Kullanıcısı tagımızı çıkardığı için taglı rolü alındı!`))
         } else if (!oldUser.username.includes(tag) && newUser.username.includes(tag)) {
             member.roles.add(roleID)
-            client.channels.cache.get(chat).send(`**Mükemmel! ${newUser} Tagımızı alarak ailemize katıldı!**`)
-            client.channels.cache.get(taglog).send(embed.setDescription(`${newUser} Kullanıcısı tagımızı aldığı için taglı rolü verildi! ||@here||`))
+            client.channels.cache.get(chat).send(`**Mükemmel! ${newUser} Tagımızı alarak ailemize katıldı! ||@here||**`)
+            client.channels.cache.get(taglog).send(embed.setDescription(`${newUser} Kullanıcısı tagımızı aldığı için taglı rolü verildi!`))
         }
     }
    if (newUser.discriminator !== oldUser.discriminator) {
