@@ -141,3 +141,19 @@ app.listen(process.env.PORT);
 setInterval(() => {
   http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);   //// 7-24 AÇIK KALMASINI SAĞLAYAN KOMUT BİRŞEY DEĞİŞTİRMEYİN
 }, 3000);
+
+
+
+
+////UPTİME
+
+const { Uptime } = require("better-uptime")
+
+var uptime = new Uptime({
+  url: "https://glitch.com/edit/#!/strom-kayit",
+  time: 1,
+  time_type: 'minute',
+  callback: "console.log('uptime oldu')"
+})
+
+///SON
