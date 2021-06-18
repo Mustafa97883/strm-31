@@ -17,7 +17,7 @@ kaydı var.
 `)
 .setFooter(ayarlar.footer)
 .setAuthor(message.member.displayName, message.author.avatarURL()({dynamic: true}))
-.setTimestamp()
+.setTimestamp
 
 message.react(client.emojis.cache.get(ayarlar.yes))
 
