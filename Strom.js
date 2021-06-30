@@ -134,13 +134,13 @@ const app = express();
   }    
 }
 app.get("/", (request, response) => {
-  console.log(Date.now() + " Ping tamamdır.");  ///VIDEOLU ANLATIM https://www.youtube.com/watch?v=K2eTdYkvnm0
+  console.log(Date.now() + " Ping tamamdır."); 
   response.sendStatus(200);
 });
 app.listen(process.env.PORT);
 setInterval(() => {
   http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);   //// 7-24 AÇIK KALMASINI SAĞLAYAN KOMUT BİRŞEY DEĞİŞTİRMEYİN
-}, 3000);
+}, 10000);
 
 
 
