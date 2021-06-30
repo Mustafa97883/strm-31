@@ -151,7 +151,7 @@ const { Uptime } = require("better-uptime")
 
 var uptime = new Uptime({
   url: "https://glitch.com/edit/#!/strom-kayit",
-  time: 1,
+  time: 3,
   time_type: 'minute',
   callback: "console.log('uptime oldu')"
 })
