@@ -15,16 +15,16 @@ const MessageEmbed = new Discord.MessageEmbed()
 .setAuthor(message.member.displayName, message.author.avatarURL({dynamic: true}))
 .setTimestamp()
 
-etiketlenenKişi.roles.set([ayarlar.kayıtsızRol])
-etiketlenenKişi.setNickname(`${ayarlar.tag} İsim ${ayarlar.sembol} Yaş`)
+etiketlenenKişi.roles.set([ayarlar.KayıtsızRol])
+etiketlenenKişi.setNickname(`${ayarlar.Tag} İsim ${ayarlar.sembol} Yaş`)
 
 message.react(client.emojis.cache.get(ayarlar.yes))
 
-message.channel.send(MessageEmbed.setDescription(`Kullanıcı başarıyla kayıtsıza (<@&${ayarlar.kayıtsızRol}>) atıldı!`))
+message.channel.send(MessageEmbed.setDescription(`Kullanıcı başarıyla kayıtsıza (<@&${ayarlar.KayıtsızRol}>) atıldı!`))
 
 }
 exports.config = {
-    name: "kayıtsız",
+    name: "B-kayıtsız",
     guildOnly: true,
-    aliases: ["unregistered", "kayitsiz", "unreg", "unregister","ks"]
+    aliases: ["b-unregistered", "b-kayitsiz", "b-unreg", "b-unregister","b-ks"]
 }

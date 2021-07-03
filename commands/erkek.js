@@ -14,16 +14,16 @@ if(!isim) return message.channel.send(`${client.emojis.cache.get(ayarlar.no)} **
 if(!yaş) return message.channel.send(`${client.emojis.cache.get(ayarlar.no)} **Kaydetmek için bir yaş belirtmelisin!**`).then(message.react(client.emojis.cache.get(ayarlar.no)))
 if(isNaN(yaş)) return message.channel.send(`${client.emojis.cache.get(ayarlar.no)} **Belirttiğin yaş rakamlardan oluşmalı!**`).then(message.react(client.emojis.cache.get(ayarlar.no)))
   
-etiketlenenKişi.roles.add(ayarlar.erkekRol1)
-etiketlenenKişi.roles.add(ayarlar.erkekRol2)
+etiketlenenKişi.roles.add(ayarlar.ErkekRol)
+etiketlenenKişi.roles.add(ayarlar.ErkekRo2)
 etiketlenenKişi.roles.remove(ayarlar.kayıtsızRol)
-etiketlenenKişi.setNickname(`${ayarlar.tag} ${isim} ${ayarlar.sembol} ${yaş}`)
+etiketlenenKişi.setNickname(`${ayarlar.Tag} ${isim} ${ayarlar.sembol} ${yaş}`)
 
 message.react(client.emojis.cache.get(ayarlar.yes))
 
 const MessageEmbed = new Discord.MessageEmbed()
 .setColor("RANDOM")
-.setDescription(`Kullanıcının ismi \`${ayarlar.tag} ${isim} ${ayarlar.sembol} ${yaş}\` olarak değiştirildi ve <@&${ayarlar.erkekRol1}>, <@&${ayarlar.erkekRol2}> rolleri verildi!`)
+.setDescription(`Kullanıcının ismi \`${ayarlar.Tag} ${isim} ${ayarlar.sembol} ${yaş}\` olarak değiştirildi ve <@&${ayarlar.ErkekRol1}>, <@&${ayarlar.erkekRol2}> rolleri verildi!`)
 .setFooter(ayarlar.footer)
 .setAuthor(message.member.displayName, message.author.avatarURL({dynamic: true})) 
 .setTimestamp()
@@ -43,7 +43,7 @@ client.channels.cache.get(ayarlar.sohbetKanal).send(`${etiketlenenKişi} **kaydo
   
 }
 exports.config = {
-    name: "erkek",
+    name: "B-erkek",
     guildOnly: true,
-    aliases: ["e", "male"]
+    aliases: ["b-e", "b-male"]
 }

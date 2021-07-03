@@ -13,17 +13,17 @@ const MessageEmbed = new Strom.MessageEmbed()
 .setAuthor(message.member.displayName, message.author.avatarURL({dynamic: true}))
 .setTimestamp
 
-if(etiketlenenKişi.roles.cache.has(ayarlar.tagRol)) return message.channel.send(MessageEmbed.setDescription(`Kullanıcıdan başarıyla taglı <@&${ayarlar.tagRol}> rolü alındı!`)).then(etiketlenenKişi.roles.remove(ayarlar.tagRol))
+if(etiketlenenKişi.roles.cache.has(ayarlar.TagRol)) return message.channel.send(MessageEmbed.setDescription(`Kullanıcıdan başarıyla taglı <@&${ayarlar.TagRol}> rolü alındı!`)).then(etiketlenenKişi.roles.remove(ayarlar.TagRol))
 
-etiketlenenKişi.roles.add(ayarlar.tagRol)
+etiketlenenKişi.roles.add(ayarlar.TagRol)
 
 message.react(client.emojis.cache.get(ayarlar.yes))
 
-message.channel.send(MessageEmbed.setDescription(`Kullanıcıya başarıyla taglı <@&${ayarlar.tagRol}> rolü verildi!`))
+message.channel.send(MessageEmbed.setDescription(`Kullanıcıya başarıyla taglı <@&${ayarlar.TagRol}> rolü verildi!`))
 
 }
 exports.config = {
-    name: "tagges",
+    name: "b-tagges",
     guildOnly: true,
-    aliases: ["tagrol", "taglırol", "taglirol"]
+    aliases: ["b-tagrol", "b-taglırol", "b-taglirol"]
 }
