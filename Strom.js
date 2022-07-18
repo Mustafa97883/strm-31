@@ -14,6 +14,7 @@ const moment = require('moment');
 var Jimp = require('jimp');
 const { Client, Util, Collection } = require('discord.js');
 const Database = require("./Helpers/Database");
+const keep_alive = require("./keep_alive.js");
 const Invites = new Collection(); //
 const fs = require('fs');
 const db = require('quick.db');
@@ -25,7 +26,7 @@ const fetch = require('node-fetch')
 
 
 setInterval(async () => {
-  await fetch('https://glitch.com/edit/#!/sayisal-bot-v234123123e142123432','https://sayisal-bot-v234123123e142123432.glitch.me').then(console.log('Uptimed!'))
+  await fetch('https://ilhanilhan2312.glitch.me','https://glitch.com/edit/#!/ilhanilhan2312').then(console.log('Uptimed!'))
 }, 20000)
 
 let prefix = ayarlar.prefix;
