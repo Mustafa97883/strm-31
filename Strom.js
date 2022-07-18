@@ -952,6 +952,7 @@ client.giveawaysManager = new GiveawaysManager(client, {
     }//#FF0000
 });
 
+
 //görsel engel
 client.on("message", async message => {
   let kanal = db.fetch(`görselengel.${message.guild.id}`);
