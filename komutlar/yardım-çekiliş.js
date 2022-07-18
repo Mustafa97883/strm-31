@@ -1,30 +1,36 @@
-const Discord = require("discord.js");
+const AsreaperDiscord = require('discord.js');
+const AsreaperClient = new AsreaperDiscord.Client();
+const ayarlar = require('../ayarlar.json');
+let prefix = ayarlar.prefix
 
-module.exports.run = async (client, message) => {
-  const morfin = new Discord.MessageEmbed()
-    .setColor("RANDOM")
-    .setTitle(" Strom Çekiliş 🎉")
-    .setDescription(
-      `**Selam ${message.author.username} Yardım Listeme Hoşgeldin.**
-      
-<:tikitenebakyon:829534240877445140>  **Çekiliş Başlatma Komutu = \`\.çekiliş-yap [#Çekiliş_Kanalı] [Zaman] [Kazanacak_Sayı] [Ödül]\`**
-<:tikitenebakyon:829534240877445140>  **Çekiliş Yenileme Komutu = \`\.çekiliş-yeniden [Mesaj_ID]\`**
-<:tikitenebakyon:829534240877445140>  **Çekiliş Bitirme Komutu = \`\.çekiliş-bitir[Mesaj_ID]\`**
-<:tikitenebakyon:829534240877445140>  **Ping/Gecikme Komutu = \`\.ping\`**`
-    )
-    .setFooter(
-      `Strom Çekiliş | ${message.author.username} Tarafından İstendi.`
-    );
-  message.channel.send(morfin);
-};
-module.exports.conf = {
+exports.run = (client, message) => {
+ const AsreaperEmbed = new AsreaperDiscord.MessageEmbed()
+ .setAuthor(`${client.user.username} Strom | çekiliş menüsü`)
+ .setColor("RED")
+.addFields({
+                name: '**s!çekiliş**',
+                  value: "Çekiliş başlatır",
+                inline: true
+              
+              
+     
+
+              }) 
+  .setFooter(`*                                                               ${client.user.username} | © 2022                                                                      *`)
+ .setImage()
+ 
+ message.channel.send(AsreaperEmbed)
+}
+exports.conf = {
   enabled: true,
   guildOnly: false,
-  aliases: ["help"]
+  aliases: ['çekiliş-sistemi'],
+  kategori: "Bot",
+  permLevel: 0
 };
 
-module.exports.help = {
-  name: "yardım",
-  description: "",
-  usage: ""
+exports.help = {
+  name: 'çekilişsistemi',
+  description: 'Bot ile ilgili bilgi verir.',
+  usage: 'bilgi'
 };

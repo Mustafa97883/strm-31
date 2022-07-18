@@ -1,82 +1,91 @@
 const ms = require('ms');
-const ayarlar = require("../ayarlar.json")
+const Discord = require("discord.js")
 exports.run = async (client, message, args) => {
 
     // If the member doesn't have enough permissions
-    if(!message.member.hasPermission('ADMINISTRATOR')){
-        return message.channel.send(':x: Çekiliş başlatmak için **__Yönetici__** yetkisine sahip olmanız gerekmektedir.');
+    if(!message.member.hasPermission('MANAGE_MESSAGES') && !message.member.roles.cache.some((r) => r.name === "Giveaways")){
+        return message.channel.send(' Çekiliş başlatman için yeterli yetkin yok! gereken yetki; `Mesajları Yönet`.');
     }
 
     // Giveaway channel
-    let çekilişKanalı = message.mentions.channels.first();
+    let giveawayChannel = message.mentions.channels.first();
     // If no channel is mentionned
-    if(!çekilişKanalı){
-        return message.channel.send(':x: Çekiliş yapmak için bir kanal belirleyin');
+    if(!giveawayChannel){
+        return message.channel.send(' Kanal seç!');
     }
 
     // Giveaway duration
-    let çekilişZamanı = args[1];
+    let giveawayDuration = args[1];
     // If the duration isn't valid
-    if(!çekilişZamanı || isNaN(ms(çekilişZamanı))){
-        return message.channel.send(':x: Bir çekiliş zamanı belirleyin');
+    if(!giveawayDuration || isNaN(ms(giveawayDuration))){
+        return message.channel.send(' Süre belirt!');
     }
 
     // Number of winners
-    let çekilişKazananları = args[2];
+    let giveawayNumberWinners = args[2];
     // If the specified number of winners is not a number
-    if(isNaN(çekilişKazananları) || (parseInt(çekilişKazananları) <= 0)){
-        return message.channel.send(':x: Kaç kişi kazanacak onu belirleyin');
+    if(isNaN(giveawayNumberWinners)){
+        return message.channel.send(' Kaç kişi kazanıcak?');
     }
+  
+  if(giveawayNumberWinners > 20){
+    return message.channel.send(" Çekiliş kazanan sayısı 20'den üstün olamaz!")
+  }
+     let giveaway = 
+    // Search with giveaway prize
+    client.giveawaysManager.giveaways.find((g) => g.prize === args.join(' ')) ||
+    // Search with giveaway ID
+    client.giveawaysManager.giveaways.find((g) => g.messageID === args[0]);
+  
 
     // Giveaway prize
-    let çekilişÖdülü = args.slice(3).join(' ');
+    let giveawayPrize = args.slice(3).join(' ');
     // If no prize is specified
-    if(!çekilişÖdülü){
-        return message.channel.send(':x: Bir ödül belirleyin!');
+    if(!giveawayPrize){
+        return message.channel.send(' Ödülü ne olucak?');
     }
 
-    // Start the giveaway
-    client.giveawaysManager.start(çekilişKanalı, {
-        // The giveaway duration
-        time: ms(çekilişZamanı),
-        // The giveaway prize
-        prize: çekilişÖdülü,
-        // The giveaway winner count
-        winnerCount: çekilişKazananları,
-        // Who hosts this giveaway
-        hostedBy: message.author,
-        // Messages
-        messages: {
-            giveaway: "🎉🎉 **ÇEKİLİŞ BAŞLADI** 🎉🎉",
-            giveawayEnded: "🎉🎉 **ÇEKİLİŞ BİTTİ** 🎉🎉",
-            timeRemaining: "Ne zaman bitecek: **{duration}**!",
-            inviteToParticipate: "Katılmak için 🎉 reaksiyonuna basın!",
-            winMessage: "Tebrikler, {winners}!  **{prize}** Kazandın(ız)!",
-            embedFooter: "Çekiliş",
-            noWinner: "Çekiliş iptal edildi, Kazanan yok",
-            hostedBy: "Çekilişi başlatan: {user}",
-            winners: "Kazanan(lar)",
-            endedAt: "Şu zaman bitti ",
-            units: {
-                seconds: "saniye",
-                minutes: "dakika",
-                hours: "saat",
-                days: "gün",
-                pluralS: false // Not needed, because units end with a S so it will automatically removed if the unit value is lower than 2
-            }
-        }
-    });
+ client.giveawaysManager.start(giveawayChannel, {
+      time: ms(giveawayDuration),
+			prize: giveawayPrize,
+			winnerCount: giveawayNumberWinners,
+			hostedBy: message.author,
+			messages: {
+				giveaway:"🎉🎉 **Çekiliş başladı.** 🎉🎉",
+				giveawayEnded: "🎉🎉 **Çekiliş bitti.** 🎉🎉",
+				timeRemaining: "Kalan süre: **{duration}**!",
+				inviteToParticipate: "Çekilişe katılmak için 🎉 emojisine tıklayın!",
+				winMessage: ` Tebrikler {winners}!, **{prize}** adlı çekilişi kazandın!`,
+				embedFooter: "Çekiliş",
+				noWinner: " Çekiliş iptal edildi. Yeterli katılım yok.",
+				hostedBy: "{user} tarafından",
+				winners: "kazanan",
+				endedAt: "Bittiği zaman",
+				units: {
+					seconds: "saniye",
+					minutes: "dakika",
+					hours: "saat",
+					days: "gün",
+					pluralS: true // Not needed, because units end with a S so it will automatically removed if the unit value is lower than 2
+				}
+			}//////////////////////////////////////////
+		});/////////////////////////////////////////////////////////////////////
 
-    message.channel.send(`${çekilişKanalı} Kanalında çekiliş başlatıldı!`);
+    message.channel.send(new Discord.MessageEmbed().addField("Başarılı", ` Çekiliş ${giveawayChannel} adlı kanalda başlatıldı!`).setColor("RANDOM"));
+  /////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 
 };
+
 exports.conf = {
-  enabled: true,
-  guildOnly: true,
-  aliases: ['çekiliş-yap'],
-  permLevel: 0
-};
+	enabled: true,
+	guildOnly: false,
+	aliases: [],
+	permLevel: 0
+}
 
 exports.help = {
-  name: 'çekiliş-başlat' 
-};
+	name: 'çekiliş',
+	description: 'Bota istediğiniz bir şeyi yazdırırsınız.',
+	usage: 'çekiliş'
+}
