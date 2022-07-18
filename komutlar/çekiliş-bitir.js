@@ -1,57 +1,48 @@
 const ms = require('ms');
+const db = require('quick.db')
+const discord = require('discord.js')
 
 exports.run = async (client, message, args) => {
-    // If the member doesn't have enough permissions
-    if(!message.member.hasPermission('MANAGE_MESSAGES') && !message.member.roles.cache.some((r) => r.name === "Giveaways")){
-        return message.channel.send(' Yetersiz yetki! gereken yetki; `MESAJLARI YÖNET`.');
-    }
-
-    // If no message ID or giveaway name is specified
+ if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send(new discord.MessageEmbed().setDescription(` Bu komutu kullanabilmek için \`yönetici\` yetkisine sahip olmalısın`).setColor("RANDOM"));
     if(!args[0]){
-        return message.channel.send(' Bir mesaj IDsi belirtmelisin!');
+        return message.channel.send(':x: Lütfen Yapılan Çekilişin Mesaj IDsini Belirtin!').then(m => m.delete({timeout: 5000, reason:"Yapılması gerekiyordu"}));
+                message.delete({timeout: 6000, reason:"Yapılması gerekiyordu"});
     }
 
-    // try to found the giveaway with prize then with ID
     let giveaway = 
-    // Search with giveaway prize
     client.giveawaysManager.giveaways.find((g) => g.prize === args.join(' ')) ||
-    // Search with giveaway ID
     client.giveawaysManager.giveaways.find((g) => g.messageID === args[0]);
 
-    // If no giveaway was found
     if(!giveaway){
-        return message.channel.send(' `'+ args.join(' ') + '` adında bir çekiliş bulunamadı.');
+        return message.channel.send('Çekiliş Mesajı Bulunamadı `'+ args.join(' ') + '`.').then(m => m.delete({timeout: 5000, reason:"Yapılması gerekiyordu"}));
+                message.delete({timeout: 6000, reason:"Yapılması gerekiyordu"});
     }
 
-    // Edit the giveaway
     client.giveawaysManager.edit(giveaway.messageID, {
         setEndTimestamp: Date.now()
     })
-    // Success message
     .then(() => {
-        // Success message
-        message.channel.send(' Çekiliş '+(client.giveawaysManager.options.updateCountdownEvery/5000)+' saniye sonra bitecek...');
+
+        message.channel.send('Çekiliş Başarıyla Sona Erdirildi!').then(m => m.delete({timeout: 5000, reason:"Yapılması gerekiyordu"}));
+                message.delete({timeout: 6000, reason:"Yapılması gerekiyordu"});
     })
     .catch((e) => {
-        if(e.startsWith(` ${giveaway.messageID} IDsi ile başlayan çekiliş zaten bitmiş!.`)){
-            message.channel.send(' Bu çekiliş zaten bitmiş!');
+        if(e.startsWith(`${giveaway.messageID} ID'li Çekiliş Sona Ermedi.`)){
+            message.channel.send('Çekiliş Başarıyla Sonlandırıldı!');
         } else {
             console.error(e);
-            message.channel.send(' Hata...');
+            message.channel.send('Bir Hata Oluştu...');
         }
     });
 
-}
+};
 
 exports.conf = {
-  enabled: true,
-  guildOnly: true,
-  aliases: ["çekiliş-bitir"],
-  permLevel: 0
-}
-
+  aliases: ['end'],
+  permLevel: 0,
+};
 exports.help = {
-  name: "çekilişbitir",
-  description: "çekilişi bitirir",
-  usage: "w!çekiliş-bitir"
-}
+  name: 'sonlandır',
+   description: 'Çekilişi Sonlandırır.',
+  usage: 'end <mesajID>'
+};

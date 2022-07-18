@@ -1,41 +1,47 @@
 const ms = require('ms');
-exports.run = (client, message, args) => {
-if(!message.member.hasPermission('MANAGE_MESSAGES')){
-        return message.channel.send(' Yetersiz yetki! gereken yetki; `MESAJLARI YÖNET`.');
+const db = require('quick.db')
+const discord = require('discord.js')
+
+exports.run = async (client, message, args) => {
+
+ if (!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send(new discord.MessageEmbed().setDescription(` Bu komutu kullanabilmek için \`yönetici\` yetkisine sahip olmalısın`).setColor("RANDOM"));
+    if(!args[0]){
+        return message.channel.send(':x: Lütfen Yapılan Çekilişin Mesaj IDsini Belirtin!').then(m => m.delete({timeout: 5000, reason:"Yapılması gerekiyordu"}));
+                message.delete({timeout: 6000, reason:"Yapılması gerekiyordu"});
     }
 
-    // Giveaway message ID
-    let messageID = args[0];
-    // If no channel is mentionned
-    if(!messageID){
-        return message.channel.send(' Bir mesaj IDsi belirtmelisin!');
+    let giveaway = 
+    client.giveawaysManager.giveaways.find((g) => g.prize === args.join(' ')) ||
+    client.giveawaysManager.giveaways.find((g) => g.messageID === args[0]);
+
+    if(!giveaway){
+        return message.channel.send('Çekiliş Mesajı Bulunamadı `'+ args.join(' ') +'`.').then(m => m.delete({timeout: 5000, reason:"Yapılması gerekiyordu"}));
+                message.delete({timeout: 6000, reason:"Yapılması gerekiyordu"});
     }
 
-    try {
-        // Reroll the giveaway
-        client.giveawaysManager.reroll(messageID);
-        // Success message
-        message.channel.send(' Çekiliş yeniden çekildi!');
-    } catch (error) {
-        // If the giveaway isn't found
-        if(error.startsWith(` ${messageID} IDsi ile başlayan bir çekiliş bulunamadı!.`)){
-            message.channel.send(" "+messageID + " IDsi ile başlayan bir çekiliş bulunamadı!");
+    client.giveawaysManager.reroll(giveaway.messageID)
+    .then(() => {
+        message.channel.send('Çekiliş Kazananı Yenilendi!').then(m => m.delete({timeout: 5000, reason:"Yapılması gerekiyordu"}));
+                message.delete({timeout: 6000, reason:"Yapılması gerekiyordu"});
+       })
+
+    .catch((e) => {
+        if(e.startsWith(`${giveaway.messageID} ID'li Çekiliş Sona Ermedi.`)){
+            message.channel.send('Bu çekiliş henüz bitmedi!')
+        } else {
+            console.error(e);
+            message.channel.send('Bir Hata Oluştu...');
         }
-        // If the giveaway is not ended
-        if(error.startsWith(` ${messageID} IDsi ile başlayan çekiliş bitmemiş!.`)){
-            message.channel.send('Bu çekiliş bitmemiş!');
-        }
-    }
-}
+    });
+
+};
+
 exports.conf = {
-  enabled: true,
-  guildOnly: true,
-  aliases: ["yeniden"],
-  permLevel: 0
-}
-
+  aliases: ['yenile'],
+  permLevel: 0,
+};
 exports.help = {
-  name: "reroll",
-  description: "reroll",
-  usage: "w!reroll"
-}
+  name: 'reroll',
+   description: 'Çekilişi yeniler.',
+  usage: 'reroll <mesajID>'
+};
