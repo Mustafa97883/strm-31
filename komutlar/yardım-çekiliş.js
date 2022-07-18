@@ -1,28 +1,30 @@
-const Discord = require('discord.js');
-const ayarlar = require('../ayarlar.json')
+const Discord = require("discord.js");
 
-exports.run = (bot, message, args) => {
-    const embed = new Discord.MessageEmbed()
-.setTitle("Zivo Code - Çekiliş Sistemi")
-.setColor("PINK")
-.setDescription(`
-\`${ayarlar.prefix}çekiliş-rol\` Çekiliş yapacak rol ayarlar.
-\`${ayarlar.prefix}çekiliş-başlat\` Çekiliş başlatırsın.
-\`${ayarlar.prefix}çekiliş-yenile\` Kazanan kişiyi yeniler.
-\`${ayarlar.prefix}çekiliş-sonladır\` Yapılan çekilişi bitirir.
-\`${ayarlar.prefix}çekiliş-log\` Logların düşeceği kanalı ayarlar.
-`)
-}
-
-exports.conf = {
-    enabled: true,
-    guildOnly: true,
-    aliases: ['çekiliş-yardım'],
-    permLevel: 0
+module.exports.run = async (client, message) => {
+  const morfin = new Discord.MessageEmbed()
+    .setColor("RANDOM")
+    .setTitle(" Strom Çekiliş 🎉")
+    .setDescription(
+      `**Selam ${message.author.username} Yardım Listeme Hoşgeldin.**
+      
+<:tikitenebakyon:829534240877445140>  **Çekiliş Başlatma Komutu = \`\.çekiliş-yap [#Çekiliş_Kanalı] [Zaman] [Kazanacak_Sayı] [Ödül]\`**
+<:tikitenebakyon:829534240877445140>  **Çekiliş Yenileme Komutu = \`\.çekiliş-yeniden [Mesaj_ID]\`**
+<:tikitenebakyon:829534240877445140>  **Çekiliş Bitirme Komutu = \`\.çekiliş-bitir[Mesaj_ID]\`**
+<:tikitenebakyon:829534240877445140>  **Ping/Gecikme Komutu = \`\.ping\`**`
+    )
+    .setFooter(
+      `Strom Çekiliş | ${message.author.username} Tarafından İstendi.`
+    );
+  message.channel.send(morfin);
+};
+module.exports.conf = {
+  enabled: true,
+  guildOnly: false,
+  aliases: ["help"]
 };
 
-exports.help = {
-    name: 'çekiliş-sistemi',
-    description: 'çekilişyap.',
-    usage: 'çekilişyap'
-}
+module.exports.help = {
+  name: "yardım",
+  description: "",
+  usage: ""
+};

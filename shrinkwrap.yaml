@@ -5967,7 +5967,7 @@ specifiers:
   discord: ^0.8.2
   discord-anti-spam-tr: ^0.7.4
   discord-buttons: ^4.0.0
-  discord-giveaways: ^4.2.1
+  discord-giveaways: ^4.4.3
   discord-logs: ^1.9.0
   discord.js: ^12.5.3
   discord.js-commando: ^0.10.0

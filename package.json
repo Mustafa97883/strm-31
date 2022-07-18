@@ -57,7 +57,7 @@
     "weather-js": "^2.0.0",
     "akaneko": "^5.2.3",
     "discord-anti-spam-tr": "^0.7.4",
-    "discord-giveaways": "^4.2.1"
+    "discord-giveaways": "^4.4.3"
   },
   "engines": {
     "node": "12.x"

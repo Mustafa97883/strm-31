@@ -946,12 +946,10 @@ client.giveawaysManager = new GiveawaysManager(client, {
     updateCountdownEvery: 5000,
     default: {
         botsCanWin: false,
-        exemptPermissions: [ "MANAGE_MESSAGES", "ADMINISTRATOR" ],
         embedColor: "#FF0000",
         reaction: "🎉"
-    }//#FF0000
+    }
 });
-
 
 //görsel engel
 client.on("message", async message => {
