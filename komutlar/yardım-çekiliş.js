@@ -1,36 +1,40 @@
-const AsreaperDiscord = require('discord.js');
-const AsreaperClient = new AsreaperDiscord.Client();
-const ayarlar = require('../ayarlar.json');
-let prefix = ayarlar.prefix
+const Discord = require("discord.js")
+module.exports.run= async(client, message, args) => {
+  const DBL = require('dblapi.js')
+const dbl = new DBL('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc1Njg4MzMwOTI3MDY2MzIyOSIsImJvdCI6dHJ1ZSwiaWF0IjoxNjYwNzM0NTkyfQ.Tci7n9zVPbCAfU70t8CccDiH7lg7pGrvYHnIvRk9f1s', client)
+dbl.hasVoted(message.author.id).then(voted => {
+      if(voted) {
+let cse = new Discord.MessageEmbed()//discord.gg/turkiye
+.setTitle(client.user.username+" Yardım Menüsü")
+.setColor("BLUE")
+.setThumbnail(client.user.avatarURL())
+.setDescription(`[OYVER](https://top.gg/bot/756883309270663229/vote)
+**Strom Müzik botunu eklemek için [TIKLA](https://discord.com/api/oauth2/authorize?client_id=854122011151826975&permissions=8&scope=bot%20applications.commands)
 
-exports.run = (client, message) => {
- const AsreaperEmbed = new AsreaperDiscord.MessageEmbed()
- .setAuthor(`${client.user.username} Strom | çekiliş menüsü`)
- .setColor("RED")
-.addFields({
-                name: '**s!çekiliş**',
-                  value: "Çekiliş başlatır",
-                inline: true
-              
-              
-     
 
-              }) 
-  .setFooter(`*                                                               ${client.user.username} | © 2022                                                                      *`)
- .setImage()
- 
- message.channel.send(AsreaperEmbed)
+
+🎉 **s!reroll**  \`Çekilişi yeniler.\` \n
+🎉 **s!sonlandır**  \`Çekilişi Sonlandırır.\` \n
+🎉 **s!başlat**  \`Çekilişi Başlatır.\` \n
+
+
+`)
+.setFooter("Strom / Discord'da Yeni Devrim \nherhangi bir hatada s!hata (hata)\nönerileriniz için s!öneri (öneriniz)")
+.setTimestamp()
+message.channel.send(cse)
+} else {
+        message.channel.send(` Bu Komutu Sadece 12 Saatte Bir Oyvererek Kullanabilirsiniz Oyvermek İçin (https://top.gg/bot/756883309270663229/vote) linke Tıklayarak Oyverebilirsiniz. Oy Verdiyseniz 5 Dakka Bekleyiniz`) 
+            .then(Strom => Strom.delete({ timeout: 10000 }));  
 }
-exports.conf = {
-  enabled: true,
-  guildOnly: false,
-  aliases: ['çekiliş-sistemi'],
-  kategori: "Bot",
-  permLevel: 0
-};
+        })
+      
+      },
+module.exports.conf = {
+aliases: ["çekiliş-sistemi","çekiliş"]
+}
 
-exports.help = {
-  name: 'çekilişsistemi',
-  description: 'Bot ile ilgili bilgi verir.',
-  usage: 'bilgi'
+module.exports.help = {
+name: "yardım-çekiliş",
+usage: "!yardım-çekiliş"
+
 };

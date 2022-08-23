@@ -1,52 +1,45 @@
-const Strom = require('discord.js');
-const ayarlar = require('../ayarlar.json');
-const db = require("quick.db")
+const Discord = require("discord.js");
 
+exports.run = async (yashinu, message, args) => {
+  if (!message.member.hasPermission("MANAGE_MESSAGES"))
+    return message.reply(
+      `Bu komutu kullanabilmek için "MESAJLARI YÖNET" iznine sahip olmalısın!`
+    );
+  if (!args[0] || isNaN(args[0]))
+    return message.reply(
+      `Silinecek mesaj miktarını belirtmelisin! (İstediğin kadar)`
+    );
+  message.delete();
+  let Lrowsayi = Number(args[0]);
+  let Lrowsilinen = 0;
+  for (var i = 0; i < Math.floor(Lrowsayi / 100); i++) {
+    message.channel.bulkDelete(100).then(r => (Lrowsilinen += r.size));
+    Lrowsayi = Lrowsayi - 100;
+  }
+  if (Lrowsayi > 0)
+    message.channel.bulkDelete(Lrowsayi).then(r => (Lrowsilinen += r.size));
+  message.channel.send(
+    new Discord.MessageEmbed()
+      .setColor("#00ff00")
+      .setDescription(
+        `🗑 | **\`\`${
+          args[0]
+        }\`\` Adet Mesaj Silindi.**`
+        
+      )
+  );
+  
+};
 
-exports.run = function(client, message, args) {
-  	const DBL = require('dblapi.js')
-const dbl = new DBL('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc1Njg4MzMwOTI3MDY2MzIyOSIsImJvdCI6dHJ1ZSwiaWF0IjoxNjU2MTEwOTkxfQ.7Oqg1lelprL5ACm4Yh0RKREKaOTPIyQRrSjDaT7uKko', client)
-dbl.hasVoted(message.author.id).then(voted => {
-      if(voted) {
-   if(db.fetch(`bakim`)) {
-  if(message.author.id !== ayarlar.sahip) {return message.channel.send(new Strom.MessageEmbed().setColor('RED').setDescription(`Şuanda bot kullanımı kapalıdır. Daha sonra tekrar deneyiniz.`))}
-}
-  
-    let basarili = ayarlar.basariliemoji;
-    let basarisiz = ayarlar.basarisizemoji;
-    let yetkili = ayarlar.logger;
-
-if (!message.member.roles.cache.get(yetkili) & !message.member.hasPermission("ADMINISTRATOR")) return message.react(basarisiz);
-  
-if(isNaN(args[0])) {
-  var errembed = new Strom.MessageEmbed().setColor("RED").setDescription(` Lütfen 1-100 arasında sayı belirtiniz!`)
-return message.channel.send(errembed).then(x => x.delete({timeout: 3000}));
-}
-  
-if (args[0] < 1) return message.channel.send(new Strom.MessageEmbed().setColor('RED').setDescription(` **1** adetten az mesaj silemem!`)).then(x => x.delete({timeout: 3000}));
-if (args[0] > 100) return message.channel.send(new Strom.MessageEmbed().setColor('RED').setDescription(` **100** adetten fazla mesaj silemem!`)).then(x => x.delete({timeout: 3000}));
-  
-message.channel.bulkDelete(args[0]).then(deletedMessages => {
-if (deletedMessages.size < 1) return message.reply(`$ Hiç mesaj silemedim! _(**14** günden önceki mesajları silemem!)_`).then(x => x.delete({timeout: 3000}));
-})
-message.channel.send(new Strom.MessageEmbed().setColor('GREEN').setDescription(`**${args[0]}** adet mesaj başarıyla silindi!`)).then(x => x.delete({timeout: 3000}));
-} else {
-        message.channel.send(` Bu Komutu Sadece 12 Saatte Bir Oyvererek Kullanabilirsiniz Oyvermek İçin (https://top.gg/bot/756883309270663229/vote) linke Tıklayarak Oyverebilirsiniz. Oy Verdiyseniz 5 Dakka Bekleyiniz`) 
-              
-}
-        })
-      
-      },
 exports.conf = {
-  enabled: true, 
-  guildOnly: false, 
-  aliases: ["sil", "mesaj-sil", "mesajları-sil"],
-  permLevel: `Mesajları yönet yetkisine sahip olmak gerekir.`
+  enabled: true,
+  guildOnly: true,
+  aliases: ["sil"],
+  permLevel: 0
 };
 
 exports.help = {
-  name: 'sil',
-  category: 'moderasyon',
-  description: 'Belirtilen miktarda mesaj siler.',
-  usage: '.sil <miktar>'
+  name: "sil",
+  description: "Belirtilen miktarda mesajı siler.",
+  usage: "sil"
 };

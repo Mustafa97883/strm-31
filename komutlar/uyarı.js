@@ -1,44 +1,66 @@
-const Discord = require('discord.js')
-const db = require("quick.db");
-const data = require('quick.db');
+const Discord = require('discord.js');
+const db = require("orio.db")
 
+exports.run = (client, message, args) => {
 
-exports.run = async (client, message, args) => {
-if(!args[0]) return message.channel.send(`**Uyaracağın kişiyi etiketle.**`)
+  if (!message.member.hasPermission("MANAGE_MESSAGES")) return message.reply(`Bu komutu kullanabilmek için **Mesajları Yönet** iznine sahip olmalısın!`);
 
+// Veriler - Başlangıç
+  let user = message.mentions.members.first();
+  let reason = args.slice(1).join(' ');
+  let warn = db.get(`uyarılar_${user.id}`)
+  let log = message.guild.channels.cache.get("866796613606440970")// Log'un Gideceği Kanal.
+  let u1 = "1003430219681628214"// 1. Uyarıda Vericek Rolün ID'i.
+  let u2 = "1003430167701626922"// 2. Uyarıda Vericek Rolün ID'i.
+  let u3 = "1003429407874093116"// 3. Uyarıda Vericek Rolün ID'i.
+// Veriler - Bitiş
 
-let kullanıcı = message.mentions.users.first()
-if(!args[0]) return message.reply(" Lütfen bir üye etiketle.")
-if(!kullanıcı) return message.reply(` Üye Bulunamadı. Hayırdır Gelmeden Uyarmak Felan? (` + args[0] + `)`)
-if(kullanıcı.bot) return message.reply(` Botları uyaramazsın! Onların uyarı sayısı sonsuz zaten xd`)
-if(kullanıcı.id === message.author.id) return message.reply(` Kendini uyaramazsın, başka birini etiketle`)
+// Uyarılar - Başlangıç
+  if (!user) return message.reply('Uyaracağın kişiyi etiketlemelisin!');
+  if (!reason) return message.reply('Uyarma sebebini yazmalısın!');
+  if (user.id === message.author.id) return message.reply('Kendini uyaramazsın!');
+  if (message.guild.members.cache.get(user.id).roles.highest.position > message.member.roles.highest.position) return message.channel.send(`Bu kişinin \`rolü/rolleri\` senin \`rolün/rollerinden\` daha yüksek.`)
+// Uyarılar - Bitiş
 
-data.add(`uyarı.${message.guild.id}.${kullanıcı.id}`, +1)
-const syı = await data.fetch(`uyarı.${message.guild.id}.${kullanıcı.id}`)
+// Log - Mesaj
+  const embed = new Discord.MessageEmbed()
+  .setColor("RANDOM")
+  .addField('Yapılan İşlem', 'Uyarma')
+  .addField('Kullanıcı', `${user.tag} (${user.id})`)
+  .addField('Yetkili', `${message.author.tag}`)
+  .addField('Sebep', reason)
+  log.send(embed);
+  // Log - Mesaj
 
-let reason = args.slice(1).join(' ')
+// Başarılı - Mesaj
+  message.guild.members.cache.get(user.id).send(`<@${user.id}>, \n**${message.guild.name}** adlı sunucuda **${reason}** sebebi ile uyarıldın! \nKuralları çiğnemeye devam eder isen susturulabilir, atılabilir veya yasaklanabilirsin!`)
+  const embed2 = new Discord.MessageEmbed()
+  .setColor("RANDOM")
+  .setTitle("Başarılı!")
+  .setDescription(`<@${user.id}> adlı kullanıcı **${reason}** sebebi ile uyarıldı ve başarıyla rolü verildi!`)
+  message.channel.send(embed2)
+  db.add(`uyarılar_${user.id}`, 1)
+ // Başarılı - Mesaj
 
-if(!reason) {
-await message.channel.send(`${kullanıcı.tag} Uyarıldı.` + "\n**Sebep:** Belirtilmedi")
-return}
+// Uyarı Rolü - Başlangıç
+if (warn === null) {
+user.roles.add(u1);
+}
+// Uyarı 2 Rol
+if (warn === 1) {
+user.roles.add(u2);
+}
+// Uyarı 3 Rol
+if (warn === 2) {
+user.roles.set([u3])// Tüm Rolleri Alır ve U3 Rolünü Verir!
+}
+// Uyarı Rolü - Bitiş
 
-if(reason) {
-await message.channel.send(`${kullanıcı.tag} Uyarıldı.` + "\n**Sebep:** "+ reason)
-return} }
-
-
-
-
-
-
-
+};
 exports.conf = {
-    enabled: true,
-    guildOnly: false,
-    aliases: [],
-    permLevel: 1
+  aliases: ["warn", "uyarı-ver"]
 };
 
 exports.help = {
-    name: 'uyar',
+  name: 'Uyar'
 };

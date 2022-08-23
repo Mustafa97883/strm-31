@@ -6,7 +6,7 @@ exports.run = async (client, message, args) => {
 
 
   if (!args[0]) {
-    const embed = new Discord.RichEmbed()
+    const embed = new Discord.MessageEmbed()
       .setColor("BLACK")
       .setTitle("Rol Koruma sistemi!")
       .setDescription(
@@ -19,7 +19,7 @@ exports.run = async (client, message, args) => {
   let rol = await db.fetch(`rolk_${message.guild.id}`);
   if (args[0] == "aç") {
     if (rol) {
-      const embed = new Discord.RichEmbed()
+      const embed = new Discord.MessageEmbed()
         .setColor("BLACK")
         .setTitle("Rol Koruma sistemi!")
         .setDescription("**Görünüşe göre rol koruma zaten aktif!**");
@@ -28,7 +28,7 @@ exports.run = async (client, message, args) => {
       return;
     } else {
       db.set(`rolk_${message.guild.id}`, "acik");
-      const embed = new Discord.RichEmbed()
+      const embed = new Discord.MessageEmbed()
         .setColor("BLACK")
         .setTitle("Rol Koruma sistemi!")
         .setDescription("**Rol koruma başarıyla açıldı!**");
@@ -37,7 +37,7 @@ exports.run = async (client, message, args) => {
     }
   } else if (args[0] == "kapat") {
     db.delete(`rolk_${message.guild.id}`);
-    const embed = new Discord.RichEmbed()
+    const embed = new Discord.MessageEmbed()
       .setColor("BLACK")
       .setTitle("Rol Koruma sistemi!")
       .setDescription("**Rol Koruma başarıyla kapandı!**");

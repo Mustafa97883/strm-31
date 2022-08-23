@@ -1,26 +1,18 @@
 const Discord = require("discord.js");
-const db = require("quick.db");
 const hast = require("hastebin-gen");
+
 module.exports.run = async (client, message, args) => {
-const DBL = require('dblapi.js')
-const dbl = new DBL('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc1Njg4MzMwOTI3MDY2MzIyOSIsImJvdCI6dHJ1ZSwiaWF0IjoxNjU2MTEwOTkxfQ.7Oqg1lelprL5ACm4Yh0RKREKaOTPIyQRrSjDaT7uKko', client)
-dbl.hasVoted(message.author.id).then(voted => {
-      if(voted) {
-  
-  
-  let v11Kod = args.slice(0).join(" ");
-  if (!v11Kod) {
+  let v11 = args.slice(0).join(" ");
+  if (!v11) {
+    return message.channel.send("V11 Kodunu Yazar Mısın ?");
+  }
+  if (v11.length > 1024) {
     return message.channel.send(
-      "Kodunu V12 Geçirmem İçin Kodunu Yazmalısın."
+      "Kodun 1024 Karakterden Fazla Bölerek Yazarmısın ?"
     );
   }
-  if (v11Kod.length > 2000) {
-    return message.channel.send(
-      "Kodun 2000 Karakterden Fazla Bölerek Yazarmısın ?"
-    );
-  }
-  let v12kod = v11Kod
-.split("get")
+  let v12 = v11
+    .split("get")
     .join("cache.get")
     .split("addRole")
     .join("roles.add")
@@ -92,41 +84,34 @@ dbl.hasVoted(message.author.id).then(voted => {
     .join("broadcast.subscribers")
     .split("forEach")
     .join("cache.forEach")
-   .split("client.ping")
-    .join("client.ws.ping")
+    .split("client.ping")
+    .join("client.ws.ping");
 
-  if (v11Kod == v12kod) {
-    return message.channel.send("Bu Komut Zaten V12");
+  if (v11 == v12) {
+    return message.channel.send("Bu Kod Zaten V12.");
   }
 
-    
-    const embed = new Discord.MessageEmbed()
+  const embed = new Discord.MessageEmbed()
+     .setColor("#00ff00")
     .addField(
-      `:outbox_tray: v12 Kod:`,
-      `   \`\`\`
-${v12kod}\`\`\` `
+      `🕑 V11 Kod:`,
+      `\`\`\`${v11}\`\`\` `
     )
-
+    .addField(
+      `🕑 V12 Kod:`,
+      `  \`\`\`${v12}\`\`\` `
+    );
 
   message.channel.send(embed);
-  db.add(`çevrilenkod`, 1);
-  
- } else {
-        message.channel.send(` Bu Komutu Sadece 12 Saatte Bir Oyvererek Kullanabilirsiniz Oyvermek İçin (https://top.gg/bot/756883309270663229/vote) linke Tıklayarak Oyverebilirsiniz. Oy Verdiyseniz 5 Dakka Bekleyiniz`) 
-                             }
-        })
-      
-      },
-
-module.exports.conf = {
-  enabled: true,
-  guildOnly: false,
-  aliases: ["ç", "çevir"],
-  permLevel: 0
 };
 
-module.exports.help = {
-  name: "v11tov12",
-  description: "Botta bulunan tüm komutları gösterir",
-  usage: "komutlar"
+exports.conf = {
+  enabled: true,
+  guildOnly: false,
+  aliases: ["cevir", "convert"],
+  permlevel: 0
+};
+
+exports.help = {
+  name: "çevir"
 };

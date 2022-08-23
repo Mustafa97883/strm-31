@@ -1,5 +1,5 @@
 {
-  "name": "hello-express",
+  "name": "chestnut-flossy-milk",
   "version": "0.0.1",
   "description": "ramo",
   "main": "Strom.js",
@@ -7,14 +7,16 @@
     "start": "node Strom.js"
   },
   "dependencies": {
+    "akaneko": "^5.2.3",
     "axios": "^0.21.1",
     "better-uptime": "^1.1.4",
     "canvacord": "^5.0.8",
     "canvas": "^2.8.0",
     "captcha-plus": "^2.5.2",
-    "chalk": "^4.1.1",
-    "common-tags": "^1.8.0",
+    "chalk": "^4.1.2",
+    "common-tags": "^1.8.2",
     "cool-images": "^1.0.3",
+    "cpu-stat": "^2.0.1",
     "croxydb": "^0.0.7",
     "crypto": "^1.0.1",
     "dabi-images": "^2.7.5",
@@ -22,7 +24,9 @@
     "dctr-antispam.js": "^0.1.1",
     "disc": "^1.3.3",
     "discord": "^0.8.2",
+    "discord-anti-spam-tr": "^0.7.4",
     "discord-buttons": "^4.0.0",
+    "discord-giveaways": "^4.2.1",
     "discord-logs": "^1.9.0",
     "discord.js": "^12.5.3",
     "discord.js-commando": "^0.10.0",
@@ -30,7 +34,7 @@
     "express": "^4.18.1",
     "foo": "0.0.7",
     "fs": "^0.0.2",
-    "generate-password": "^1.6.0",
+    "generate-password": "^1.7.0",
     "hastebin-gen": "^2.0.5",
     "hex-color-regex": "^1.1.0",
     "humanize-duration": "^3.27.0",
@@ -38,12 +42,12 @@
     "jimp": "^0.16.1",
     "join": "^3.0.0",
     "lowdb": "^2.1.0",
-    "math-expression-evaluator": "^1.3.7",
+    "math-expression-evaluator": "^1.4.0",
     "moment": "^2.29.1",
     "moment-duration-format": "^2.3.2",
     "mongoose": "^5.11.9",
     "ms": "^2.1.3",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^2.6.7",
     "node-superfetch": "^0.1.11",
     "npm": "^7.20.6",
     "parse-ms": "^2.1.0",
@@ -51,19 +55,18 @@
     "pretty-ms": "^7.0.1",
     "quick.db": "^7.1.3",
     "snekfetch": "^4.0.4",
+    "steam-provider": "^0.3.2",
     "string-similarity": "^4.0.4",
     "superagent": "^6.1.0",
     "vultrex.db": "^1.4.1",
     "weather-js": "^2.0.0",
-    "akaneko": "^5.2.3",
-    "discord-anti-spam-tr": "^0.7.4",
-    "discord-giveaways": "^4.2.1"
+    "orio.db": "^3.1.2"
   },
   "engines": {
     "node": "12.x"
   },
   "repository": {
-    "url": "https://glitch.com/edit/#!/hello-express"
+    "url": "https://glitch.com/edit/#!/chestnut-flossy-milk"
   },
   "license": "MIT",
   "keywords": [

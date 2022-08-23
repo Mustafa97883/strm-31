@@ -41,7 +41,7 @@ exports.run = (client,message,args) => {
         .setDescription('Başvurun başarıyla gönderildi!'))
     
     
-    client.channels.cache.get('860167717691850782').send(
+    client.channels.cache.get('900027061920489572').send(
         new MessageEmbed()
         .setColor('GREEN')
         .setTitle('Yeni Başvuru!')

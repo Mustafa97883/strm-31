@@ -1,36 +1,40 @@
 const Discord = require('discord.js');
 const db = require('quick.db');
-const botlist  = require('../botlist.json')
 
-exports.run = async(client, message, args) => {
-	if(!message.member.roles.cache.has(botlist.yetkili)) return message.channel.send("Yeterli yetkin Yok.")
-  if(message.channel.id !== botlist.kanalyetkili) return message.channel.send(`<#${botlist.kanalyetkili}> sadece bu kanalda kullanabılır.`)
 
-let botid = args[0]
-let sahip = args[1]
-if(!botid) return message.channel.send("Bir Bot İd Gir.").then(a => a.delete(20000))
-if(!sahip) return message.channel.send("Sahip İd Giriniz.").then(a => a.delete(20000))
-message.delete()
+exports.run = function(client, message, args) {
+  let yetkili = db.fetch(`byetkili_${message.guild.id}`)
+  if (!message.member.roles.cache.has(yetkili)) return message.channel.send('Bu Komutu Kullanamazsın')
+    let botisim = args[0]
+  let sahip = args[1]
   
-message.channel.send("✅ **|** Başarıyla Botu Onayladınız.")
-  
-   message.guild.members.cache.get(botid).roles.add(botlist.botrol)
- message.guild.members.cache.get(sahip).roles.add(botlist.onaylıüye)
-  
-  let embed = new Discord.MessageEmbed()
-  .setColor("RANDOM")
-.setDescription(`:white_check_mark:  **|**  <@${botid}> Adlı Bot Onaylandı Bot Sahip : <@${sahip}>.`)
-client.channels.cache.get(botlist.log).send(embed)
-  
+    let basvuru = db.fetch(`basvuruk_${message.guild.id}`)
+    let kanal = db.fetch(`bot-ekle_${message.guild.id}`)
+  let log =   db.fetch(`bot-log_${message.guild.id}`)
+    if(!log) return message.channel.send("Bu komudu kullanmak için botlist kanallarının sunucuda ayarlı olması gerekiyor.")
+  if(!basvuru) return message.channel.send("Bu komudu kullanmak için botlist kanallarının sunucuda ayarlı olması gerekiyor.")
+  if(!kanal) return message.channel.send("Bu komudu kullanmak için botlist kanallarının sunucuda ayarlı olması gerekiyor.")
+  const onay = new Discord.MessageEmbed()
+  .setColor("GREEN")
+  .setDescription(`<@${sahip}> adlı kişinin <@${botisim}> adlı botu onaylandı.\nOnaylayan yetkili : ${message.author}`)
+    
+    if (!botisim) return message.channel.send(`:no_entry: Botun idsini yazmalısın.`).then(msg => msg.delete(10000))
+  message.delete()
+  if (!sahip) return message.channel.send(`:no_entry: Botun sahipinin ID'sini yazmalısın.`).then(msg => msg.delete(10000))
+        client.channels.cache.get(log).send(onay)      
+  message.channel.send(`Botu onayladınız.`).then(msg => msg.delete(1000))
+ 
+};
 
-}
 exports.conf = {
-	enabled: true,
-	guildOnly: false,
-	aliases:[],
-	permlevel: 0
+  enabled: true,
+  guildOnly: false,
+  aliases: ['bot-onayla', 'onayla'],
+  permLevel: 3
 };
 
 exports.help = {
-	name: "onayla"
-}
+  name: 'botonayla', 
+  description: "Sunucuya eklenen botu onaylar.",
+  usage: 'botonayla <bot ismi>'
+};

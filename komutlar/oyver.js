@@ -12,9 +12,9 @@ exports.run = async (client, message, args) => {
       `${client.user.username} `,
       client.user.displayAvatarURL({ dynamic: true })
     )
-    .setColor("#d02090")
-    .setTitle(` **Oy ver** `)
-    .setDescription(`**Bota Oy Vermek için** [TIKLA](https://top.gg/bot/756883309270663229/vote)
+    .setColor("RANDOM")
+    .setTitle(` **oy ver gardeeş** `)
+    .setDescription(`**oy Vermek için** [TIKLA](https://top.gg/bot/756883309270663229/vote)
   
       ${message.author.username} Tarafından İstendi.`,
       message.author.displayAvatarURL({ dynamic: true })

@@ -1,46 +1,53 @@
-const Discord = require('discord.js');
-const db = require('quick.db')
-const ayarlar = require("../ayarlar.json");
+const Discord = require("discord.js"); ///modulumuzu tanittik
+const db = require("quick.db");
+exports.run = (client, message, args) => {
+  let kanal = client.channels.cache.get(db.fetch(`ökanal_${message.guild.id}`));
+  let p = db.fetch(`prefix_${message.guild.id}`) || process.env.prefix;
 
+  let öneri = args.slice(0).join(" ");
+  if (!kanal)
+    return message.channel.send(
+      "❌  Önerilog kanalı ayarlanmamış. Lütfen ayarlamak için `" +
+        p +
+        "önerilog #kanal` komutunu kullanın."
+    );
+  if (!öneri)
+    return message.reply("❌  Önerini yaz lütfen. ");
+  if (öneri.length > 300)
+    return message.reply(
+      "❌  Önerin `300` karakterden fazla olamaz."
+    );
+  if (öneri.length < 10)
+    return message.reply(
+      "❌  Önerin `10` karakterden az olamaz."
+    );
+  let user = message.mentions.users.first();
+  if (user)
+    return message.reply(
+      "❌  Öneri komudunda kimseyi etiketleyemezsin"
+    );
 
-
-exports.run = function(client, message, args) {
-    let hata = args.join(" ")
-    let şikayetlog = "826124655613575268"
-    let prefix = db.fetch(`prefix_${message.guild.id}`) || ayarlar.prefix;
-    let type = args.slice(0).join(' ');
-    if (type.length < 1) return message.channel.send(new Discord.MessageEmbed().setDescription(`
-\`__Hatalı Kullanım...__\`
-${hata}
-\`__Doğru Kullanım__\`
-\`${prefix}öneri <öneririniz>\`**`));
-
-const ace = new Discord.MessageEmbed()
-.setDescription(`<@${message.author.id}>\n\n Öneriniz Bildirildi! En Kısa Sürede Geri Dönüş Yapılıcakatır.\n\n Anlayışınız İçin Teşekkürler.\n\n [KONTROL](https://discord.gg/6xQtMXjRsA)`)
-.setThumbnail(message.author.avatarURL({ dynamic: true, format: 'png', size: 1024 }))
-message.channel.send(ace)
-
-const acee = new Discord.MessageEmbed()
-.setDescription(`<@${message.author.id}> adlı kullanıcının **__Önerisi__**:`)
-.addField(`
-**Kulanıcı Bilgileri**`,
-` **__Kullanıcı ID:__** **\`${message.author.id}\`**
-**__Kullanıcı Adı:__** **\`${message.author.username}\`**
-**__Kullanıcı Tagı:__** **\`#${message.author.discriminator}\`**`)
-.addField("Kullanıcı Önerisi", type)
-.setThumbnail(message.author.avatarURL)
- client.channels.cache.get(şikayetlog).send(acee);
+  message.channel.send(
+    "✅ öneriniz iletildi. "
+  );
+  let codeming = new Discord.MessageEmbed()
+    .setThumbnail(message.author.avatarURL())
+    .setFooter(message.author.username, client.user.avatarURL())
+    .setTitle(" ⚡ | Yeni Öneri! ")
+    .setDescription(
+      `Öneren Kişi : ${message.author} ( ${message.author.id}) \n Önerisi : **${öneri}** `
+    );
+  kanal.send(codeming);
 };
 
 exports.conf = {
   enabled: true,
-  guildOnly: false, 
-  aliases: ["öner","alviyi öner"],
-  permLevel: 0 
+  guildOnly: false,
+  aliases: [],
+  permlevel: 0
 };
-
 exports.help = {
-  name: 'öneri',
-  description: 'Şikayet de bulunursunuz..',
-  usage: 'şikayet <şikayet>'
-}; 
+  name: "öneri-yap",
+  despricton: "Öneri verirsiniz.",
+  usage: "öneri"
+};

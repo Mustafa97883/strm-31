@@ -77,21 +77,21 @@
 
 		"isim": "Pro Kek Kasası",
     "açıklama": "Patates Kasası Batma ihtimali var",
-		"fiyat": "1000000",
+		"fiyat": "500000",
     "kasaid": "13"
 	} ,
 {
 
 		"isim": "Kumar Kasası(açma)",
-    "açıklama": "Kumar Kasası(açma) Batma ihtimali var",
-		"fiyat": "10000000",
+    "açıklama": "Kumar Kasası yüreği yeten açar. Batma ihtimali var",
+		"fiyat": "1000000",
     "kasaid": "14"
 	} ,
 {
 
 		"isim": "Efkar Kasası",
     "açıklama": "Efkar Kasası Batma ihtimali var",
-		"fiyat": "5000000",
+		"fiyat": "1500000",
     "kasaid": "15"
 	} 
 

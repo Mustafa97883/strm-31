@@ -1,62 +1,49 @@
-const Strom = require("discord.js");
-const db = require("quick.db");
+const Discord = require("discord.js");
 const ayarlar = require("../ayarlar.json");
-const talkedRecently = new Set();
-let botid = "756883309270663229";
-var prefix = ayarlar.prefix;
+let prefix = ayarlar.prefix;
 
-exports.run = async (client, message, args) => {
-  
- const DBL = require('dblapi.js')
-const dbl = new DBL('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc1Njg4MzMwOTI3MDY2MzIyOSIsImJvdCI6dHJ1ZSwiaWF0IjoxNjU2MTEwOTkxfQ.7Oqg1lelprL5ACm4Yh0RKREKaOTPIyQRrSjDaT7uKko', client)
-dbl.hasVoted(message.author.id).then(voted => {
-      if(voted) {
-  
-  const embed = new Strom.MessageEmbed()
-    .setAuthor(
-      `${client.user.username} `,
-      client.user.displayAvatarURL({ dynamic: true })
+exports.run = async (bot, msg, args) => {
+  const seviye = new Discord.MessageEmbed()
+    .setAuthor(`Strom | OtoRol Sistem`)
+    .setTitle(``)
+    .setColor("#00ff00")
+    .setThumbnail(
+      
     )
-    .setColor("#d02090")
-    .setTitle(` **Strom Bot otorol-sistemi Menüsüne Hoşgeldiniz** `)
-    .setDescription(`**Bota Oy Vermek için** [TIKLA](https://top.gg/bot/756883309270663229/vote)
-  **Bota yorum atıp 5 yıldız vermeyi unutma :)** [TIKLA](https://top.gg/bot/756883309270663229)
-  **Strom Müzik botunu eklemek için [TIKLA](https://discord.com/api/oauth2/authorize?client_id=854122011151826975&permissions=8&scope=bot%20applications.commands)
-  
-
-  <a:rainbow:855248569136578570> **s!otorol\`sunucuya giren kişiye otomatik rol verir.\` \n
-  <a:rainbow:855248569136578570> **s!otorol-sıfırla\`otorol sıfırlanır.\` \n
-  <a:rainbow:855248569136578570> **s!otorol-mesaj\`otorol mesajı ayarlarsınız.\` \n
-  <a:rainbow:855248569136578570> **s!otorol-mesaj-sıfırla\`otorol mesajı sıfırlarsınız.\` \n
-`
+    .setDescription(
+      `🟣 Strom Botumuzu Eklemek İçin \`${prefix}davet\` yazabilirsiniz.`
+    )
+    .addField(
+      `**__OtoRol__**`,
+      `💝 \`${prefix}otorol\` \n OtoRolü Nasıl Ayarlayacagınız Hakkında Bilgi Tablosu.`,
+        true
+    )
+  .addField(
+      `**__OtoRol Msg__**`,
+      `💝 \`${prefix}otorol-msg\` \n Sunucunuza Özel Otorol Msg Ayarlarsınız.`,
+        true
+    )
+   .addField(
+      `**__OtoRol Ayarla__**`,
+      `💝 \`${prefix}oto-rol-ayarla\` \n OtoRol Mesaji Gidecegi Kanalı Ve Rölü Ayarlarsınız.`,
+        true
+    )
+   .addField(
+      `**__OtoRol Kapat__**`,
+      `💝 \`${prefix}otorol-kapat\` \n Tüm OtoRol Ayalarını Sıfırlarsınız.`,
+        true
     
-    
-  )
-    .setFooter( "Strom / Discord'da Yeni Devrim!", client.user.avatarURL())
-  return message.channel.send(embed);
-
-      
-      } else {
-        message.channel.send(` Bu Komutu Sadece 12 Saatte Bir Oyvererek Kullanabilirsiniz Oyvermek İçin (https://top.gg/bot/756883309270663229/vote) linke Tıklayarak Oyverebilirsiniz. Oy Verdiyseniz 5 Dakka Bekleyiniz`) 
-                             }
-        })
-      
-      },
-
-
-  
-  
-  
-  
-  exports.conf = {
+   );
+  msg.channel.send(seviye);
+};
+exports.conf = {
   enabled: true,
-  guildOnly: false,
-  aliases: ["otorol-sistemi","otorol-sistemi"],
+  guildOnly: true,
+  aliases: [],
   permLevel: 0
 };
-
 exports.help = {
-  name: "otorol-sistemi",
-  description: "a!davet-sistemi Menüsü",
-  usage: "otorol-sistemi"
+  name:"otorol-sistem",
+  description: "İstediğiniz kullanıcını bilgilerini gösterir.",
+  usage: "seviye"
 };

@@ -1,19 +1,19 @@
 const Discord = require("discord.js");
 const ayarlar = require("../ayarlar.json");
-
+const db = require('quick.db')
+let prefix = ayarlar.prefix;
 exports.run = function(client, message, args) {
-  const db = require('quick.db')
-let p = db.fetch(`prefix_${message.guild.id}`) || ayarlar.prefix;
+  
 
 
 const onerisiz = new Discord.MessageEmbed()
-.setColor("RED")
+.setColor("RANDOM")
 .setTitle("• Hata: 0014 •")
 .setDescription("Hata bildirebilmek için hatayı yazmalısın.")
 .setFooter(`©️ Tüm hakları saklıdır. | 2022`);
 
 const onerili = new Discord.MessageEmbed()
-.setColor("GREEN")
+.setColor("RANDOM")
 .setTitle("Başarılı")
 .setDescription("Hatanız alınmıştır! Teşekkür ederiz.")
 .setFooter(`©️ Tüm hakları saklıdır. | 2022`);  

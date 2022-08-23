@@ -14,7 +14,6 @@ const moment = require('moment');
 var Jimp = require('jimp');
 const { Client, Util, Collection } = require('discord.js');
 const Database = require("./Helpers/Database");
-const keep_alive = require("./keep_alive.js");
 const Invites = new Collection(); //
 const fs = require('fs');
 const db = require('quick.db');
@@ -26,7 +25,7 @@ const fetch = require('node-fetch')
 
 
 setInterval(async () => {
-  await fetch('https://ilhanilhan2312.glitch.me','https://glitch.com/edit/#!/ilhanilhan2312').then(console.log('Uptimed!'))
+  await fetch('https://cooperative-spiffy-dead.glitch.me','https://glitch.com/edit/#!/cooperative-spiffy-dead').then(console.log('Uptimed!'))
 }, 20000)
 
 let prefix = ayarlar.prefix;
@@ -38,14 +37,14 @@ client.ekoayarlar = {
   botismi: "Strom",
   renk: "RANDOM", //İNGİLİZCE TERCİH ETTİĞİNİZ RENGİ YAZINIZ! EĞER BÖYLE BIRAKIRSANIZ RASTGELE ATAR!
   isimsiz: "Bilinmiyor", //İSİMSİZ KİŞİLERİN HANGİ İSİM İLE GÖZÜKECEĞİNİ BELİRLEYEBİLİRSİNİZ!
-  rastgelepara: true, //EĞER BUNU TRUE YAPARSANIZ RASTGELE PARA VERME ÖZELLİĞİ AKTİF OLUR VE GÜNLÜK PARALARI RASTGELE VERİR!
-  minpara: 10, //EĞER RASTGELE PARA DURUMUNU AKTİF ETTİYSENİZ BURADAN RASTGELE PARA PARAMETRESİNİNİN MİNUMUM PARASINI BELİRTİNİZ!
-  maxpara: 200, //EĞER RASTGELE PARA DURUMUNU AKTİF ETTİYSENİZ BURADAN RASTGELE PARA PARAMETRESİNİNİN MAXİMUM PARASINI BELİRTİNİZ!
-  günlükpara: 50, //EĞER RASTGELE PARAYI TRUE YAPTIYSANIZ BURAYI ELLEMENİZE GEREK YOK!
+  rastgelepara: false, //EĞER BUNU TRUE YAPARSANIZ RASTGELE PARA VERME ÖZELLİĞİ AKTİF OLUR VE GÜNLÜK PARALARI RASTGELE VERİR!
+  minpara: 101, //EĞER RASTGELE PARA DURUMUNU AKTİF ETTİYSENİZ BURADAN RASTGELE PARA PARAMETRESİNİNİN MİNUMUM PARASINI BELİRTİNİZ!
+  maxpara: 150, //EĞER RASTGELE PARA DURUMUNU AKTİF ETTİYSENİZ BURADAN RASTGELE PARA PARAMETRESİNİNİN MAXİMUM PARASINI BELİRTİNİZ!
+  günlükpara: 130, //EĞER RASTGELE PARAYI TRUE YAPTIYSANIZ BURAYI ELLEMENİZE GEREK YOK!
   dbloy: true, //EĞER BOTUNUZ DBL (DİSCORD BOT LİST) DE KAYITLIYSA GÜNLÜK ÖDÜL ALMAK İÇİN OY İSTER FALSE KAPALI, TRUE AKTİF DEMEK!
   dblkey: "https://top.gg/bot/756883309270663229/vote", //EĞER DBLOY U AKTİF ETMEDİYSENİZ BURAYA KEY EKLEMENİZE GEREK YOK EĞER AKTİF ETTİYSENİZ DBL SİTESİNDEN BULABİLİRSİNİZ!
   dblmsj: "Bu komutu kullanabilmek için bota oy vermelisiniz. Oy vermek için soyver", //EĞER DBLOY U AKTİF ETMEDİYSENİZ BURAYA MESAJ YAZMANIZA GEREK YOK! EĞER AKTİF ETTİYSENİZ BOTA OY VERMEK İÇİN HANGİ MESAJI YAZACAĞINI AYARLAYABİLİRSİNİZ.
-  başlangıçparası: 50, //EĞER RASTGELE PARAYI TRUE YAPTIYSANIZ BURAYI ELLEMENİZE GEREK YOK!
+  başlangıçparası: 101, //EĞER RASTGELE PARAYI TRUE YAPTIYSANIZ BURAYI ELLEMENİZE GEREK YOK!
   admin: ["846736343593779230"]//["id","",""]
 }
 const log = message => {
@@ -134,32 +133,6 @@ client.elevation = message => {
     return permlvl;
 };
 
-
-
-client.on("guildMemberAdd", async member => {
-    let kanal = await db.fetch(`hgkanal_${member.guild.id}`) 
-    if(!kanal || !kanal) return
-    let sonuç = kanal - member.guild.memberCount
-     let user = client.users.cache.get(member.id);
-  let yetkilirole = db.fetch(`yetkilirole_${member.guild.id}`)
-  require("moment-duration-format");
-    let kurulus = new Date().getTime() - user.createdAt.getTime();  
-    var kontrol;
-if (kurulus < 1296000000) kontrol = '**Şüpheli**'
-if (kurulus > 1296000000) kontrol = '**Güvenli**'
-  moment.locale("tr");
-  const embed = new Strom.MessageEmbed()
-    .setTitle(member.guild.name + ` Sunucusuna Hoş Geldin!`)
-    .setDescription(`${member} **Bizde Seni Bekliyorduk..**
-  \nSeninle Birlikte \`${member.guild.memberCount}\` Kişiyiz!
-  \nKaydının yapılması için **sesli odaya** gelip ses vermen yeterli.
-  \nSunucumuzdaki kaydını yapmak için <@&${yetkilirole}> Rolündekilerle İletişime Geçebilirsin.
-  \nHesap Durumu ${moment(member.user.createdAt).format("**DD MMMM YYYY dddd (hh<:mm:723226315972673658>ss)**") } - ${kontrol}`)
-  client.channels.cache.get(kanal).send(`<@&${yetkilirole}>`)
-  client.channels.cache.get(kanal).send(embed)
-  return
-    })
-
 client.login(process.env.token);
 
 //----------komut------------//
@@ -184,14 +157,7 @@ if (message.content === `<@${client.user.id}>`) {
 });
 
 
-///tag//
 
-client.on('message', message => {
-let prefix = ayarlar.prefix;
-if (message.content === `tag`) {
- message.reply(`**Tagımızı Alarak Bize Destek Çıkabilirsin! Tag: ✧ **`)
-}
-});
 
 
 
@@ -305,11 +271,11 @@ const küfür = [
 		"skim",
 		"skm",
 		"sg",
-   "Amk", "mk", "amk", "aq", "orospu", "oruspu", "oç", "sikerim", "yarrak", "piç", "amq", "sik", "amcık", "çocu", "sex", "seks", "amına", "orospu çocuğu", "sg", "siktir git","A M K","A m K","a M K","a m k","porno","p o r n o","ororspu çocugu","orusbu","orusbu çocuğu","orosbu cocu","orospu cocu","orosbuçoocu","anancı","anneni sikeyim","ananı sikeyim","annen piç","anai sikeyim","ananı sikeyim","ananı skm","anneni skm","anneni sikm","siqerim","siqerim seni","siqim","siqim seni","skEİRM","yarak","ospu","ospu çocuğu","ospu çocu","sikik","oç","orospu","orospu çocuğu","öröspü çöcüğü","Oç","oÇ","OÇ","sikerim","kafasız","porno","pörnö","pornocu","31","31.",
+   "Amk", "mk", "amk", "aq", "orospu", "oruspu", "oç", "sikerim", "yarrak", "piç", "amq", "sik", "amcık", "çocu", "sex", "seks", "amına", "orospu çocuğu", "sg", "siktir git","A M K","A m K","a M K","a m k","porno","p o r n o","ororspu çocugu","orusbu","orusbu çocuğu","orosbu cocu","orospu cocu","orosbuçoocu","anancı","anneni sikeyim","ananı sikeyim","annen piç","anai sikeyim","ananı sikeyim","ananı skm","anneni skm","anneni sikm","siqerim","siqerim seni","siqim","siqim seni","skEİRM","yarak","ospu","ospu çocuğu","ospu çocu","sikik","oç","orospu","orospu çocuğu","öröspü çöcüğü","Oç","oÇ","OÇ","sikerim","kafasız","porno","pörnö","pornocu","31","31.","otuzbir","otuz bir",
 "31 çeken","am","amcık","am çorbası","amcık çorbası","tam sikmelik","sikiş","sikmek","sik çorbası","sik suyu","am suyu","amcık suyu","yarrak","amcık hoşafı","AMCIK HOŞAFI","Amcık Hoşafı",
 "yarrak kafalı","soğan sikli","siki başı sik","yarrağı kara","kara sikli","kara yarraklı","tam oç","tam öç","tem oç","tem öç","öç","yarrak kokusu",
 "sik kokusu","ananı sikim","ananı sikiyim","anneni sikim","anneni sikiyim","ablanı sikim","ablanı sikiyim","gacını sikiyim","karını sikiyim",
-"babanı sikiyim","aileni sikime oturturayım","muz istermisin","yarrağım","sikim","sik","nah","taşşak","taşak","yarak","yalak","kafasını siktiğim",
+"babanı sikiyim","aileni sikime oturturayım","muz istermisin","yarrağım","sikim","sik","taşşak","taşak","yarak","yalak","kafasını siktiğim",
 "kafası sikik","amk","sik","Sik","Sİk","SİK","Oruspu","Oruspu çocukları","Oruspi","Oruspu","amini","amina","selAM","SelAM","salAM"
  ,     ];
 client.on("messageUpdate", async (old, nev) => {
@@ -389,7 +355,7 @@ const botistatistik = new Strom.MessageEmbed()
 //https://cnslink.cf
 botdurum.send(botistatistik);
 
-  }, 300000); //Milisaniye cinsinden. 1 saniye =  1000 milisaniye. Örnek Olarak 1 saat = 3600000milisaniye
+  }, 3600000); //Milisaniye cinsinden. 1 saniye =  1000 milisaniye. Örnek Olarak 1 saat = 3600000milisaniye
   //https://convertlive.com/tr/u/dönüştürmek/milisaniye/a/saniye Bu siteden hesaplamasını yapabilirsiniz.
 });
 
@@ -610,41 +576,49 @@ global.onUpdateInvite = (guildMember, guild, total) => {
 
 
 
-//     [-----------------> Afk <------------------]  \\
+//AFK Baş
+
+
+const { DiscordAPIError } = require("discord.js");
 
 client.on("message", async message => {
-  
-  let prefix = ayarlar.prefix;
-  let kullanıcı = message.mentions.users.first() || message.author;
-  let afkdkullanıcı = await db.fetch(`afk_${message.author.id}`);
-  let afkkullanıcı = await db.fetch(`afk_${kullanıcı.id}`);
-  let sebep = afkkullanıcı;
   if (message.author.bot) return;
-  if (message.content.includes(`${prefix}afk`)) return;
-  if (message.content.includes(`<@${kullanıcı.id}>`)) {
-    if (afkdkullanıcı) {
-      message.channel.send(
-        new Strom.MessageEmbed().setDescription(`
-AFK modundan ayrıldın <@${kullanıcı.id}>.`)
-      );
-      db.delete(`afk_${message.author.id}`);
-    }
-    if (afkkullanıcı)
-      return message.channel.send(
-        `${message.author}\`${kullanıcı.tag}\` şu anda AFK. \n Sebep : \`${sebep}\``
-      );
+  if (!message.guild) return;
+  if (message.content.includes(`afk`)) return;
+
+  if (await db.fetch(`afk_${message.author.id}`)) {
+    db.delete(`afk_${message.author.id}`);
+    db.delete(`afk_süre_${message.author.id}`);
+
+    const embed = new Strom.MessageEmbed()
+
+      .setColor("#00ff00")
+      .setAuthor(message.author.username, message.author.avatarURL)
+      .setDescription(`${message.author.username} Artık \`AFK\` Değilsin.`);
+
+    message.channel.send(embed);
   }
-  if (!message.content.includes(`<@${kullanıcı.id}>`)) {
-    if (afkdkullanıcı) {
-      message.channel.send(
-        new Strom.MessageEmbed().setDescription(`
-AFK modundan ayrıldın <@${kullanıcı.id}>.`)
+
+  var USER = message.mentions.users.first();
+  if (!USER) return;
+  var REASON = await db.fetch(`afk_${USER.id}`);
+
+  if (REASON) {
+    let süre = await db.fetch(`afk_süre_${USER.id}`);
+    let timeObj = ms(Date.now() - süre);
+
+    const afk = new Strom.MessageEmbed()
+
+      .setColor("#00ff00")
+      .setDescription(
+        `**Bu Kullanıcı AFK**\n\n**Afk Olan Kullanıcı :** \`${USER.tag}\`\n**Afk Süresi :** \`${timeObj.hours}saat\` \`${timeObj.minutes}dakika\` \`${timeObj.seconds}saniye\`\n**Sebep :** \`${REASON}\``
       );
-      db.delete(`afk_${message.author.id}`);
-    }
+
+    message.channel.send(afk);
   }
 });
 
+//AFK Son
 
 
 ///reklam engel
@@ -710,7 +684,7 @@ client.on("guildMemberAdd", async member => {
         .setColor("RANDOM")
         .setThumbnail(member.user.avatarURL())
         .setDescription(
-          `**${member.user.tag}** (${member.id}) adlı bota bir yetkili izin verdi eğer kaldırmak istiyorsanız **!bot-izni kaldır <botid>**.`
+          `**${member.user.tag}** (${member.id}) adlı bota bir yetkili izin verdi eğer kaldırmak istiyorsanız **s!bot-izni kaldır <botid>**.`
         );
       synx2.send(synx);
     } else {
@@ -725,7 +699,7 @@ client.on("guildMemberAdd", async member => {
             member.id +
             ") " +
             "adlı bot sunucuya eklendi ve banladım eğer izin vermek istiyorsanız **" +
-            "!bot-izni ver <botid>**"
+            "s!bot-izni ver <botid>**"
         );
       member.kick(); // Eğer sunucudan atmak istiyorsanız ban kısmını kick yapın
       synx2.send(izinverilmemişbot);
@@ -938,41 +912,10 @@ const Strom = new Strom.MessageEmbed()
 
 //////
 
-// çekiliş sistemi
 
 
-const { GiveawaysManager } = require('discord-giveaways');
-client.giveawaysManager = new GiveawaysManager(client, {
-    storage: "./giveaways.json",
-    updateCountdownEvery: 5000,
-    default: {
-        botsCanWin: false,
-        exemptPermissions: [ "MANAGE_MESSAGES", "ADMINISTRATOR" ],
-        embedColor: "#FF0000",
-        reaction: "🎉"
-    }//#FF0000
-});
 
 
-//görsel engel
-client.on("message", async message => {
-  let kanal = db.fetch(`görselengel.${message.guild.id}`);
-  if(message.channel.id == kanal){
-    if(!message.attachments.first()){
-
-      if(message.author.bot) return;
-      message.delete()
-      const embed = new Strom.MessageEmbed()
-      .setColor("RANDOM")
-      .setDescription(`${message.author}, Bu Kanalda Sadece Gif Veya Fotoğraf Paylaşabilirsiniz, Mesaj Değil!`)
-      .setFooter(`${message.author.tag} UYARI!`)
-      .setTimestamp()
-      message.channel.send(embed).then(x => x.delete({timeout: 6000}))
-
-    };
-  
-  };
-});
 
 //Anti Raid
 client.on("guildMemberAdd", async member => {
@@ -1001,82 +944,6 @@ member.kick(member)
 }
 })
 
-
-
-
-//tehlike / tehlikesiz
-client.on("guildMemberAdd", async member => {
-  let { oldu, hata } = require("./ayarlar.json")
-  let tehlikerol = await db.fetch(`gtehlike.${member.guild.id}`)
-    let güvenlirol = await db.fetch(`ggüven.${member.guild.id}`)
-    let log = await db.fetch(`logg.${member.guild.id}`)
-let log2 = client.channels.cache.get(log)
-
-
-  if(!tehlikerol) return
-     let member2 = member.user 
-    let zaman = new Date().getTime() - member2.createdAt.getTime()
-
-  var takizaman = [];
-if(zaman < 604800000) {
-takizaman = '**Tehlikeli**'
-  member.roles.add(tehlikerol)
-  if(log) {
-        log2.send(new Strom.MessageEmbed().setDescription(`Bu Kişi **7** Günün Altında Discorda Giriş Yaptığı İçin Ona <@&${tehlikerol}> Rolünü Verdim!`).setColor(oldu))
-
-    return
-  }
-if(güvenlirol) {
-  
-
-} else {
-takizaman = `**Güvenli**`}
-  member.roles.add(güvenlirol)
-
-  if(log) {
-  
-    log2.send(new Strom.MessageEmbed().setDescription(`Bu Kişi **7** Günün Altında Olmadığı İçin Ona <@&${güvenlirol}> Rolünü Verdim!`).setColor(oldu))
-    
-    return
-  }
-}
-})
-
-
-
-client.on("message", async message => {
-  let premium = await db.fetch(`premium.${message.guild.id}`)
-  if( message.content === "sa" || message.content === "Sa" || message.content === "Selamın Aleyküm" || message.content === "selamın aleyküm" || message.content === "sea" || message.content === "Sea") {
-
-    
-  if(premium) {
-
-          if (message.content.length > 64) {
-
-    let embed = new Strom.MessageEmbed()
-    .setDescription("Hizaya Geçin. Bir Gold Üye Belirdi!")
-    .setColor(ayarlar.oldu)
-    message.channel.send(embed)
-  } else {
-    return
-  }
-  }
-  }
-})
-
-
-client.on("message", async msg => {
-  let prefix535 = await db.fetch(`prefix.${msg.guild.id}`) || ayarlar.prefix
-    if(msg.content.includes(`<@${client.user.id}>`) || msg.content.includes(`<@!${client.user.id}>`)) {
-  msg.channel.send({embed: {color: ayarlar.oldu, description: `
-  Sunucudaki Prefixim: ${prefix535}
-  Orijinal Prefixim: ${ayarlar.prefix}
-  
-  **__Prefixi Değiştirmek İçin : ${prefix}prefix ayarla ${prefix}__**`}})
-}
-  
-
-});
 
 
 
@@ -1176,19 +1043,6 @@ if(data && data === role.id) require('quick.db').delete(`strom-mute-role.${role.
 ///mute son
 
 
-///boost
-
-const logs = require('discord-logs');
-logs(client);
-
-client.on('guildMemberBoost', (member) => {// 
-let kanal = client.channels.cache.get('864544996337123348');
-kanal.send(`${member.user.tag} kullanıcısı ${member.guild.name} sunucusuna boost bastı!`);
-member.send(`${member.guild.name} sunucusuna boost bastığın için teşekkürler!`);
-});//
-
-///boost son
-
 
 ///bot yönetici yetkisi alma
 
@@ -1204,141 +1058,6 @@ member.guild.channels.random().send(`${member}, sunucuya girdi. Bende onun için
 }})// codare
 
 ///bot y.y.alma son
-
-
-
-////seviye sistemi
-
-client.cooldown = new Strom.Collection();
-client.config = {
-cooldown: 1 * 1000
-}
-client.db = require("quick.db");
-client.on("message", async (message) => {
-    if (!message.guild || message.author.bot) return;
-    // XP
-    exp(message);
-function exp(message) {
-    if (!client.cooldown.has(`${message.author.id}`) || (Date.now() - client.cooldown.get(`${message.author.id}`) > client.config.cooldown)) {
-        let exp = client.db.add(`exp_${message.author.id}`, 1);
-        let level = Math.floor(0.3 * Math.sqrt(exp));
-        let lvl = client.db.get(`level_${message.author.id}`) || client.db.set(`level_${message.author.id}`,1);;
-        if (level > lvl) {
-            let newLevel = client.db.set(`level_${message.author.id}`,level);
-            message.channel.send(`:tada: ${message.author.toString()}, Level atladın yeni levelin ${newLevel}!`);
-        }
-        client.cooldown.set(`${message.author.id}`, Date.now());
-    }
-}
-});
-
-
-///seviye son
-
-
-// spam engel
-
-const dctrat = require('dctr-antispam.js'); 
-
-var authors = [];
-var warned = [];
-
-var messageLog = [];
-
-client.on('message', async message => {
-const spam = await db.fetch(`spam.${message.guild.id}`);
-if(!spam) return;
-const maxTime = await db.fetch(`max.${message.guild.id}.${message.author.id}`);
-const timeout = await db.fetch(`time.${message.guild.id}.${message.author.id}`);
-db.add(`mesaj.${message.guild.id}.${message.author.id}`, 1)
-if(timeout) {
-const sayı = await db.fetch(`mesaj.${message.guild.id}.${message.author.id}`);
-if(Date.now() < maxTime) {
-  const Strom = new Strom.MessageEmbed()
-  .setColor(0x36393F)
-  .setDescription(` <@${message.author.id}> ,  **HOPP BİLADER? spam yapmak yasak bidaha olmasın. :))**`)
- // .setFooter(`Bu mesaj otomatik olarak silinecektir.`)
- if (message.member.hasPermission("BAN_MEMBERS")) return ;
- message.channel.send(Strom).then(msg => msg.delete({timeout: 1500}));
-  return message.delete();
-  
-}
-} else {
-db.set(`time.${message.guild.id}.${message.author.id}`, 'ok');
-db.set(`max.${message.guild.id}.${message.author.id}`, Date.now()+3000);
-setTimeout(() => {
-db.delete(`mesaj.${message.guild.id}.${message.author.id}`);
-db.delete(`time.${message.guild.id}.${message.author.id}`);
-}, 500) // default : 500
-}
-
-
-});
-
-
-
-
-
-
-
-//----------------------------------------------------- TAG ROL ------------------------------------------------\\
-
-// tag rol kodu bana ait değildir, geliştirip sizlere sundum.
-client.on("userUpdate", async function(oldUser, newUser) { 
-    const guildID = "796388765257695273"// sunucu ıd
-    const roleID = "818220083921944578"// taglı rolünüzün ıd
-    const tag = "✧"// tagınız
-    const chat = '855224732291170364'// chat kanalı ıd
-    const taglog = '855224732291170364' // log kanalı ıd
-  
-    const guild = client.guilds.cache.get(guildID)
-    const role = guild.roles.cache.find(roleInfo => roleInfo.id === roleID)
-    const member = guild.members.cache.get(newUser.id)
-    const embed = new Strom.MessageEmbed().setAuthor(member.displayName, member.user.avatarURL({ dynamic: true })).setColor('#ff0010').setTimestamp().setFooter('Strom was here!');
-    if (newUser.username !== oldUser.username) {
-        if (oldUser.username.includes(tag) && !newUser.username.includes(tag)) {
-            member.roles.remove(roleID)
-            client.channels.cache.get(taglog).send(embed.setDescription(`${newUser} Kullanıcısı tagımızı çıkardığı için taglı rolü alındı!`))
-        } else if (!oldUser.username.includes(tag) && newUser.username.includes(tag)) {
-            member.roles.add(roleID)
-            client.channels.cache.get(chat).send(`**Mükemmel! ${newUser} Tagımızı alarak ailemize katıldı! ||@here||**`)
-            client.channels.cache.get(taglog).send(embed.setDescription(`${newUser} Kullanıcısı tagımızı aldığı için taglı rolü verildi!`))
-        }
-    }
-   if (newUser.discriminator !== oldUser.discriminator) {
-        if (oldUser.discriminator == "" && newUser.discriminator !== "") {
-            member.roles.remove(roleID)
-            client.channels.cache.get(taglog).send(embed.setDescription(`${newUser} Kullanıcısı etiket tagımızı çıkardığı için taglı rolü alındı!`))
-        } else if (oldUser.discriminator !== "" && newUser.discriminator == "") {
-            member.roles.add(roleID)-
-            client.channels.cache.get(taglog).send(embed.setDescription(`${newUser} Kullanıcısı etiket tagımızı aldığı için taglı rolü verildi!`))
-            client.channels.cache.get(chat).send(`**Mükemmel! ${newUser} Etiket tagımızı alarak ailemize katıldı!**`)
-        }
-    }
-  
-  })
-
-//----------------------------------------------------- TAG ROL ------------------------------------------------\\
-
-
-
-
-
-
-
-client.on("message", message => {
-    if (message.channel.type === "dm") {
-        if (message.author.bot) return;
-        const dmlog = new Strom.MessageEmbed()
-         .setTitle(`${client.user.username}'a Özelden Mesaj Gönderildi!`)
-         .setColor('RANDOM')
-         .addField('Mesajı Gönderen',` \`\`\` ${message.author.tag} \`\`\` `)
-         .addField('Mesajı Gönderenin ID', ` \`\`\`${message.author.id}\`\`\` `)
-         .addField(`Gönderilen Mesaj`, message.content)
-         .setThumbnail(message.author.avatarURL()) 
-    client.channels.cache.get("855390850996240385").send(dmlog);
-    }
-});
 
 
 
@@ -1677,3 +1396,75 @@ client.channels.cache.get(modlog).send(embed)
 
 })
 // mod log son ///
+
+
+//panel son//OtoRol Baş
+
+client.on("guildMemberAdd", async member => {
+  let kanal = await db.fetch(`otoRK_${member.guild.id}`);
+  let rol = await db.fetch(`otoRL_${member.guild.id}`);
+  let mesaj = db.fetch(`otoRM_${member.guild.id}`);
+  if (!rol) return;
+
+  if (!mesaj) {
+    client.channels.cache
+      .get(kanal)
+      .send(
+        ":loudspeaker: :inbox_tray: Otomatik Rol Verildi Seninle Beraber `" +
+          member.guild.memberCount +
+          "` Kişiyiz! Hoşgeldin! `" +
+          member.user.username +
+          "`"
+      );
+    return member.roles.add(rol);
+  }
+
+  if (mesaj) {
+    var mesajs = mesaj
+      .replace("-uye-", `${member.user}`)
+      .replace("-uyetag-", `${member.user.tag}`)
+      .replace("-rol-", `${member.guild.roles.cache.get(rol).name}`)
+      .replace("-server-", `${member.guild.name}`)
+      .replace("-uyesayisi-", `${member.guild.memberCount}`)
+      .replace(
+        "-botsayisi-",
+        `${member.guild.members.cache.filter(m => m.user.bot).size}`
+      )
+      .replace("-bolge-", `${member.guild.region}`)
+      .replace("-kanalsayisi-", `${member.guild.channels.size}`);
+    member.roles.add(rol);
+    return client.channels.cache.get(kanal).send(mesajs);
+  }
+});
+
+//OtORol Son
+
+//// DM Mesaj
+client.on("message", message => {
+    if (message.channel.type === "dm") {
+        if (message.author.bot) return;
+        const dmlog = new Strom.MessageEmbed()
+         .setTitle(`${client.user.username}'a Özelden Mesaj Gönderildi!`)
+         .setColor('RANDOM')
+         .addField('Mesajı Gönderen',` \`\`\` ${message.author.tag} \`\`\` `)
+         .addField('Mesajı Gönderenin ID', ` \`\`\`${message.author.id}\`\`\` `)
+         .addField(`Gönderilen Mesaj`, message.content)
+         .setThumbnail(message.author.avatarURL()) 
+    client.channels.cache.get("868498890356293682").send(dmlog);
+    }
+});
+//// DM Mesaj son
+
+//// çekiliş
+const { GiveawaysManager } = require('discord-giveaways');
+client.giveawaysManager = new GiveawaysManager(client, {
+    storage: "./db.json",
+    updateCountdownEvery: 3000,
+    default: {
+        botsCanWin: false,
+        embedColor: "#FF0000",
+        reaction: "🎉"
+    }
+});
+
+//// çekiliş son

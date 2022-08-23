@@ -1,37 +1,40 @@
 const Discord = require('discord.js');
 const db = require('quick.db');
-const botlist  = require('../botlist.json')
-exports.run = async(client, message, args) => {
-  
-	if(!message.member.roles.cache.has(botlist.yetkili)) return message.channel.send("Yeterli yetkin Yok.")
-  if(message.channel.id !== botlist.kanalyetkili) return message.channel.send(` <#${botlist.kanalyetkili}> sadece bu kanalda kullanabılır.`)
 
-let botid = args[0]
-let sahip = args[1]
-let sebep = args.slice(2).join(' ')
-if(!botid) return message.channel.send("Bir Bot İd Gir.").then(a => a.delete(20000))
-if(!sahip) return message.channel.send("Sahip İd Giriniz.").then(a => a.delete(20000))
-  if(!sebep) return message.channel.send("Sebep Giriniz.").then(a => a.delete(20000))
-message.delete()
-  
-message.channel.send("✅ **|** Başarıyla Botu Reddetınız.")
-  
- message.guild.members.cache.get(sahip).send(`❌ **|** <@${botid}> Adlı Bot  Reddildi.`)
-  
-  let embed = new Discord.MessageEmbed()
-  .setColor("RANDOM")
-.setDescription(`❌  **|**  <@${botid}> Adlı Bot  **${sebep}** Nedeniyle Reddedildi.`)
-client.channels.cache.get(botlist.log).send(embed)
-  
+exports.run = function(client, message, args) {
 
-}
+  let yetkili = db.fetch(`byetkili_${message.guild.id}`)
+if (!message.member.roles.cache.has(yetkili)) return message.channel.send('Bu Komutu Kullanamazsın')    
+  let botisim = args[0]
+  let sahip = args[1]
+  let sebep = args.slice(2).join(" ");
+  let basvuru = db.fetch(`basvuruk_${message.guild.id}`)
+    let kanal = db.fetch(`bot-ekle_${message.guild.id}`)
+  let log =   db.fetch(`bot-log_${message.guild.id}`)
+    if(!log) return message.channel.send("Bu komudu kullanmak için botlist kanallarının sunucuda ayarlı olması gerekiyor.")
+  if(!basvuru) return message.channel.send("Bu komudu kullanmak için botlist kanallarının sunucuda ayarlı olması gerekiyor.")
+  if(!kanal) return message.channel.send("Bu komudu kullanmak için botlist kanallarının sunucuda ayarlı olması gerekiyor.")
+  const red = new Discord.MessageEmbed()
+  .setColor("RED")
+  .setDescription(`<@${sahip}> adlı kişini <@${botisim}> adlı botu reddedildi.\nSebep : ${sebep}\nReddeden yetkili : ${message.author}`)
+    
+    if (!botisim) return message.channel.send(`:no_entry: Botun ID'sini yazmalısın.`).then(msg => msg.delete(10000))
+  if (!sebep) return message.channel.send(`:no_entry: Botu neden onaylamadığını yazmalısın.`).then(msg => msg.delete(10000))
+    if (!sahip) return message.channel.send(`:no_entry: Bot Sahibi ID yazman lazım.`).then(msg => msg.delete(10000))
+  message.delete()
+        client.channels.cache.get(log).send(red);
+        message.channel.send(`Botu reddettiniz.`).then(msg => msg.delete(10000))
+};
+
 exports.conf = {
-	enabled: true,
-	guildOnly: false,
-	aliases:[],
-	permlevel: 0
+  enabled: true,
+  guildOnly: false,
+  aliases: ['bot-reddet', 'reddet'],
+  permLevel: 3
 };
 
 exports.help = {
-	name: "reddet"
-}
+  name: 'botreddet', 
+  description: "Sunucuya eklenen botu reddeder.",
+  usage: 'botreddet <bot ismi> - <sebep>'
+};
