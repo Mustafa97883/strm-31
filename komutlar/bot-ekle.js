@@ -31,6 +31,7 @@ dbl.hasVoted(message.author.id).then(voted => {
   .setDescription(`[Ekle](https://discordapp.com/oauth2/authorize?client_id=${botid}&scope=bot&permissions=0)`, true)
   .setTitle("Bot Ekletme")
   .addField("Bot Sahibi", message.author.tag)
+  .addField("Bot Sahibi", message.author.id)
   .addField("Bot ID", botid)
   .addField("Bot Prefix", prefix)
   .addField("Bot Onaylımı?", onaylımı)
