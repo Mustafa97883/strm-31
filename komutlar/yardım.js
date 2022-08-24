@@ -49,6 +49,11 @@ exports.run = async (client, message) => {
       `🎲 \`${prefix}eğlence\``,
       true
     )
+  .addField(
+      `__nsfw +18 Komutlar__`,
+      `🍑 \`${prefix}nsfw\``,
+      true
+    )
     .addField(
       `__Bilgilendirme__`,
           `🔱  \`${prefix}davet\` | Botu Sununuya Davet Edersiniz\n 🔱 \`${prefix}botbilgi\` | Botun İstatistiklerini Görürsünüz \n 🔱 \`${prefix}iletişim\` | Strom  İletişim Bilgileri. \n 🔱 \`${prefix}çağır\` | Sunucunuza yetkili birini çağırır.**Troll amaçlı kullananlar karalisteye alınacak!**` 

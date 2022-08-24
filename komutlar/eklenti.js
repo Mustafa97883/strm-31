@@ -42,7 +42,7 @@ exports.run = async (client, message) => {
     )
   .addField(
       `__kayıt__`,
-      `♻️ \`${prefix}kayıt-sistem [Oyun]\` Ayarlanabilir Kayıt sistem`,
+      `♻️ \`${prefix}kayıt-sistem\` Ayarlanabilir Kayıt sistem`,
       true
     )
     .addField(

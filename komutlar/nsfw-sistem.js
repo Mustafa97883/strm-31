@@ -75,7 +75,7 @@ exports.run = async (client, message) => {
 exports.conf = {
   enabled: true,
   guildOnly: false,
-  aliases: ["nsfw-sisetm"],
+  aliases: ["nsfw-sistem"],
   permLevel: 0
 };
 
