@@ -9,6 +9,6 @@ module.exports = async client => {
 
     client.user.setActivity(oyun[random], { type: "WATCHING" });
   }, 10000);
-  client.user.setStatus("dnd");
+  client.user.setStatus("online");
 
 }
