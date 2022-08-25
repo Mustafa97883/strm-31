@@ -1462,4 +1462,82 @@ client.giveawaysManager = new GiveawaysManager(client, {
     }
 });
 
-//// çekiliş son
+//// çekiliş son//Güvenlik Baş
+
+client.on("guildMemberAdd", member => {
+  let kanal = db.fetch(`güvenlik.${member.guild.id}`);
+  if (!kanal) return;
+
+  let aylar = {
+    "01": "Ocak",
+    "02": "Şubat",
+    "03": "Mart",
+    "04": "Nisan",
+    "05": "Mayıs",
+    "06": "Haziran",
+    "07": "Temmuz",
+    "08": "Ağustos",
+    "09": "Eylül",
+    "10": "Ekim",
+    "11": "Kasım",
+    "12": "Aralık"
+  };
+
+  let bitiş = member.user.createdAt;
+  let günü = moment(new Date(bitiş).toISOString()).format("DD");
+  let ayı = moment(new Date(bitiş).toISOString())
+    .format("MM")
+    .replace("01", "Ocak")
+    .replace("02", "Şubat")
+    .replace("03", "Mart")
+    .replace("04", "Nisan")
+    .replace("05", "Mayıs")
+    .replace("06", "Haziran")
+    .replace("07", "Temmuz")
+    .replace("08", "Ağustos")
+    .replace("09", "Eylül")
+    .replace("10", "Ekim")
+    .replace("11", "Kasım")
+    .replace("12", "Aralık")
+    .replace("13", "CodAre");
+  let yılı = moment(new Date(bitiş).toISOString()).format("YYYY");
+  let saati = moment(new Date(bitiş).toISOString()).format("HH:mm");
+
+  let günay = `${günü} ${ayı} ${yılı} ${saati}`;
+
+  let süre = member.user.createdAt;
+  let gün = moment(new Date(süre).toISOString()).format("DD");
+  let hafta = moment(new Date(süre).toISOString()).format("WW");
+  let ay = moment(new Date(süre).toISOString()).format("MM");
+  let ayy = moment(new Date(süre).toISOString()).format("MM");
+  let yıl = moment(new Date(süre).toISOString()).format("YYYY");
+  let yıl2 = moment(new Date().toISOString()).format("YYYY");
+
+  let netyıl = yıl2 - yıl;
+
+  let created = ` ${netyıl} yıl  ${ay} ay ${hafta} hafta ${gün} gün önce`;
+
+  let kontrol;
+  if (süre < 1296000000)
+    kontrol = "`Bu hesap şüpheli!` 🚨";
+  if (süre > 1296000000)
+    kontrol = "`Bu hesap güvenli!` ✔️";
+
+  let codare = new Strom.MessageEmbed()
+    .setColor("RANDOM")
+    .setTitle(`${member.user.username} Katıldı`)
+    .setDescription(
+      "<@" +
+        member.id +
+        "> Bilgileri ➡️ \n\n  __Hesap Oluşturulma Tarihi__  ➡️ \n\n**[" +
+        created +
+        "]** (`" +
+        günay +
+        "`) \n\n __Hesap durumu__  ➡️ \n\n**" +
+        kontrol +
+        "**"
+    );
+  client.channels.cache.get(kanal).send(codare);
+});
+
+//Güvenlik Son

@@ -54,6 +54,16 @@ exports.run = async (client, message) => {
       `⚙️ \`${prefix}antiraid\` Discord Sunucunuza bot eklerken izin ister.`,
       true
     )
+   .addField(
+      `__everyonehere koruma__`,
+      `⚙️ \`${prefix}everhereengel\` yetkisi olmayan kişiler everyone ve here atamaz.`,
+      true
+    )
+  .addField(
+      `__isim reklam koruma__`,
+      `⚙️ \`${prefix}isim-reklam-koruma\` Kullanıcının isminde reklam varsa yasaklar.`,
+      true
+    )
     .addField(
       `__Sohbet aç__`,
       `⚙️ \`${prefix}sohbet-aç\` Komutu Kullandıgınız Kanalda Sohbeti Açar.`,
@@ -77,6 +87,21 @@ exports.run = async (client, message) => {
     .addField(
       `__Güvenlik Sıfırla__`,
       `⚙️ \`${prefix}güvenlik-sıfırla\` Güvenlik Kanalını Sıfırlarsın.`,
+      true
+    )
+   .addField(
+      `__ping__`,
+      `⚙️ \`${prefix}ping\` Botun geçikme süresine bakarsınız.`,
+      true
+    )
+  .addField(
+      `__ping__`,
+      `⚙️ \`${prefix}ping\` Botun geçikme süresine bakarsınız.`,
+      true
+    )
+  .addField(
+      `__ban sistem__`,
+      `⚙️ \`${prefix}ban-sistem\` Ban sistemi ayarlarsınız.`,
       true
     )
     .addField(
