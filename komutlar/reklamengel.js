@@ -1,40 +1,61 @@
-const Discord = require('discord.js')
-const db = require('quick.db')
-
-exports.run = async (client ,message, args) =>{
+exports.run = (client, message) => {
   const DBL = require('dblapi.js')
 const dbl = new DBL('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc1Njg4MzMwOTI3MDY2MzIyOSIsImJvdCI6dHJ1ZSwiaWF0IjoxNjYwNzM0NTkyfQ.Tci7n9zVPbCAfU70t8CccDiH7lg7pGrvYHnIvRk9f1s', client)
 dbl.hasVoted(message.author.id).then(voted => {
       if(voted) {
-  
-  if (!message.member.permissions.has("MANAGE_GUILD")) return message.channel.send(`❌ Bu Komutu Kullana Bilmek İçin \`Mesajları Yönet\` Yetkisine Sahip Olmalısın!`)
-if(args[0] === 'aç') {
-    db.set(`${message.guild.id}.reklam`, true)
-    message.channel.send(`Reklam Engel Başarılı Bir Şekilde Akif Edildi.`)
-  return
-}
-if (args[0] === 'kapat') {
-  db.delete(`${message.guild.id}.reklam`)
-message.channel.send(`Reklam Engel Başarılı Bir Şekilde Kapatıldı.`)
-return
-}
-  message.channel.send('Lütfen aç veya kapat yazın. **Örnek Kullanım:** reklam-engel aç/kapat')
-} else {
+  let db = require("quick.db");
+  let Discord = require("discord.js");
+
+  let reklam = db.fetch(`reklam.${message.guild.id}.durum`);
+  const member3 = new Discord.MessageEmbed()
+    .setColor(0x36393f)
+    .setDescription(` **HATA**  - Bu sunucuda yetkili değilsin.`);
+  if (!message.member.permissions.has("MANAGE_MESSAGES"))
+    return message.channel.send(member3);
+  if (reklam) {
+    db.delete(`reklam.${message.guild.id}`);
+    message.channel
+      .send(
+        new Discord.MessageEmbed()
+          .setColor("#00ff00")
+          .setDescription(
+            `**Başarılı Bir Şekilde Reklam Engel Koruması Kapandı.**`
+          )
+      )
+      .then(l => {
+        l.delete({ timeout: 5000 });
+      });
+  } else {
+    db.set(`reklam.${message.guild.id}.durum`, true);
+    message.channel
+      .send(
+        new Discord.MessageEmbed()
+          .setColor("#00ff00")
+          .setDescription(
+            ` **Başarılı Bir Şekilde Reklam Engel Koruması Açıldı.**`
+          )
+      )
+      .then(l => {
+        l.delete({ timeout: 5000 });
+      });
+  }
+};else {
         message.channel.send(` Bu Komutu Sadece 12 Saatte Bir Oyvererek Kullanabilirsiniz Oyvermek İçin (https://top.gg/bot/756883309270663229/vote) linke Tıklayarak Oyverebilirsiniz. Oy Verdiyseniz 5 Dakka Bekleyiniz`) 
-              .then(Strom => Strom.delete({ timeout: 10000 }));
+          .then(Strom => Strom.delete({ timeout: 10000 }));    
 }
         })
       
       },
+
 exports.conf = {
- enabled: true,
- guildOnly: false,
- aliases: ['reklamengel'], 
- permLevel: 0
+  enabled: true,
+  guildOnly: false,
+  aliases: ["reklam-engel"],
+  permLevel: 0
 };
 
 exports.help = {
- name: 'reklam-engel',
- description: 'reklamı engeller.',
- usage: 'reklamengel'
+  name: "reklamengel",
+  description: "asreaper",
+  usage: "asreaper"
 };
