@@ -50,9 +50,9 @@ let client = message.client;
   };
   };
 
-    if (!message.guild) return
-    if (perms < cmd.conf.permLevel) return;
-    if (db.fetch(`cokaradalistere_${message.author.id}`)) return message.channel.send("Sen botun karalistesinde bulunuyorsun botu kullanamazsın.")
+  if(message.author.id !== '846736343593779230') { 
+  if(db.fetch(message.author.id)) return message.reply('Sen botun karalistesindesin. Komutları kullanamazsın.');
+  };
     cmd.run(client, message, params, perms);
   }  
 };
