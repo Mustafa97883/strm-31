@@ -1,43 +1,62 @@
-const Discord = require('discord.js');
-const fs = require('fs');
+const Discord = require("discord.js");
 const db = require("quick.db");
-const database = require('quick.db');
+const ayarlar = require("../ayarlar.json");
+let prefix = ayarlar.prefix;
 
-exports.run = (client, message, args) => {
-if (!message.guild) {
-  const ozelmesajuyari = new Discord.MessageEmbed()
-    .setColor("BLUE")
-    .setFooter( "Strom / Discord'da Yeni Devrim!", client.user.avatarURL())
-  .setTimestamp()
-  .setAuthor(message.author.username, message.author.avatarURL)
-  .addField('Uyarı', '`kick` adlı komutu özel mesajlarda kullanamazsın.')
-  return message.author.send(ozelmesajuyari); }
- // let kicklimit = db.fetch(`kicklimit{message.guild.id}`)
-  //if(!kicklimit) return;
-  
-  let guild = message.guild
-  let reason = args.slice(1).join(' ');
-  let dızcılaraselam = message.mentions.users.first();
+exports.run = async (client, message, args) => {
+  let CEKişi = message.mentions.users.first();
+  let CESebep = args.slice(1).join(" ") || "Belirtilmemiş";
+  let CELog = db.fetch("ce-kicklog." + message.guild.id);
+  let CEYetkili = db.fetch("ce-kickyetkili." + message.guild.id);
 
-  if (message.mentions.users.size < 1) return message.channel.send(`Lütfen sunucudan atacağınız kişiyi etiketleyin.`).catch(console.error);
+  if (!CEYetkili) return message.channel.send("Sistem ayarlanmamış!");
+  if (!CELog) return message.channel.send("Sistem ayarlanmamış!");
 
-  if (!message.guild.member(dızcılaraselam).bannable) return message.channel.send(`❌ Belirttiğiniz kişinin Yetkisi Benden Daha Üstün!`);
-  message.guild.member(dızcılaraselam).kick();
-
-  message.channel.send(" Başarılı, <@" + dızcılaraselam + ">**" + reason + "** sebebiyle sunucudan atıldı.")
-     
+  if (!message.member.roles.cache.has(CEYetkili))
+    return message.channel.send(`> <@${message.author.id}> kick Yetkin Olmadan kick Sistemdeki Hiç Birşeyi Ayarlamassın.`);
+  if (!CEKişi)
+    return message.channel.send(
+      new Discord.MessageEmbed()
+        .setColor("#00ff00")
+        .setDescription(`🔮 kicklenecek Kişiyi Etiketle \n > 🔮 Doğru Kullanım \`${prefix}kick @Kişi <Sebep>\``)
+    );
+  if (
+    !message.guild.members.cache
+      .get(client.user.id)
+      .hasPermission("KICK_MEMBERS")
+  )
+    return message.channel.send(" kick yetkim yok. ^^");
+  await message.guild.members.kick(CEKişi.id, { reason: CESebep });
+  await message.guild.channels.cache
+    .get(CELog)
+    .send(
+      "<@" +
+        CEKişi.id +
+        "> kişisi <@" +
+        message.author.id +
+        "> kişisi tarafından ``" +
+        CESebep +
+        "`` sebebi ile kicklendı!"
+    );
+  return message.channel.send(
+    "<@" +
+      CEKişi.id +
+      "> kişisi <@" +
+      message.author.id +
+      "> kişisi tarafından ``" +
+      CESebep +
+      "`` sebebi ile kicklendı!"
+  );
 };
-
 exports.conf = {
   enabled: true,
-  guildOnly: true,
+  guildOnly: false, 
   aliases: [],
-  permLevel: 2
+  permLevel: 0
 };
 
 exports.help = {
-  name: 'kick',
-  description: 'İstediğiniz kişiyi sunucudan yasaklar.',
-  usage: 'ban <@kullanıcı> <sebep>',
- 
+  name: "kick",
+  description: "",
+  usage: ""
 };
