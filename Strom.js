@@ -589,53 +589,95 @@ client.on("message", async message => {
 
 //AFK Son
 
+//Reklam Engel Baş
 
-///reklam engel
+const reklam = [
+  ".com",
+  ".net",
+  ".xyz",
+  ".tk",
+  ".pw",
+  ".io",
+  ".me",
+  ".gg",
+  "www.",
+  "https",
+  "http",
+  ".gl",
+  ".org",
+  ".com.tr",
+  ".biz",
+  "net",
+  ".rf",
+  ".gd",
+  ".az",
+  ".party",
+  ".gf",
+  ".31"
+];
+client.on("messageUpdate", async (old, nev) => {
+  if (old.content != nev.content) {
+    let i = await db.fetch(`reklam.${nev.member.guild.id}.durum`);
+    let y = await db.fetch(`reklam.${nev.member.guild.id}.kanal`);
+    if (i) {
+      if (reklam.some(word => nev.content.includes(word))) {
+        if (nev.member.hasPermission("BAN_MEMBERS")) return;
+        //if (ayarlar.gelistiriciler.includes(nev.author.id)) return ;
+        const embed = new Strom.MessageEmbed()
+          .setColor("#00ff00")
+          .setDescription(
+            ` ${nev.author} , **Mesajını editleyerek reklam yapmaya çalıştı!**`
+          )
+          .addField("Mesajı:", nev);
 
-client.on("message", msg => {
-  const veri = db.fetch(`${msg.guild.id}.reklam`);
-  if (veri) {
-    const reklam = [
-      ".com",
-      ".net",
-      ".xyz",
-      ".tk",
-      ".pw",
-      ".io",
-      ".me",
-      ".gg",
-      "www.",
-      "https",
-      "http",
-      ".gl",
-      ".org",
-      ".com.tr",
-      ".biz",
-      "net",
-      ".rf.gd",
-      ".az",
-      ".party",
-      ".tv",
-      "discord.gg",
-      "youtube.com"
-    ];
-    if (reklam.some(word => msg.content.includes(word))) {
+        nev.delete();
+        const embeds = new Strom.MessageEmbed()
+          .setColor("#00ff00")
+          .setDescription(
+            ` ${nev.author} , **Mesajı editleyerek reklam yapamana izin veremem!**`
+          );
+        client.channels.cache.get(y).send(embed);
+        nev.channel.send(embeds).then(msg => msg.delete({ timeout: 5000 }));
+      }
+    } else {
+    }
+    if (!i) return;
+  }
+});
+
+client.on("message", async msg => {
+  if (msg.author.bot) return;
+  if (msg.channel.type === "dm") return;
+  let y = await db.fetch(`reklam.${msg.member.guild.id}.kanal`);
+
+  let i = await db.fetch(`reklam.${msg.member.guild.id}.durum`);
+  if (i) {
+    if (reklam.some(word => msg.content.toLowerCase().includes(word))) {
       try {
-        if (!msg.member.permissions.has("BAN_MEMBERS")) {
-          msg.delete();
-          return msg
-            .reply("**HOPP BİLADER? Reklam yasak bidaha olmasın :))**.")
-            .then(wiskyx => wiskyx.delete({ timeout: 5000 }));
+        if (!msg.member.hasPermission("MANAGE_GUILD")) {
+          //  if (!ayarlar.gelistiriciler.includes(msg.author.id)) return ;
+          msg.delete({ timeout: 750 });
+          const embeds = new Strom.MessageEmbed()
+            .setColor("#00ff00")
+            .setDescription(
+              ` <@${msg.author.id}> , **Bu sunucuda reklam yapmak yasak!**`
+            );
+          msg.channel.send(embeds).then(msg => msg.delete({ timeout: 5000 }));
+          const embed = new Strom.MessageEmbed()
+            .setColor("#00ff00")
+            .setDescription(` ${msg.author} , **Reklam yapmaya çalıştı!**`)
+            .addField("Mesajı:", msg);
+          client.channels.cache.get(y).send(embed);
         }
       } catch (err) {
         console.log(err);
       }
     }
   }
-  if (!veri) return;
+  if (!i) return;
 });
 
-//REKLAM ENGEL
+//Reklam Engel Son
 
 ///son
 
