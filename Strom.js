@@ -561,7 +561,7 @@ client.on("message", async message => {
 
     const embed = new Strom.MessageEmbed()
 
-      .setColor("#00ff00")
+      .setColor("RANDOM")
       .setAuthor(message.author.username, message.author.avatarURL)
       .setDescription(`${message.author.username} Artık \`AFK\` Değilsin.`);
 
@@ -578,7 +578,7 @@ client.on("message", async message => {
 
     const afk = new Strom.MessageEmbed()
 
-      .setColor("#00ff00")
+      .setColor("RANDOM")
       .setDescription(
         `**Bu Kullanıcı AFK**\n\n**Afk Olan Kullanıcı :** \`${USER.tag}\`\n**Afk Süresi :** \`${timeObj.hours}saat\` \`${timeObj.minutes}dakika\` \`${timeObj.seconds}saniye\`\n**Sebep :** \`${REASON}\``
       );
