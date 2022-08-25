@@ -588,7 +588,6 @@ client.on("message", async message => {
 });
 
 //AFK Son
-
 //Reklam Engel Baş
 
 const reklam = [
