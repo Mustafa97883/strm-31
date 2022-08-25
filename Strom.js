@@ -238,64 +238,63 @@ client.on("emojiDelete", async (emoji, message, channels) => {
 
 //kanalkorumason//
 
-//küfürengel//
+//KüfürEngel Baş
 
 const küfür = [
-        "siktir",
-        "fuck",
-        "puşt",
-        "pust",
-        "piç",
-        "sikerim",
-        "sik",
-        "yarra",
-        "yarrak",
-        "amcık",
-        "orospu",
-        "orosbu",
-        "orosbucocu",
-        "oç",
-        ".oc",
-        "ibne",
-        "yavşak",
-        "bitch",
-        "dalyarak",
-        "amk",
-        "awk",
-        "taşak",
-        "taşşak",
-        "daşşak",
-		"sikm",
-		"sikim",
-		"sikmm",
-		"skim",
-		"skm",
-		"sg",
-   "Amk", "mk", "amk", "aq", "orospu", "oruspu", "oç", "sikerim", "yarrak", "piç", "amq", "sik", "amcık", "çocu", "sex", "seks", "amına", "orospu çocuğu", "sg", "siktir git","A M K","A m K","a M K","a m k","porno","p o r n o","ororspu çocugu","orusbu","orusbu çocuğu","orosbu cocu","orospu cocu","orosbuçoocu","anancı","anneni sikeyim","ananı sikeyim","annen piç","anai sikeyim","ananı sikeyim","ananı skm","anneni skm","anneni sikm","siqerim","siqerim seni","siqim","siqim seni","skEİRM","yarak","ospu","ospu çocuğu","ospu çocu","sikik","oç","orospu","orospu çocuğu","öröspü çöcüğü","Oç","oÇ","OÇ","sikerim","kafasız","porno","pörnö","pornocu","31","31.","otuzbir","otuz bir",
-"31 çeken","am","amcık","am çorbası","amcık çorbası","tam sikmelik","sikiş","sikmek","sik çorbası","sik suyu","am suyu","amcık suyu","yarrak","amcık hoşafı","AMCIK HOŞAFI","Amcık Hoşafı",
-"yarrak kafalı","soğan sikli","siki başı sik","yarrağı kara","kara sikli","kara yarraklı","tam oç","tam öç","tem oç","tem öç","öç","yarrak kokusu",
-"sik kokusu","ananı sikim","ananı sikiyim","anneni sikim","anneni sikiyim","ablanı sikim","ablanı sikiyim","gacını sikiyim","karını sikiyim",
-"babanı sikiyim","aileni sikime oturturayım","muz istermisin","yarrağım","sikim","sik","taşşak","taşak","yarak","yalak","kafasını siktiğim",
-"kafası sikik","amk","sik","Sik","Sİk","SİK","Oruspu","Oruspu çocukları","Oruspi","Oruspu","amini","amina","selAM","SelAM","salAM"
- ,     ];
+  "siktir",
+  "fuck",
+  "puşt",
+  "pust",
+  "piç",
+  "sikerim",
+  "sik",
+  "yarra",
+  "yarrak",
+  "amcık",
+  "orospu",
+  "orosbu",
+  "orosbucocu",
+  "oç",
+  ".oc",
+  "ibne",
+  "yavşak",
+  "bitch",
+  "dalyarak",
+  "amk",
+  "awk",
+  "taşak",
+  "taşşak",
+  "daşşak",
+  "sikm",
+  "sikim",
+  "sikmm",
+  "skim",
+  "skm",
+  "sg"
+];
 client.on("messageUpdate", async (old, nev) => {
-  
-    if (old.content != nev.content) {
+  if (old.content != nev.content) {
     let i = await db.fetch(`küfür.${nev.member.guild.id}.durum`);
     let y = await db.fetch(`küfür.${nev.member.guild.id}.kanal`);
-   if (i) {
-      
+    if (i) {
       if (küfür.some(word => nev.content.includes(word))) {
-      if (nev.member.hasPermission("BAN_MEMBERS")) return ;
-       //if (ayarlar.gelistiriciler.includes(nev.author.id)) return ;
- const embed = new Strom.MessageEmbed() .setColor(0x36393F) .setDescription(` ${nev.author} , **Mesajını editleyerek küfür etmeye çalıştı!**`)
-            .addField("Mesajı:",nev)
-        
-            nev.delete();
-            const embeds = new Strom.MessageEmbed() .setColor(0x36393F) .setDescription(` ${nev.author} , **Mesajı editleyerek küfür etmene izin veremem!**`) 
-          client.channels.cache.get(y).send(embed)
-            nev.channel.send(embeds).then(msg => msg.delete({timeout:5000}));
-          
+        if (nev.member.hasPermission("BAN_MEMBERS")) return;
+        //if (ayarlar.gelistiriciler.includes(nev.author.id)) return ;
+        const embed = new Strom.MessageEmbed()
+          .setColor("#00ff00")
+          .setDescription(
+            ` ${nev.author} , **Mesajını editleyerek küfür etmeye çalıştı!**`
+          )
+          .addField("Mesajı:", nev);
+
+        nev.delete();
+        const embeds = new Strom.MessageEmbed()
+          .setColor("#00ff00")
+          .setDescription(
+            ` ${nev.author} , **Mesajı editleyerek küfür etmene izin veremem!**`
+          );
+        client.channels.cache.get(y).send(embed);
+        nev.channel.send(embeds).then(msg => msg.delete({ timeout: 5000 }));
       }
     } else {
     }
@@ -304,33 +303,38 @@ client.on("messageUpdate", async (old, nev) => {
 });
 
 client.on("message", async msg => {
+  if (msg.author.bot) return;
+  if (msg.channel.type === "dm") return;
+  let y = await db.fetch(`küfür.${msg.member.guild.id}.kanal`);
 
-     
-    if(msg.author.bot) return;
-    if(msg.channel.type === "dm") return;
-         let y = await db.fetch(`küfür.${msg.member.guild.id}.kanal`);
-   
-    let i = await db.fetch(`küfür.${msg.member.guild.id}.durum`);
-          if (i) {
-              if (küfür.some(word => msg.content.toLowerCase().includes(word))) {
-                try {
-                 if (!msg.member.hasPermission("MANAGE_GUILD")) {
-                 //  if (!ayarlar.gelistiriciler.includes(msg.author.id)) return ;
-     msg.delete({timeout:750});
-                    const embeds = new Strom.MessageEmbed() .setColor(0x36393F) .setDescription(` <@${msg.author.id}> , **Bu sunucuda küfür yasak!**`)
-      msg.channel.send(embeds).then(msg => msg.delete({timeout: 5000}));
-                const embed = new Strom.MessageEmbed() .setColor(0x36393F) .setDescription(` ${msg.author} , **Küfür etmeye çalıştı!**`) .addField("Mesajı:",msg)
-               client.channels.cache.get(y).send(embed)
-                  }              
-                } catch(err) {
-                  console.log(err);
-                }
-              }
-          }
-         if(!i) return ;
+  let i = await db.fetch(`küfür.${msg.member.guild.id}.durum`);
+  if (i) {
+    if (küfür.some(word => msg.content.toLowerCase().includes(word))) {
+      try {
+        if (!msg.member.hasPermission("MANAGE_GUILD")) {
+          //  if (!ayarlar.gelistiriciler.includes(msg.author.id)) return ;
+          msg.delete({ timeout: 750 });
+          const embeds = new Strom.MessageEmbed()
+            .setColor("#00ff00")
+            .setDescription(
+              ` <@${msg.author.id}> , **Bu sunucuda küfür yasak!**`
+            );
+          msg.channel.send(embeds).then(msg => msg.delete({ timeout: 5000 }));
+          const embed = new Strom.MessageEmbed()
+            .setColor("#00ff00")
+            .setDescription(` ${msg.author} , **Küfür etmeye çalıştı!**`)
+            .addField("Mesajı:", msg);
+          client.channels.cache.get(y).send(embed);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }
+  if (!i) return;
 });
 
-//küfür engel son //
+//KüfürEngel Son
 
 ////Bot istatistiklerini atar
 
@@ -1051,25 +1055,6 @@ if(data && data === role.id) require('quick.db').delete(`strom-mute-role.${role.
 
 
 ///mute son
-
-
-
-///bot yönetici yetkisi alma
-
-client.on('guildMemberAdd', async member => {// chimp ᵈ♡#0110
-if(member.user.bot) {
-  
-let rol = member.guild.roles.cache.find(c => c.name === member.user.username)
-if(rol.managed) {
-  
-rol.setPermissions(['SEND_MESSAGES'])
-member.guild.channels.random().send(`${member}, sunucuya girdi. Bende onun için oluşturulan rolde ki yönetici yetkisini aldım.`) }
-  
-}})// codare
-
-///bot y.y.alma son
-
-
 
 
 /// modlog sistemi
