@@ -1,23 +1,22 @@
 const Discord = require("discord.js");
 const Database = require("../Helpers/Database");
-const data = require('quick.db');
+// exports.onLoad = (client) => {};
+/**
+ * @param {Discord.Client} client 
+ * @param {Discord.Message} message 
+ * @param {Array<String>} args 
+ */
 exports.run = async (client, message, args) => {
-const DBL = require('dblapi.js')
-const dbl = new DBL('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc1Njg4MzMwOTI3MDY2MzIyOSIsImJvdCI6dHJ1ZSwiaWF0IjoxNjYwNzM0NTkyfQ.Tci7n9zVPbCAfU70t8CccDiH7lg7pGrvYHnIvRk9f1s', client)
-dbl.hasVoted(message.author.id).then(voted => {
-      if(voted) {
-  
-  
-  if(!message.member.hasPermission("ADMINISTRATOR") && !message.member.hasPermission("MANAGE_GUILD")) return message.reply("Yetkin Yok!");//
+    if(!message.member.hasPermission("ADMINISTRATOR") && !message.member.hasPermission("MANAGE_GUILD")) return message.reply("Yetkin Yok!");
 
     
     var roleId = message.mentions.roles.first(), targetInvite = Number(args[1]);
-  
-    if(isNaN(targetInvite)) return message.reply("Bir Numara Gir");//
+  /*  if(!message.guild.roles.cache.has(roleId)) return message.reply("no such role.");*/
+    if(isNaN(targetInvite)) return message.reply("Bir Numara Gir");
 
-    const db = new Database("./Servers/" + message.guild.id, "Rewards");//
+    const db = new Database("./Servers/" + message.guild.id, "Rewards");
 
-    var rewards = db.get("rewards") || [];//
+    var rewards = db.get("rewards") || [];
     rewards.push({
         Id: roleId.id,
         Invite: targetInvite
@@ -25,15 +24,10 @@ dbl.hasVoted(message.author.id).then(voted => {
 
     db.set("rewards", rewards);
 const embed = new Discord.MessageEmbed()
-.setDescription(`**${roleId} Rolünü Ulaşabilmek İçin Toplam ${targetInvite} Davet Yapmaları Gerekmektedir.**`)//
+.setDescription(`**${roleId} Rolünü Ulaşabilmek İçin Toplam ${targetInvite} Davet Yapmaları Gerekmektedir.**`)
 message.channel.send(embed)
-} else {
-        message.channel.send(` Bu Komutu Sadece 12 Saatte Bir Oyvererek Kullanabilirsiniz Oyvermek İçin (https://top.gg/bot/756883309270663229/vote) linke Tıklayarak Oyverebilirsiniz. Oy Verdiyseniz 5 Dakka Bekleyiniz`) 
-              .then(Strom => Strom.delete({ timeout: 10000 }));
-}
-        })
-      
-      },
+};
+
 exports.conf = {
   enabled: true,
   guildOnly: false,
