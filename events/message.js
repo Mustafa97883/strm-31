@@ -4,7 +4,17 @@ const db = require ("quick.db");
 let talkedRecently = new Set();
 
 module.exports = async ( message, args) => {
-let client = message.client;
+  let prefix;
+  
+  if (db.has(`prefix_${message.guild.id}`) === true) {
+    prefix = db.fetch(`prefix_${message.guild.id}`)
+  }
+    
+  if (db.has(`prefix_${message.guild.id}`) === false) {
+    prefix = ayarlar.prefix
+  }
+  
+  let client = message.client;
   if (talkedRecently.has(message.author.id)) {
     return;
   }

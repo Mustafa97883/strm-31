@@ -1,46 +1,89 @@
-const db = require('quick.db')
-const ayarlar = require('../ayarlar.json')
-const Discord = require('discord.js')
-exports.run = async(client, message, args) => {
-  
-let prefix = await db.fetch(`prefix_${message.guild.id}`) || ayarlar.prefix;
-let ohow = await db.fetch(`prefix_${message.guild.id}`)
+const Discord = require('discord.js');
+const database = require('quick.db');
 
-  if(!message.member.hasPermission("ADMINISTRATOR")) return message.channel.send(new Discord.MessageEmbed()
-.setDescription("Bu komutu kullanabilmek için `YONETICI` iznine sahip olmalısın!"));
+exports.run = async (client, message, args) => {// can#0002
 
+let argslar = ['add', 'remove', 'set', 'clear'];
+if(!args[0] || !argslar.includes(args[0])) {
 
-if(args[0] !== 'ayarla' && args[0] !== 'sıfırla') return message.channel.send(new Discord.MessageEmbed().setDescription(`
-${ayarlar.hata} Lütfen **${prefix}prefix ayarla** veya **${prefix}prefix sıfırla** yaz.`))
- if (args[0] !== 'aç' && args[0] !== 'kapat') return message.channel.send(new Discord.MessageEmbed().setDescription(`${ayarlar.hata}`))
-if(args[0] === 'ayarla') {
-db.set(`prefix_${message.guild.id}`, args[1])
-message.channel.send(new Discord.MessageEmbed().setDescription(`
-${ayarlar.oldu2} Prefix Başarıyla **`+ args[1] + `** olarak ayarlandı.`).setFooter().setColor("#29f713"))
+let prefixes = ['1. <@!'+client.user.id+'>'];
+const prefixler = await database.fetch(`prefixes.${message.guild.id}`);
+if(prefixler && prefixler.length >= 1) {
+var i = 1;
+for(const key in prefixler) {
+i++
+prefixes.push(i+'. '+prefixler[key]);
 };
-  
-if(args[0] === 'sıfırla') {
-      if(!ohow) {
-       return message.channel.send(new Discord.MessageEmbed()
-.setDescription(`Bir prefix ayarlanmadan sıfırlanamaz!`).setColor("#f00e0e"));
-    }
-    db.delete(`prefix_${message.guild.id}`)       
-   return message.channel.send(new Discord.MessageEmbed()
-.setDescription(`
-${ayarlar.oldu2} Prefix Başarıyla Sıfırlandı. Prefix: **${ayarlar.prefix}**
-`).setColor("#29f713"));
-}
-
-  
 };
 
+const embed = new Discord.MessageEmbed()
+.setTitle('Prefixes')
+.setColor('BLUE')
+.setFooter(`${prefixes.length} prefixes`)
+.setDescription(prefixes.join('\n'));
+return message.channel.send(embed);
+
+};
+
+if(args[0] === 'add') {
+if(!args[1]) return;
+if(args[1].startsWith('"') && args[args.length-1].endsWith('"')) {
+let arg = args.slice(1).join(' ').slice(1, args.slice(1).join(' ').length-1);
+const prefixler = await database.fetch(`prefixes.${message.guild.id}`);
+if(prefixler && prefixler.some(a => a === arg)) return message.channel.send(`${arg} added`);  
+await database.push(`prefixes.${message.guild.id}`, arg);
+return message.channel.send(`${arg} added`);
+};
+if(args[2]) return message.channel.send("You've given too many prefixes. Either quote it or only do it one by one.");
+const prefixler = await database.fetch(`prefixes.${message.guild.id}`);
+if(prefixler && prefixler.some(a => a === args[1])) return message.channel.send(`${args[1]} added`);  
+await database.push(`prefixes.${message.guild.id}`, args[1]);
+return message.channel.send(`${args[1]} added`);
+};
+
+if(args[0] === 'remove') {
+if(!args[1]) return;
+if(args[1].startsWith('"') && args[args.length-1].endsWith('"')) {
+let arg = args.slice(1).join(' ').slice(1, args.slice(1).join(' ').length-1);
+const prefixler = await database.fetch(`prefixes.${message.guild.id}`);
+if(prefixler && !prefixler.some(a => a === arg)) return message.channel.send('I do not have this prefix registered.');  
+await database.set(`prefixes.${message.guild.id}`, prefixler.filter(a => a !== arg));
+return message.channel.send(`${arg} removed`);
+};
+if(args[2]) return message.channel.send("You've given too many prefixes. Either quote it or only do it one by one.");
+const prefixler = await database.fetch(`prefixes.${message.guild.id}`);
+if(prefixler && !prefixler.some(a => a === args[1])) return message.channel.send('I do not have this prefix registered.');  
+await database.set(`prefixes.${message.guild.id}`, prefixler.filter(a => a !== args[1]));
+return message.channel.send(`${args[1]} removed`);
+};
+
+if(args[0] === 'set') {
+if(!args[1]) return;
+if(args[1].startsWith('"') && args[args.length-1].endsWith('"')) {
+let arg = args.slice(1).join(' ').slice(1, args.slice(1).join(' ').length-1);
+await database.delete(`prefixes.${message.guild.id}`);
+await database.push(`prefixes.${message.guild.id}`, arg);
+return message.channel.send(`Prefix for this server is now ${arg}.`);
+};
+if(args[2]) return message.channel.send("You've given too many prefixes. Either quote it or only do it one by one.");
+await database.delete(`prefixes.${message.guild.id}`);
+await database.push(`prefixes.${message.guild.id}`, args[1]);
+return message.channel.send(`Prefix for this server is now ${args[1]}.`);
+};
+
+if(args[0] === 'clear') {
+await database.delete(`prefixes.${message.guild.id}`);
+return message.channel.send('ALL prefixes removed, you need to mention me to set a new one.');
+};
+
+};
 exports.conf = {
   enabled: true,
   guildOnly: false,
-  aliases: ["prefx","prefixx"],
-  permlevel: 0
+  aliases: [],
+  permLevel: 3
 };
 
 exports.help = {
-  name: "prefix"
-};
+  name: 'prefix'
+};// codare ♥
