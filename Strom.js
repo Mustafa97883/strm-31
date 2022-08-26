@@ -645,7 +645,6 @@ client.on("message", async message => {
 //Reklam Engel Baş
 
 const reklam = [
-  ".com",
   ".net",
   ".xyz",
   ".tk",
@@ -654,19 +653,14 @@ const reklam = [
   ".me",
   ".gg",
   "www.",
-  "https",
-  "http",
   ".gl",
   ".org",
   ".com.tr",
   ".biz",
-  "net",
   ".rf",
   ".gd",
   ".az",
-  ".party",
-  ".gf",
-  ".31"
+  ".party"
 ];
 client.on("messageUpdate", async (old, nev) => {
   if (old.content != nev.content) {
