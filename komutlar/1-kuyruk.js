@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const YouTube = require('simple-youtube-api');
 const ytdl = require('ytdl-core');
-const { YOUTUBE_API_KEY } = require("../ayarlar.json");
+const youtube = new YouTube("AIzaSyDK2QIFH6w9Vn_cnKXj1BR5-lmevwcN0oQ");
 exports.run = async (client, message, args) => {
      // 
     const { channel } = message.member.voice;

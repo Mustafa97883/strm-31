@@ -12,34 +12,30 @@ exports.run = async (client, message, args) => {
 
     var voiceChannel = message.member.voiceChannel;
 
-    const a = new Discord.MessageEmbed()
+    const err1 = new Discord.MessageEmbed()
     .setColor("#0f0f0f")
     .setDescription(`:x: **Bu komutu kullanmak için bir ses kanalında olmanız gerekir.**`)  
-  if (!voiceChannel) return message.channel.send(a)
-
-  if (serverQueue && serverQueue.playing) {
-    serverQueue.playing = false;
-    serverQueue.connection.dispatcher.pause();
-        const asjdhsaasjdhaadssad = new Discord.MessageEmbed()
-    .setColor("#0f0f0f")
-    .setDescription(`Paused :pause_button:`)
-      return message.channel.send(asjdhsaasjdhaadssad);
-    }
-    const b = new Discord.MessageEmbed()
+    if (!voiceChannel) return message.channel.send(err1);
+    const err2 = new Discord.MessageEmbed()
     .setColor("#0f0f0f")
     .setDescription(`:x: Şu anda çalan şarkı yok.`)
-    if (!serverQueue) return message.channel.send(b);
-
+    if (!serverQueue) return message.channel.send(err2);
+    serverQueue.songs = [];
+    const songEnd = new Discord.MessageEmbed()
+    .setColor("#0f0f0f")
+    .setDescription(`:mailbox_with_no_mail: Bağlantı başarıyla kesildi`)
+    serverQueue.connection.dispatcher.end('');
+    message.channel.send(songEnd);
 };
 
 exports.conf = {
     enabled: true,
-    aliases: ['durdur',"pause"],
+    aliases: ['çık',"ayrıl"],
     permLevel: 0
 };
 
 exports.help = {
-    name: 'stop',
-    description: 'Çalan şarkıyı duraklatır.',
-    usage: 'duraklat'
-};
+    name: 'disconnect',
+    description: 'Botu Kanaldan Çıkartır ve Şarkıyı Kapatır.',
+    usage: 'botçık'
+}; 

@@ -1,31 +1,41 @@
 const Discord = require('discord.js');
 const YouTube = require('simple-youtube-api');
 const ytdl = require('ytdl-core');
-const { YOUTUBE_API_KEY } = require("../ayarlar.json");
+const youtube = new YouTube("AIzaSyDK2QIFH6w9Vn_cnKXj1BR5-lmevwcN0oQ");
+
 exports.run = async (client, message, args) => {
-    const { channel } = message.member.voice;
-   // 
-    if (!channel) {
-      return message.channel.send("**Herhangi bir ses kanalında bulunmalısınız.**");
-    }
+    const queue = client.queue;
 
-    const serverQueue = message.client.queue.get(message.guild.id);
+    var searchString = args.slice(0).join(' ');
+    var url = args[0] ? args[0].replace(/<(.+)>/g, '$1') : '';
+    var serverQueue = queue.get(message.guild.id);
 
-    if (!serverQueue) {
-      return message.channel.send("**Atlayabileceğim bir şarkı yok.**");
-    }  // 
-    serverQueue.connection.dispatcher.end();
-    message.channel.send("✔ **| Şarkı geçildi.**");
-  }
-exports.conf = {
-  enabled: true,
-  guildOnly: false,
-  aliases: ['s',"skip"],
-  permLevel: 0
+    var voiceChannel = message.member.voiceChannel;
+
+    const err0 = new Discord.MessageEmbed()
+      .setColor("#0f0f0f")
+      .setDescription(`:x: **Bu komutu kullanmak için bir ses kanalında olmanız gerekir.**`) 
+    if (!voiceChannel) return message.channel.send(err0);
+    const err05 = new Discord.MessageEmbed()
+    .setColor("#0f0f0f")
+    .setDescription(`:x: Şu anda çalan şarkı yok.`)
+    if (!serverQueue) return message.channel.send(err05);
+    const songSkip = new Discord.MessageEmbed()
+    .setColor("#0f0f0f")
+    .setDescription(`Şarkı başarıyla atlandı!`)
+    serverQueue.connection.dispatcher.end('');
+    message.channel.send(songSkip)
+if(!message.member.hasPermission("KİCK_MEMBERS")) return message.reply(":x: **Bu komut, ** `DJ` ** veya **`Kanalları Yönet` ** adlı bir role sahip olmanızı gerektirir ** (botla yalnız kalmak da işe yarar");
 };
+
+exports.conf = {
+    enabled: true,
+    aliases: ['sk'],
+    permLevel: 0
+};
+
 exports.help = {
-  name: 'atla',
-  category: "müzik",
-  description: 'İstediğiniz bir kişi ile düello atarsınız!',
-  usage: 'atla <@kullanıcı>'
+    name: 'skip',
+    description: 'Sıradaki şarkıya geçer. Sırada şarkı yoksa şarkıyı kapatır.',
+    usage: 'geç'
 };
