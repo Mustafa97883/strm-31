@@ -1593,9 +1593,9 @@ if(Date.now() < maxTime) {
   const AsreaperHerDaim = new Strom.MessageEmbed()
   .setColor(0x36393F)
   .setDescription(` <@${message.author.id}> , **Bu sunucuda spam yapmak yasak!**`)
-  .setFooter(`Bu mesaj otomatik olarak silinecektir.`)
+  //.setFooter(`Bu mesaj otomatik olarak silinecektir.`)
  if (message.member.hasPermission("BAN_MEMBERS")) return ;
- message.channel.send(AsreaperHerDaim).then(msg => msg.delete({timeout: 1500}));
+ message.channel.send(AsreaperHerDaim).then(msg => msg.delete({timeout: 2000}));
   return message.delete();
   
 }
