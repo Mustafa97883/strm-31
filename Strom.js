@@ -1526,3 +1526,4 @@ client.on("guildMemberAdd", member => {
 });
 
 //Güvenlik Son
+
