@@ -5,8 +5,8 @@ const db = require('quick.db');
 exports.run = function(client, message, args) {
   let yetkili = db.fetch(`byetkili_${message.guild.id}`)
   if (!message.member.roles.cache.has(yetkili)) return message.channel.send('Bu Komutu Kullanamazsın')
-    let botisim = args[1]
-  let sahip = args[0]
+    let botisim = args[0]
+  let sahip = args[1]
   
     let basvuru = db.fetch(`basvuruk_${message.guild.id}`)
     let kanal = db.fetch(`bot-ekle_${message.guild.id}`)
