@@ -20,10 +20,12 @@ dependencies:
   discord-buttons: 4.0.0
   discord-giveaways: 4.5.1
   discord-logs: 1.9.0
+  discord-player: 5.3.1
   discord.js: 12.5.3
   discord.js-commando: 0.10.0
   discord.js-reaction-menu: 1.1.2
   express: 4.18.1
+  ffmpeg-static: 5.0.2
   foo: 0.0.7
   fs: 0.0.2
   generate-password: 1.7.0
@@ -42,6 +44,7 @@ dependencies:
   node-fetch: 2.6.7
   node-superfetch: 0.1.11
   npm: 7.24.2
+  opusscript: 0.0.8
   orio.db: 3.1.2
   parse-ms: 2.1.0
   path: 0.12.7
@@ -53,6 +56,7 @@ dependencies:
   superagent: 6.1.0
   vultrex.db: 1.4.1
   weather-js: 2.0.0
+  ytdl-core: 4.11.1
 packages:
   /@babel/runtime/7.18.9:
     dependencies:
@@ -62,6 +66,17 @@ packages:
       node: '>=6.9.0'
     resolution:
       integrity: sha512-lkqXDcvlFT5rvEjiu6+QYO+1GXrEHRo2LOtS7E4GtX5ESIZOgepqsZBVIj6Pv+a6zqsya9VCgiK1KAK4BvJDAw==
+  /@derhuerst/http-basic/8.2.4:
+    dependencies:
+      caseless: 0.12.0
+      concat-stream: 2.0.0
+      http-response-object: 3.0.2
+      parse-cache-control: 1.0.1
+    dev: false
+    engines:
+      node: '>=6.0.0'
+    resolution:
+      integrity: sha512-F9rL9k9Xjf5blCz8HsJRO4diy111cayL2vkY2XE4r4t3n0yPXVYy3KD3nJ1qbrSn9743UWSXH4IwuCa/HWlGFw==
   /@discordjs/builders/0.16.0:
     dependencies:
       '@sapphire/shapeshift': 3.5.1
@@ -98,6 +113,18 @@ packages:
       node: '>= 6'
     resolution:
       integrity: sha512-ZfFsbgEXW71Rw/6EtBdrP5VxBJy4dthyC0tpQKGKmYFImlmmrykO14Za+BiIVduwjte0jXEBlhSKf0MWbFp9Eg==
+  /@discordjs/voice/0.11.0:
+    dependencies:
+      '@types/ws': 8.5.3
+      discord-api-types: 0.36.3
+      prism-media: 1.3.4
+      tslib: 2.4.0
+      ws: 8.8.1
+    dev: false
+    engines:
+      node: '>=16.9.0'
+    resolution:
+      integrity: sha512-6+9cj1dxzBJm7WJ9qyG2XZZQ8rcLl6x2caW0C0OxuTtMLAaEDntpb6lqMTFiBg/rDc4Rd59g1w0gJmib33CuHw==
   /@jimp/bmp/0.16.1/@jimp!custom@0.16.1:
     dependencies:
       '@babel/runtime': 7.18.9
@@ -688,6 +715,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-DHqhlq5jeESLy19TYhLakJ07kNumXWjcDdxXsLUMJZ6ue8VZJj4kLPQVE/2mdHh3xZziNF1xppu5lwmS53HR+A==
+  /@types/node/10.17.60:
+    dev: false
+    resolution:
+      integrity: sha512-F0KIgDJfy2nA3zMLmWGKxcH2ZVEtCZXHHdOQs2gSaQ27+lNeEfGxzkIw90aXswATX7AZ33tahPbzy6KAfUreVw==
   /@types/node/14.18.24:
     dev: false
     resolution:
@@ -1629,6 +1660,17 @@ packages:
       '0': node >= 0.8
     resolution:
       integrity: sha512-27HBghJxjiZtIk3Ycvn/4kbJk/1uZuJFfuPEns6LaEvpvG1f0hTea8lilrouyo9mVc2GWdcEZ8OLoGmSADlrCw==
+  /concat-stream/2.0.0:
+    dependencies:
+      buffer-from: 1.1.2
+      inherits: 2.0.4
+      readable-stream: 3.6.0
+      typedarray: 0.0.6
+    dev: false
+    engines:
+      '0': node >= 6.0
+    resolution:
+      integrity: sha512-MWufYdFw53ccGjCA+Ol7XJYpAlW6/prSMzuPOTRnJGcGzuhLn4Scrz7qf6o8bROZ514ltazcIFJZevcfbo0x7A==
   /console-control-strings/1.1.0:
     dev: false
     resolution:
@@ -1988,6 +2030,19 @@ packages:
     dev: false
     resolution:
       integrity: sha512-wyTwB/KrWvgRXLfxxtAP9EJwSq3EcKasv3uEsWz1BCgmDiYJ6qXcNx28wcJWNIa7CeCUojnBODOgc7pQdEOwbw==
+  /discord-player/5.3.1:
+    dependencies:
+      '@discordjs/voice': 0.11.0
+      libsodium-wrappers: 0.7.10
+      soundcloud-scraper: 5.0.3
+      spotify-url-info: 3.1.4
+      tiny-typed-emitter: 2.1.0
+      tslib: 2.4.0
+      youtube-sr: 4.3.1
+      ytdl-core: 4.11.1
+    dev: false
+    resolution:
+      integrity: sha512-ADiq5H3NWm2kLq03qJ54Kfb5X+YwZzZkAB1uj+Y46SVnKjC9iOYXvO/R2GkdGfTvry8AtkyhdDHa+Gltl8epuw==
   /discord.js-commando/0.10.0:
     dependencies:
       common-tags: 1.8.2
@@ -2140,6 +2195,12 @@ packages:
       node: '>=0.12'
     resolution:
       integrity: sha512-o4q/dYJlmyjP2zfnaWDUC6A3BQFmVTX+tZPezK7k0GLSU9QYCauscf5Y+qcEPzKL+EixVouYDgLQK5H9GrLpkg==
+  /env-paths/2.2.1:
+    dev: false
+    engines:
+      node: '>=6'
+    resolution:
+      integrity: sha512-+h1lkLKhZMTYjog1VEpJNG7NZJWcuc2DDk/qsqSTRRCOXiLjeQ1d1/udrUGhqMxUgAlwKNZ0cf2uqan5GLuS2A==
   /errno/0.1.8:
     dependencies:
       prr: 1.0.1
@@ -2395,6 +2456,18 @@ packages:
     dev: false
     resolution:
       integrity: sha512-DkPJKQeY6kKwmuMretBhr7G6Vodr7bFwDYTXIkfG1gjvNpaxBTQV3PbXg6bR1c1UP4jPOX0jHUbbHANL9vRjVg==
+  /ffmpeg-static/5.0.2:
+    dependencies:
+      '@derhuerst/http-basic': 8.2.4
+      env-paths: 2.2.1
+      https-proxy-agent: 5.0.1
+      progress: 2.0.3
+    dev: false
+    engines:
+      node: '>=16'
+    requiresBuild: true
+    resolution:
+      integrity: sha512-rYeA04AGbvxbUxov6Cn/KDKIzw2rmzwPlgHoqn837NZt0xPdOVA9mJMILz9IX27R45hhSlXS6nThk85XxDivLg==
   /file-tree/1.0.0:
     dependencies:
       async-reduce: 0.0.1
@@ -2883,6 +2956,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-l9sfDFsuqtOqKDsQdqrMRk0U85RZc0RtOR9yPI7mRVOa4FsR/BVnZ0shmQRM96Ji99kYZP/7hn1cedc1+ApsTQ==
+  /himalaya/1.1.0:
+    dev: false
+    resolution:
+      integrity: sha512-LLase1dHCRMel68/HZTFft0N0wti0epHr3nNY7ynpLbyZpmrKMQ8YIpiOV77TM97cNpC8Wb2n6f66IRggwdWPw==
   /home-or-tmp/2.0.0:
     dependencies:
       os-homedir: 1.0.2
@@ -2923,6 +3000,12 @@ packages:
       node: '>= 0.8'
     resolution:
       integrity: sha512-FtwrG/euBzaEjYeRqOgly7G0qviiXoJWnvEH2Z1plBdXgbyjv34pHTSb9zoeHMyDy33+DWy5Wt9Wo+TURtOYSQ==
+  /http-response-object/3.0.2:
+    dependencies:
+      '@types/node': 10.17.60
+    dev: false
+    resolution:
+      integrity: sha512-bqX0XTF6fnXSQcEJ2Iuyr75yVakyjIDCqroJQ/aHfSdlM743Cwqoi2nDYMzLGWUcuTWGWy8AAvOKXTfiv6q9RA==
   /http-signature/1.2.0:
     dependencies:
       assert-plus: 1.0.0
@@ -3730,6 +3813,16 @@ packages:
       node: '>= 0.8.0'
     resolution:
       integrity: sha512-0OO4y2iOHix2W6ujICbKIaEQXvFQHue65vUG3pb5EUomzPI90z9hsA1VsO/dbIIpC53J8gxM9Q4Oho0jrCM/yA==
+  /libsodium-wrappers/0.7.10:
+    dependencies:
+      libsodium: 0.7.10
+    dev: false
+    resolution:
+      integrity: sha512-pO3F1Q9NPLB/MWIhehim42b/Fwb30JNScCNh8TcQ/kIc+qGLQch8ag8wb0keK3EP5kbGakk1H8Wwo7v+36rNQg==
+  /libsodium/0.7.10:
+    dev: false
+    resolution:
+      integrity: sha512-eY+z7hDrDKxkAK+QKZVNv92A5KYkxfvIshtBJkmg5TSiCnYqZP3i9OO9whE79Pwgm4jGaoHgkM4ao/b9Cyu4zQ==
   /load-bmfont/1.4.1:
     dependencies:
       buffer-equal: 0.0.1
@@ -3817,6 +3910,15 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==
+  /m3u8stream/0.8.6:
+    dependencies:
+      miniget: 4.2.2
+      sax: 1.2.4
+    dev: false
+    engines:
+      node: '>=12'
+    resolution:
+      integrity: sha512-LZj8kIVf9KCphiHmH7sbFQTVe4tOemb202fWwvJwR9W5ENW/1hxJN6ksAWGhQgSBSa3jyWhnjKU1Fw1GaOdbyA==
   /make-dir/3.1.0:
     dependencies:
       semver: 6.3.0
@@ -3982,6 +4084,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-9Wy1B3m3f66bPPmU5hdA4DR4PB2OfDU/+GS3yAB7IQozE3tqXaVv2zOjgla7MEGSRv95+ILmOuvhLkOK6wJtCQ==
+  /miniget/4.2.2:
+    dev: false
+    engines:
+      node: '>=12'
+    resolution:
+      integrity: sha512-a7voNL1N5lDMxvTMExOkg+Fq89jM2vY8pAi9ZEWzZtfNmdfP6RXkvUtFnCAXoCv2T9k1v/fUJVaAEuepGcvLYA==
   /minimatch/3.1.2:
     dependencies:
       brace-expansion: 1.1.11
@@ -4545,6 +4653,10 @@ packages:
       node: '>= 0.8.0'
     resolution:
       integrity: sha512-+IW9pACdk3XWmmTXG8m3upGUJst5XRGzxMRjXzAuJ1XnIFNvfhjjIuYkDvysnPQ7qzqVzLt78BCruntqRhWQbA==
+  /opusscript/0.0.8:
+    dev: false
+    resolution:
+      integrity: sha512-VSTi1aWFuCkRCVq+tx/BQ5q9fMnQ9pVZ3JU4UHKqTkf0ED3fKEPdr+gKAAl3IA2hj9rrP6iyq3hlcJq3HELtNQ==
   /orio.db/3.1.2:
     dependencies:
       bson: 4.7.0
@@ -4634,6 +4746,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-bjnliEOmGv3y1aMEfREMBJ9tfL3WR0i0CKPj61DnSLaoxWR3nLrsQrEbCId/8rF4NyRF0cCqisSVXyQYWM+mCQ==
+  /parse-cache-control/1.0.1:
+    dev: false
+    resolution:
+      integrity: sha512-60zvsJReQPX5/QP0Kzfd/VrpjScIQ7SHBW6bFCYfEP+fp0Eppr1SHhIO5nd1PjZtvclzSzES9D/p5nFJurwfWg==
   /parse-glob/3.0.4:
     dependencies:
       glob-base: 0.3.0
@@ -4884,6 +5000,12 @@ packages:
       node: '>= 0.6.0'
     resolution:
       integrity: sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A==
+  /progress/2.0.3:
+    dev: false
+    engines:
+      node: '>=0.4.0'
+    resolution:
+      integrity: sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==
   /proxy-addr/2.0.7:
     dependencies:
       forwarded: 0.2.0
@@ -5450,6 +5572,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-dyycG9fvwtSJqKPfMVOpXt+60qvMGe7vWLwOJDiSJaiAx+hs2EnFChG2bXCWn7ulz+zGzrHdN9/yeEb0YqEPww==
+  /soundcloud-scraper/5.0.3:
+    dependencies:
+      cheerio: 1.0.0-rc.12
+      m3u8stream: 0.8.6
+      node-fetch: 2.6.7
+    dev: false
+    resolution:
+      integrity: sha512-AmS9KmK7mMaPVzHzBk40rANpAttZila3+iAet6EA47EeiTBUzVwjq4B+1LCOLtgPmzDSGk0qn+LZOEd5UhnZTQ==
   /source-map-resolve/0.5.3:
     dependencies:
       atob: 2.1.2
@@ -5521,6 +5651,21 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-NzNVhJDYpwceVVii8/Hu6DKfD2G+NrQHlS/V/qgv763EYudVwEcMQNxd2lh+0VrUByXN/oJkl5grOhYWvQUYiw==
+  /spotify-uri/3.0.2:
+    dev: false
+    engines:
+      node: '>= 12'
+    resolution:
+      integrity: sha512-1RrJkUr+uVYJtJiMvh/Jq42GQikJBZN87ki3ZYzybF9452fb5EfAihdMSIAHGU55+YQUl5Vqb1VLJDzEdottAw==
+  /spotify-url-info/3.1.4:
+    dependencies:
+      himalaya: 1.1.0
+      spotify-uri: 3.0.2
+    dev: false
+    engines:
+      node: '>= 12'
+    resolution:
+      integrity: sha512-SgoVhdj2GNZL3oRfkpU83uf79h+IaGP6nzrjVh+I63Xz+/YX6sfPxIXiRtfkQvZ6ev/OuU0ajZQsIDi8ADkS1g==
   /sprintf-js/1.0.3:
     dev: false
     resolution:
@@ -5812,6 +5957,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-IjZc9KIotudix8bMaBW6QvMuq64BrJWFs1+4V0lXwWGQZwH+LnX87doAYhem4caOEusRP9/g6jVDQmZ8XOk1nw==
+  /tiny-typed-emitter/2.1.0:
+    dev: false
+    resolution:
+      integrity: sha512-qVtvMxeXbVej0cQWKqVSSAHmKZEHAvxdF8HEUBFWts8h+xEo5m/lEiPakuyZ3BnCBjOD8i24kzNOiOLLgsSxhA==
   /tinycolor2/1.4.2:
     dev: false
     resolution:
@@ -6264,6 +6413,20 @@ packages:
     dev: false
     resolution:
       integrity: sha512-XS0NJoM9Iz0azh1cdgfLF5VFK6BSWfrrqA0V2tIx3fV6aGrWCseVDwOkIBg746ev0hes59od5ZvQAfdET4H0pw==
+  /youtube-sr/4.3.1:
+    dev: false
+    resolution:
+      integrity: sha512-PTR2WJZxe+Cd7+niMdQctm/dudzhF5fwhtpIZfQjY08IZn5C0noj8bJdmXZ9jpyuzxyquKhjJDTTzjpfUztdpw==
+  /ytdl-core/4.11.1:
+    dependencies:
+      m3u8stream: 0.8.6
+      miniget: 4.2.2
+      sax: 1.2.4
+    dev: false
+    engines:
+      node: '>=12'
+    resolution:
+      integrity: sha512-0H2hl8kv9JA50qEUewPVpDCloyEVkXZfKJ6o2RNmkngfiY99pGVqE7jQbMT6Rs1QwZpF8GiMB50VWXqivpzlgQ==
 registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
@@ -6289,10 +6452,12 @@ specifiers:
   discord-buttons: ^4.0.0
   discord-giveaways: ^4.2.1
   discord-logs: ^1.9.0
+  discord-player: ^5.3.1
   discord.js: ^12.5.3
   discord.js-commando: ^0.10.0
   discord.js-reaction-menu: ^1.1.1
   express: ^4.18.1
+  ffmpeg-static: ^5.0.0
   foo: 0.0.7
   fs: ^0.0.2
   generate-password: ^1.7.0
@@ -6311,6 +6476,7 @@ specifiers:
   node-fetch: ^2.6.7
   node-superfetch: ^0.1.11
   npm: ^7.20.6
+  opusscript: ^0.0.8
   orio.db: ^3.1.2
   parse-ms: ^2.1.0
   path: ^0.12.7
@@ -6322,3 +6488,4 @@ specifiers:
   superagent: ^6.1.0
   vultrex.db: ^1.4.1
   weather-js: ^2.0.0
+  ytdl-core: ^4.11.0
