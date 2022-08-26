@@ -1572,324 +1572,41 @@ client.on("guildMemberAdd", member => {
 //Güvenlik Son
 
 
+// spam engel
 
-// --------------------> [Müzik Sistemi] <----------------------- \\
+const dctrat = require('dctr-antispam.js'); 
 
-const youtube = new YouTube("AIzaSyDK2QIFH6w9Vn_cnKXj1BR5-lmevwcN0oQ");
+var authors = [];
+var warned = [];
 
-client.on("message", async (msg, message) => {
-  let prefix = ayarlar.prefix;
-  if (msg.author.bot) return undefined;
-  if (!msg.content.startsWith(prefix)) return undefined;
+var messageLog = [];
 
-  const args = msg.content.split(" ");
-  const searchString = args.slice(1).join(" ");
-  const url = args[1] ? args[1].replace(/<(.+)>/g, "$1") : "";
-  const serverQueue = queue.get(msg.guild.id);
-  let command = msg.content.toLowerCase().split(" ")[0];
-  command = command.slice(prefix.length);
-
-  if (command === "sadecebotunsahibikullanır") {
-    const voiceChannel = msg.member.voiceChannel;
-    if (!voiceChannel)
-      return msg.channel.send(
-        new Strom.MessageEmbed()
-          .setColor("BLACK")
-          .setDescription(
-            ":x: **Bu komutu kullanmak için bir ses kanalında olmanız gerekir.**"
-          )
-      );
-    const permissions = voiceChannel.permissionsFor(msg.client.user);
-    if (!permissions.has("CONNECT")) {
-      return msg.channel.send(
-        new Strom.MessageEmbed()
-          .setColor("BLACK")
-          .setTitle(
-            ":x: **Bu komutu kullanmak için bir ses kanalında olmanız gerekir.**"
-          )
-      );
-    }
-    if (!permissions.has("SPEAK")) {
-      return msg.channel.send(
-        new Strom.MessageEmbed()
-          .setColor("BLACK")
-          .setTitle(
-            ":x: Müziği açamıyorum / kanalda konuşmama izin verilmediğinden veya mikrofonum kapalı olduğundan şarkı çalamıyorum."
-          )
-      );
-    }
-
-    if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
-      const playlist = await youtube.getPlaylist(url);
-      const videos = await playlist.getVideos();
-      for (const video of Object.values(videos)) {
-        const video2 = await youtube.getVideoByID(video.id); // eslint-disable-line no-await-in-loop
-        await handleVideo(video2, msg, voiceChannel, true); // eslint-disable-line no-await-in-loop
-      }
-      return msg.channel
-        .send(new Strom.MessageEmbed())
-        .setTitle(`**Oynatma Listesi **${playlist.title}** Sıraya eklendi!**`);
-    } else {
-      try {
-        var video = await youtube.getVideo(url);
-      } catch (error) {
-        try {
-          var videos = await youtube.searchVideos(searchString, 10);
-          let index = 0;
-
-          msg.channel.send(
-            new Strom.MessageEmbed()
-              .setTitle(":musical_note: Şarkı Seçimi")
-              .setThumbnail(
-                "https://i.postimg.cc/W1b1LW13/youtube-kids-new-logo.png"
-              )
-              .setDescription(
-                `${videos
-                  .map(video2 => `**${++index} -** ${video2.title}`)
-                  .join("\n")}`
-              )
-              .setFooter(
-                "Lütfen 1-10 arasında bir rakam seçin ve liste 10 saniye içinde iptal edilecektir.."
-              )
-              .setColor("BLACK")
-          );
-          msg.delete(5000);
-
-          try {
-            var response = await msg.channel.awaitMessages(
-              msg2 => msg2.content > 0 && msg2.content < 11,
-              {
-                maxMatches: 1,
-                time: 10000,
-                errors: ["time"]
-              }
-            );
-          } catch (err) {
-            console.error(err);
-            return msg.channel.send(
-              new Strom.MessageEmbed()
-                .setColor("BLACK")
-                .setDescription(
-                  ":x: **Şarkı Değerini belirtmediği için seçim iptal edildi**."
-                )
-            );
-          }
-          const videoIndex = parseInt(response.first().content);
-          var video = await youtube.getVideoByID(videos[videoIndex - 1].id);
-        } catch (err) {
-          console.error(err);
-          return msg.channel.send(
-            new Strom.MessageEmbed()
-              .setColor("BLACK")
-              .setDescription(":x: **Aradım ama sonuç yok**")
-          );
-        }
-      }
-      return handleVideo(video, msg, voiceChannel);
-    }
-  } else if (command === "volume") {
-    if (!msg.member.voiceChannel)
-      if (!msg.member.voiceChannel)
-        return msg.channel.send(
-          new Strom.MessageEmbed()
-            .setColor("BLACK")
-            .setDescription(
-              ":x: **Bu komutu kullanmak için bir ses kanalında olmanız gerekir.**"
-            )
-        );
-    if (!serverQueue)
-      return msg.channel.send(
-        new Strom.MessageEmbed()
-          .setColor("BLACK")
-          .setTitle(":x: Şu anda çalan şarkı yok.")
-      );
-    if (!args[1])
-      return msg.channel.send(
-        new Strom.MessageEmbed()
-          .setTitle(`Current Volume: **${serverQueue.volume}**`)
-          .setColor("BLACK")
-      );
-    serverQueue.volume = args[1];
-    serverQueue.connection.dispatcher.setVolumeLogarithmic(args[1] / 5);
-    return msg.channel.send(
-      new Strom.MessageEmbed()
-        .setTitle(`Setting Volume: **${args[1]}**`)
-        .setColor("BLACK")
-    );
-  } else if (command === "now") {
-    if (!serverQueue)
-      return msg.channel.send(
-        new Strom.MessageEmbed()
-          .setTitle(":x: **Şu anda çalan şarkı yok.**")
-          .setColor("BLACK")
-      );
-    return msg.channel.send(
-      new Strom.MessageEmbed()
-        .setColor("BLACK")
-        .setTitle(" :headphones: | Şimdi oynuyor")
-        .addField(
-          "Şarkı Adı",
-          `[${serverQueue.songs[0].title}](${serverQueue.songs[0].url})`,
-          true
-        )
-        .addField(
-          "Oynamaya kadar tahmini süre",
-          `${serverQueue.songs[0].durationm}:${serverQueue.songs[0].durations}`,
-          true
-        )
-    );
-  } else if (command === "") {
-    let index = 0;
-    if (!serverQueue)
-      return msg.channel.send(
-        new Strom.MessageEmbed()
-          .setTitle(":x: **Sırada Müzik Yok**")
-          .setColor("BLACK")
-      );
-    return msg.channel
-      .send(
-        new Strom.MessageEmbed()
-          .setColor("RANDOM")
-          .setTitle("Şarkı sırası")
-          .setDescription(
-            `${serverQueue.songs
-              .map(song => `**${++index} -** ${song.title}`)
-              .join("\n")}`
-          )
-      )
-      .addField("Şimdi oynuyor: " + `${serverQueue.songs[0].title}`);
-  }
-});
-
-async function handleVideo(video, msg, voiceChannel, playlist = false) {
-  const serverQueue = queue.get(msg.guild.id);
-  const song = {
-    id: video.id,
-    title: video.title,
-    url: `https://www.youtube.com/watch?v=${video.id}`,
-    durationh: video.duration.hours,
-    durationm: video.duration.minutes,
-    durations: video.duration.seconds,
-    zg: video.raw.snippet.channelId,
-    best: video.channel.title,
-    views: video.raw.views
-  };
-  if (!serverQueue) {
-    const queueConstruct = {
-      textChannel: msg.channel,
-      voiceChannel: voiceChannel,
-      connection: null,
-      songs: [],
-      volume: 5,
-      playing: true
-    };
-    queue.set(msg.guild.id, queueConstruct);
-
-    queueConstruct.songs.push(song);
-
-    try {
-      var connection = await voiceChannel.join();
-      queueConstruct.connection = connection;
-      play(msg.guild, queueConstruct.songs[0]);
-    } catch (error) {
-      console.error(`:x: Ses kanalına giremedim HATA: ${error}**`);
-      queue.delete(msg.guild.id);
-      return msg.channel.send(
-        new Strom.MessageEmbed()
-          .setTitle(`:x: Ses kanalına giremedim HATA: ${error}**`)
-          .setColor("BLACK")
-      );
-    }
-  } else {
-    serverQueue.songs.push(song);
-    console.log(serverQueue.songs);
-    if (playlist) return undefined;
-    return msg.channel.send(
-      new Strom.MessageEmbed()
-        .setTitle(
-          `:arrow_heading_up:  **${song.title}** Sıraya Adlandırılmış Müzik Eklendi!`
-        )
-        .setColor("BLACK")
-    );
-  }
-  return undefined;
-}
-
-function play(guild, song) {
-  const serverQueue = queue.get(guild.id);
-
-  if (!song) {
-    serverQueue.voiceChannel.leave();
-    queue.delete(guild.id);
-    return;
-  }
-  console.log(serverQueue.songs);
-
-  const dispatcher = serverQueue.connection
-    .playStream(ytdl(song.url))
-    .on("end", reason => {
-      if (reason === " :x: **Yayın akış hızı yeterli değil.**")
-        console.log("Şarkı Sona Erdi");
-      else console.log(reason);
-      serverQueue.songs.shift();
-      play(guild, serverQueue.songs[0]);
-    })
-    .on("error", error => console.error(error));
-  dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
-
-  serverQueue.textChannel.send(
-    new Strom.MessageEmbed()
-      .setTitle("**:microphone: Şarkı Başladı**")
-      .setThumbnail(`https://i.ytimg.com/vi/${song.id}/default.jpg`)
-      .addField("Şarkı adı", `[${song.title}](${song.url})`, true)
-      .addField("Ses", `${serverQueue.volume}%`, true)
-      .addField("Süre", `${song.durationm}:${song.durations}`, true)
-      .addField("Video ID", `${song.id}`, true)
-      .addField("Kanal ID", `${song.zg}`, true)
-      .addField("Kanal adı", `${song.best}`, true)
-      .addField("Video Link", `${song.url}`, true)
-      .setImage(`https://i.ytimg.com/vi/${song.id}/hqdefault.jpg`)
-      .setColor("BLACK")
-  );
-}
-client.on("message", (msg, message, guild) => {
-  if (msg.content.toLowerCase() === prefix +"invite") {
-    const eris = new Strom.MessageEmbed().setDescription(
-      `[Destek Sunucum](https://discord.gg/NAzGC2cxXR)`
-    );
-    msg.channel.send(eris);
-  }
-});
-
-client.on("guildCreate", async(guild, message) => {
-
-let alındı = `${ayarlar.oldu2}`
-let alınıyor = "<a:yükleniyor:839266395308687421>"
-
-  const emmmmbed = new Strom.MessageEmbed()
-    .setDescription(`
-  **Selamlar chat ben geldim sabahlara kadar kopmaya hazır mısınız? Bende bütün sistemler var rahat olun sadece** \`a!yardım\` **yazarak komutlarıma bakman yeterli. Hatalı komutlar** \`a!yardım-bot\``)
-
-  let defaultChannel = "";
+client.on('message', async message => {
+const spam = await db.fetch(`spam.${message.guild.id}`);
+if(!spam) return;
+const maxTime = await db.fetch(`max.${message.guild.id}.${message.author.id}`);
+const timeout = await db.fetch(`time.${message.guild.id}.${message.author.id}`);
+db.add(`mesaj.${message.guild.id}.${message.author.id}`, 1)
+if(timeout) {
+const sayı = await db.fetch(`mesaj.${message.guild.id}.${message.author.id}`);
+if(Date.now() < maxTime) {
+  const AsreaperHerDaim = new Strom.MessageEmbed()
+  .setColor(0x36393F)
+  .setDescription(` <@${message.author.id}> , **Bu sunucuda spam yapmak yasak!**`)
+  .setFooter(`Bu mesaj otomatik olarak silinecektir.`)
+ if (message.member.hasPermission("BAN_MEMBERS")) return ;
+ message.channel.send(AsreaperHerDaim).then(msg => msg.delete({timeout: 1500}));
+  return message.delete();
   
-  guild.channels.cache.forEach(channel => {
-    if (channel.type == "text" && defaultChannel == "") {
-      if (channel.permissionsFor(guild.me).has("SEND_MESSAGES")) {
-        defaultChannel = channel;
-      }
-    }
-  });
-  const alın = await defaultChannel.send("Sunucu Verileri alınıyor.")
-  alın.edit("Sunucu Verileri alınıyor..")
-  alın.edit("Sunucu Verileri alınıyor...").then(m => m.delete({ timeout: 2542 }))
-  defaultChannel.send(emmmmbed);
+}
+} else {
+db.set(`time.${message.guild.id}.${message.author.id}`, 'ok');
+db.set(`max.${message.guild.id}.${message.author.id}`, Date.now()+3000);
+setTimeout(() => {
+db.delete(`mesaj.${message.guild.id}.${message.author.id}`);
+db.delete(`time.${message.guild.id}.${message.author.id}`);
+}, 500) // default : 500
+}
+
+
 });
-/*
-client.on('guildCreate', guild => {
-let kanal = guild.channels.filters(c => c.type === "text").random()
-const embed = new Discord.MessageEmbed()
-.setTitle('Selamlar chat ben geldim sabahlara kadar kopmaya hazır mısınız? Bende bütün sistemler var rahat olun')
-kanal.send(embed)
-    
-});
-*/
