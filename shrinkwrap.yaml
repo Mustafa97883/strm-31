@@ -53,7 +53,6 @@ dependencies:
   superagent: 6.1.0
   vultrex.db: 1.4.1
   weather-js: 2.0.0
-  ytdl-core: 4.11.1
 packages:
   /@babel/runtime/7.18.9:
     dependencies:
@@ -3818,15 +3817,6 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==
-  /m3u8stream/0.8.6:
-    dependencies:
-      miniget: 4.2.2
-      sax: 1.2.4
-    dev: false
-    engines:
-      node: '>=12'
-    resolution:
-      integrity: sha512-LZj8kIVf9KCphiHmH7sbFQTVe4tOemb202fWwvJwR9W5ENW/1hxJN6ksAWGhQgSBSa3jyWhnjKU1Fw1GaOdbyA==
   /make-dir/3.1.0:
     dependencies:
       semver: 6.3.0
@@ -3992,12 +3982,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-9Wy1B3m3f66bPPmU5hdA4DR4PB2OfDU/+GS3yAB7IQozE3tqXaVv2zOjgla7MEGSRv95+ILmOuvhLkOK6wJtCQ==
-  /miniget/4.2.2:
-    dev: false
-    engines:
-      node: '>=12'
-    resolution:
-      integrity: sha512-a7voNL1N5lDMxvTMExOkg+Fq89jM2vY8pAi9ZEWzZtfNmdfP6RXkvUtFnCAXoCv2T9k1v/fUJVaAEuepGcvLYA==
   /minimatch/3.1.2:
     dependencies:
       brace-expansion: 1.1.11
@@ -6280,16 +6264,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-XS0NJoM9Iz0azh1cdgfLF5VFK6BSWfrrqA0V2tIx3fV6aGrWCseVDwOkIBg746ev0hes59od5ZvQAfdET4H0pw==
-  /ytdl-core/4.11.1:
-    dependencies:
-      m3u8stream: 0.8.6
-      miniget: 4.2.2
-      sax: 1.2.4
-    dev: false
-    engines:
-      node: '>=12'
-    resolution:
-      integrity: sha512-0H2hl8kv9JA50qEUewPVpDCloyEVkXZfKJ6o2RNmkngfiY99pGVqE7jQbMT6Rs1QwZpF8GiMB50VWXqivpzlgQ==
 registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
@@ -6348,4 +6322,3 @@ specifiers:
   superagent: ^6.1.0
   vultrex.db: ^1.4.1
   weather-js: ^2.0.0
-  ytdl-core: ^4.11.1
