@@ -1033,39 +1033,41 @@ member.kick(member)
 ///isim reklam engel son
 
 
-//     [-----------------> Sayaç <------------------]  \\
+//sayaç
 
-client.on("guildMemberAdd", async member => {
-  let sayac = await db.fetch(`sayac_${member.guild.id}`);
-  let skanal9 = await db.fetch(`sayacK_${member.guild.id}`);
-  if (!skanal9) return;
-  const skanal31 = member.guild.channels.find("name", skanal9);
-  if (!skanal31) return;
-  skanal31.send(
-    new Strom.MessageEmbed()
-      .setDescription(`
-:inbox_tray: <@${member.user.id}> sunucuya katıldı, **${sayac}** kişi olmamıza **${sayac -member.guild.members.size}** kişi kaldı.`)
-      .setColor("RANDOM")
-      .setTitle("Strom - Sayaç")
-  );
+client.on("message", async message => {
+  if (!message.guild) return;
+
+  if (db.has(`sayac_${message.guild.id}`) === true) {
+    if (db.fetch(`sayac_${message.guild.id}`) <= message.guild.members.cache.size) {
+      const embed = new Strom.MessageEmbed()
+        .setTitle(`Tebrikler ${message.guild.name}!`)
+        .setDescription(`Başarıyla \`${db.fetch(`sayac_${message.guild.id}`)}\` kullanıcıya ulaştık! Sayaç sıfırlandı!`)
+        .setColor("RANDOM");
+      message.channel.send(embed);
+      message.guild.owner.send(embed);
+      db.delete(`sayac_${message.guild.id}`);
+    }
+  }
 });
-
 client.on("guildMemberRemove", async member => {
-  let sayac = await db.fetch(`sayac_${member.guild.id}`);
-  let skanal9 = await db.fetch(`sayacK_${member.guild.id}`);
-  if (!skanal9) return;
-  const skanal31 = member.guild.channels.find("name", skanal9);
-  if (!skanal31) return;
+  const channel = db.fetch(`sKanal_${member.guild.id}`);
+  if (db.has(`sayac_${member.guild.id}`) == false) return;
+  if (db.has(`sKanal_${member.guild.id}`) == false) return;
 
-  skanal31.send(
-    new Strom.MessageEmbed()
-      .setDescription(`
-:outbox_tray: <@${member.user.id}> adlı kullanıcı sunucudan ayrıldı. **${sayac}** kullanıcı olmaya **${sayac -member.guild.members.size}** kullanıcı kaldı.`
-      )
-      .setColor("RANDOM")
-      .setTitle("Strom - Sayaç")
-  );
+    member.guild.channels.cache.get(channel).send(`**${member.user.tag}** Sunucudan ayrıldı! \`${db.fetch(`sayac_${member.guild.id}`)}\` üye olmamıza son \`${db.fetch(`sayac_${member.guild.id}`) - member.guild.memberCount}\` üye kaldı!`);
 });
+client.on("guildMemberAdd", async member => {
+  const channel = db.fetch(`sKanal_${member.guild.id}`);
+  if (db.has(`sayac_${member.guild.id}`) == false) return;
+  if (db.has(`sKanal_${member.guild.id}`) == false) return;
+
+    member.guild.channels.cache.get(channel).send(`**${member.user.tag}** Sunucuya Katıldı :tada:! \`${db.fetch(`sayac_${member.guild.id}`)}\` üye olmamıza son \`${db.fetch(`sayac_${member.guild.id}`) - member.guild.memberCount}\` üye kaldı!`);
+});
+
+
+//sayaç son
+
 
 
 
