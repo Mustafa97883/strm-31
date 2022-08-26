@@ -469,71 +469,119 @@ client.on('guildMemberRemove', async member => {
 ////davet son
 
 
-//sa yardıma geldim
-client.on("guildMemberAdd", (member) => {
-    //const gi = new Collection().concat(Invites.get(member.guild.id));
-    const db = new Database("./Servers/" + member.guild.id, "Invites"), gi = (Invites.get(member.guild.id) || new Collection()).clone(), settings = new Database("./Servers/" + member.guild.id, "Settings").get("settings") || {};
-    var guild = member.guild, fake = (Date.now() - member.createdAt) / (1000 * 60 * 60 * 24) <= 3 ? true : false, channel = guild.channels.cache.get(settings.Channel);
-    guild.fetchInvites().then(invites => {
-        // var invite = invites.find(_i => gi.has(_i.code) && gi.get(_i.code).maxUses != 1 && gi.get(_i.code).uses < _i.uses) || gi.find(_i => !invites.has(_i.code)) || guild.vanityURLCode;
-        var invite = invites.find(_i => gi.has(_i.code) && gi.get(_i.code).uses < _i.uses) || gi.find(_i => !invites.has(_i.code)) || guild.vanityURLCode;
-        Invites.set(member.guild.id, invites);
-        var content = `${member} is joined the server.`, total = 0, regular = 0, _fake = 0, bonus = 0;
-        if(invite == guild.vanityURLCode) content = settings.defaultMessage ? settings.defaultMessage : `-member- is joined the server! But don't know that invitation he came up with. :tada:`;
-        else content = settings.welcomeMessage ? settings.welcomeMessage : `The -member-, joined the server using the invitation of the -target-.`;
+const invites = {};
 
-        if (invite.inviter) { 
-            db.set(`invites.${member.id}.inviter`, invite.inviter.id); 
-            if(fake){
-                total = db.add(`invites.${invite.inviter.id}.total`, 1);
-                _fake = db.add(`invites.${invite.inviter.id}.fake`, 1);
-            }
-            else{
-                total = db.add(`invites.${invite.inviter.id}.total`, 1);
-                regular = db.add(`invites.${invite.inviter.id}.regular`, 1);
-            }
-            var im = guild.member(invite.inviter.id);
-            bonus = db.get(`invites.${invite.inviter.id}.bonus`) || 0;
-            if(im) global.onUpdateInvite(im, guild.id, Number(total + Number(bonus)));
-            
-        }
+const wait = require("util").promisify(setTimeout);
 
+client.on("ready", () => {
+  wait(1000);
 
-        db.set(`invites.${member.id}.isfake`, fake);
-
-        if(channel){
-       channel.send(`${member} Adlı Kişi Sunucuya Katıldı **Davet Eden Şahıs:** ${invite.inviter.tag} (**${total + bonus}** Davet! :white_check_mark:)`)
-        }
-    }).catch();
+  client.guilds.cache.forEach(g => {
+    g.fetchInvites().then(guildInvites => {
+      invites[g.id] = guildInvites;
+    });
+  });
 });
 
-client.on("guildMemberRemove", (member) => {
-    const db = new Database("./Servers/" + member.guild.id, "Invites"), settings = new Database("./Servers/" + member.guild.id, "Settings").get("settings") || {};
-    var total = 0, bonus = 0, regular = 0, fakecount = 0, channel = member.guild.channels.cache.get(settings.Channel), content = settings.leaveMessage ? settings.leaveMessage : `${member} is left the server.`, data = db.get(`invites.${member.id}`);
-    if(!data){
+client.on("guildMemberRemove", async member => {
+  let kanal = await db.fetch(`davetkanal_${member.guild.id}`);
+  if (!kanal) return;
+  let veri = await db.fetch(`rol1_${member.guild.id}`);
+  let veri12 = await db.fetch(`roldavet1_${member.guild.id}`);
+  let veri21 = await db.fetch(`roldavet2_${member.guild.id}`);
+  let veri2 = await db.fetch(`rol2_${member.guild.id}`);
+  let d = await db.fetch(`bunudavet_${member.id}`);
+  const sa = client.users.get(d);
+  const sasad = member.guild.members.get(d);
+  let sayı2 = await db.fetch(`davet_${d}_${member.guild.id}`);
+  db.add(`davet_${d}_${member.guild.id}`, -1);
+
+  if (!d) {
+    const aa = new Strom.MessageEmbed()
+      .setColor("BLACK")
+      .setDescription(
+        `\`\`${member.user.tag}\`\` **adlı kullanıcı aramızdan ayrıldı.\nŞahsı davet eden:** \`\`Bulunamadı!\`\``
+      )
+      .setFooter(client.user.username, client.user.avatarURL);
+    client.channels.get(kanal).send(aa);
+    return;
+  } else {
+    const aa = new Strom.MessageEmbed()
+      .setColor("BLACK")
+      .setDescription(
+        `\`\`${member.user.tag}\`\` **adlı kullanıcı aramızdan ayrıldı.\nŞahsı davet eden:** \`\`${sa.tag}\`\``
+      )
+      .setFooter(client.user.username, client.user.avatarURL);
+    client.channels.cache.get(kanal).send(aa);
+
+    if (!veri) return;
+
+    if (sasad.roles.has(veri)) {
+      if (sayı2 <= veri12) {
+        sasad.roles.remove(veri);
         return;
+      }
     }
-        if(data === null) data = "Bulunamadı"
-    if(data.isfake && data.inviter){
-        fakecount = db.sub(`invites.${data.inviter}.fake`, 1);
-        total = db.sub(`invites.${data.inviter}.total`, 1);
+    if (sasad.roles.has(veri2)) {
+      if (!veri2) return;
+      if (sayı2 <= veri21) {
+        sasad.roles.remove(veri2);
+        return;
+      }
     }
-    else if(data.inviter){
-        regular = db.sub(`invites.${data.inviter}.regular`, 1);
-        total = db.sub(`invites.${data.inviter}.total`, 1);
-    }
-    if(data.inviter) bonus = db.get(`invites.${data.inviter}.bonus`) || 0;
-    
-    var im = member.guild.member(data.inviter)
-    if(im) global.onUpdateInvite(im, member.guild.id, Number(total) + Number(bonus));
-
-    db.add(`invites.${data.inviter}.leave`, 1);
-     if(channel){
-        let user = client.users.cache.get(data.inviter)
-     	channel.send(`${member.user.tag} Sunucudan Ayrıldı **Şahsı Davet Eden:** ${user.tag} (**${Number(total) + Number(bonus)}** Davet! :x:)`)
-     }
+  }
 });
 
+client.on("guildMemberAdd", async member => {
+  member.guild.fetchInvites().then(async guildInvites => {
+    let veri = await db.fetch(`rol1_${member.guild.id}`);
+    let veri12 = await db.fetch(`roldavet1_${member.guild.id}`);
+    let veri21 = await db.fetch(`roldavet2_${member.guild.id}`);
+    let veri2 = await db.fetch(`rol2_${member.guild.id}`);
+    let kanal = await db.fetch(`davetkanal_${member.guild.id}`);
+    if (!kanal) return;
+    const ei = invites[member.guild.id];
+
+    invites[member.guild.id] = guildInvites;
+
+    const invite = guildInvites.find(i => ei.get(i.code).uses < i.uses);
+    const sasad = member.guild.members.get(invite.inviter.id);
+    const davetçi = client.users.get(invite.inviter.id);
+
+    db.add(`davet_${invite.inviter.id}_${member.guild.id}`, +1);
+    db.set(`bunudavet_${member.id}`, invite.inviter.id);
+    let sayı = await db.fetch(`davet_${invite.inviter.id}_${member.guild.id}`);
+
+    let sayı2;
+    if (!sayı) {
+      sayı2 = 0;
+    } else {
+      sayı2 = await db.fetch(`davet_${invite.inviter.id}_${member.guild.id}`);
+    }
+
+    const aa = new Strom.MessageEmbed()
+      .setColor("BLACK")
+      .setDescription(
+        `\`\`${member.user.tag}\`\` **adlı kullanıcı sunucuya katıldı.\nŞahsı davet eden:** \`\`${davetçi.tag}\`\`\n**Toplam \`\`${sayı2}\`\` daveti oldu!**`
+      )
+      .setFooter(client.user.username, client.user.avatarURL);
+    client.channels.cache.get(kanal).send(aa);
+    if (!veri) return;
+
+    if (!sasad.roles.has(veri)) {
+      if (sayı2 => veri12) {
+        sasad.roles.add(veri);
+        return;
+      }
+    } else {
+      if (!veri2) return;
+      if (sayı2 => veri21) {
+        sasad.roles.add(veri2);
+        return;
+      }
+    }
+  });
+});
 
 global.onUpdateInvite = (guildMember, guild, total) => {
     if(!guildMember.manageable) return;
