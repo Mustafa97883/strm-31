@@ -60,7 +60,11 @@
     "superagent": "^6.1.0",
     "vultrex.db": "^1.4.1",
     "weather-js": "^2.0.0",
-    "orio.db": "^3.1.2"
+    "orio.db": "^3.1.2",
+     "discord-player": "^5.3.1",
+    "ffmpeg-static": "^5.0.0",
+    "opusscript": "^0.0.8",
+    "ytdl-core": "^4.11.0"
   },
   "engines": {
     "node": "12.x"

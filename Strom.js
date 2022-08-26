@@ -5,14 +5,14 @@ app.get("/foo", (req, res, next) => {
 })
 process.on("unhandledRejection", (reason, promise) => {})
 
-
+const { Player } = require('discord-player');
 const Strom = require('discord.js');
 const client = new Strom.Client();
 const ayarlar = require('./ayarlar.json');
 const chalk = require('chalk');
 const moment = require('moment');
 var Jimp = require('jimp');
-const { Client, Util, Collection } = require('discord.js');
+const { Client, Util, Collection, Intents } = require('discord.js');
 const Database = require("./Helpers/Database");
 const Invites = new Collection(); //
 const fs = require('fs');
@@ -22,7 +22,15 @@ const path = require('path');
 const snekfetch = require('snekfetch');
 const ms = require('ms');
 const fetch = require('node-fetch')
-
+global.client = new Client({
+    intents: [
+        Intents.FLAGS.GUILDS,
+        Intents.FLAGS.GUILD_MEMBERS,
+        Intents.FLAGS.GUILD_MESSAGES,
+        Intents.FLAGS.GUILD_VOICE_STATES
+    ],
+    disableMentions: 'everyone',
+});
 
 setInterval(async () => {
   await fetch('https://cooperative-spiffy-dead.glitch.me','https://glitch.com/edit/#!/cooperative-spiffy-dead').then(console.log('Uptimed!'))
