@@ -5,7 +5,7 @@ const talkedRecently = new Set();
 let botid = "756883309270663229";
 
 exports.run = async (client, message, args) => {
-  let prefix = (await db.fetch(`prefix_${message.guild.id}`)) || "!";
+  let prefix = (await db.fetch(`prefix_${message.guild.id}`)) || "s!";
 
     const embed = new Strom.MessageEmbed()
     .setAuthor(
@@ -13,7 +13,7 @@ exports.run = async (client, message, args) => {
       client.user.displayAvatarURL({ dynamic: true })
     )
     .setColor("RANDOM")
-    .setTitle(` **oy ver gardeeş** `)
+    .setTitle(` **Altyapı al** `)
     .setDescription(`[Altyapı](https://discord.gg/fr43SS2n64)
     Altyapı satınalabilmek için **Altyapı** yazısına tıkla.
     altyapıları **owo** karşılığı alabilirsin.
