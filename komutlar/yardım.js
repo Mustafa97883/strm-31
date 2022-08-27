@@ -56,7 +56,7 @@ exports.run = async (client, message) => {
     )
     .addField(
       `__Bilgilendirme__`,
-          `🔱  \`${prefix}davet\` | Botu Sununuya Davet Edersiniz\n 🔱 \`${prefix}botbilgi\` | Botun İstatistiklerini Görürsünüz \n 🔱 \`${prefix}iletişim\` | Strom  İletişim Bilgileri. \n 🔱 \`${prefix}çağır\` | Sunucunuza yetkili birini çağırır.**Troll amaçlı kullananlar karalisteye alınacak!**` 
+          `🔱  \`${prefix}davet\` | Botu Sununuya Davet Edersiniz\n 🔱 \`${prefix}botbilgi\` | Botun İstatistiklerini Görürsünüz \n 🔱 \`${prefix}iletişim\` | Strom  İletişim Bilgileri. \n 🔱 \`${prefix}çağır\` | Sunucunuza yetkili birini çağırır.**Troll amaçlı kullananlar karalisteye alınacak!** \n 🔱 \`${prefix}altyapı\` | Botunuz için en iyi altyapılar! ** ` 
     );
   return message.channel.send(embed);
 };
