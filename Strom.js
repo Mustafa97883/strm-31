@@ -1027,41 +1027,49 @@ member.kick(member)
 ///isim reklam engel son
 
 
-//sayaç
+///////////////////////// SAYAÇ ////////////////////
+//-----------------------Sayaç-----------------------\\
 
-client.on("message", async message => {
-  if (!message.guild) return;
 
-  if (db.has(`sayac_${message.guild.id}`) === true) {
-    if (db.fetch(`sayac_${message.guild.id}`) <= message.guild.members.cache.size) {
-      const embed = new Strom.MessageEmbed()
-        .setTitle(`Tebrikler ${message.guild.name}!`)
-        .setDescription(`Başarıyla \`${db.fetch(`sayac_${message.guild.id}`)}\` kullanıcıya ulaştık! Sayaç sıfırlandı!`)
-        .setColor("RANDOM");
-      message.channel.send(embed);
-      message.guild.owner.send(embed);
-      db.delete(`sayac_${message.guild.id}`);
-    }
-  }
-});
-client.on("guildMemberRemove", async member => {
-  const channel = db.fetch(`sKanal_${member.guild.id}`);
-  if (db.has(`sayac_${member.guild.id}`) == false) return;
-  if (db.has(`sKanal_${member.guild.id}`) == false) return;
-
-    member.guild.channels.cache.get(channel).send(`**${member.user.tag}** Sunucudan ayrıldı! \`${db.fetch(`sayac_${member.guild.id}`)}\` üye olmamıza son \`${db.fetch(`sayac_${member.guild.id}`) - member.guild.memberCount}\` üye kaldı!`);
-});
 client.on("guildMemberAdd", async member => {
-  const channel = db.fetch(`sKanal_${member.guild.id}`);
-  if (db.has(`sayac_${member.guild.id}`) == false) return;
-  if (db.has(`sKanal_${member.guild.id}`) == false) return;
-
-    member.guild.channels.cache.get(channel).send(`**${member.user.tag}** Sunucuya Katıldı :tada:! \`${db.fetch(`sayac_${member.guild.id}`)}\` üye olmamıza son \`${db.fetch(`sayac_${member.guild.id}`) - member.guild.memberCount}\` üye kaldı!`);
+  let sayac = await db.fetch(`sayac_${member.guild.id}`);
+  let skanal9 = await db.fetch(`sayacK_${member.guild.id}`);
+  if (!skanal9) return;
+  const skanal31 = client.channels.cache.get(skanal9)
+  if (!skanal31) return;
+  const geldi = new Strom.MessageEmbed()
+.setColor('#f6ff00')
+.setThumbnail(member.user.displayAvatarURL({dynamic : true}))
+.addField( `***╭−−−−−−−−−−− \`『 °Spallers Sayaç° 』\` −−−−−−−−−−−−╮ ***`,
+    `
+**┊** <a:giris:780165054112333875> **${member}** Sunucuya Katıldı
+**┊** <a:giris:780165054112333875> **${sayac}** Kişi Olmamıza **${sayac - member.guild.memberCount}** Kişi Kaldı
+**┊** <a:giris:780165054112333875> Toplam **${member.guild.memberCount}** Kişiyiz !
+**╰−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−╯**
+  `)
+  skanal31.send(geldi)
 });
 
+client.on("guildMemberRemove", async member => {
+  let sayac = await db.fetch(`sayac_${member.guild.id}`);
+  let skanal9 = await db.fetch(`sayacK_${member.guild.id}`);
+  if (!skanal9) return;
+  const skanal31 = client.channels.cache.get(skanal9)
+  if (!skanal31) return;
+const gitti = new Strom.MessageEmbed()
+.setColor('#f6ff00')
+.setThumbnail(member.user.displayAvatarURL({dynamic : true}))
+.addField( `***╭−−−−−−−−−−− \`『 °Spallers Sayaç° 』\` −−−−−−−−−−−−╮ ***`,
+    `
+**┊** <a:cikis:780165054435426324> **${member}** Sunucudan Ayrıldı
+**┊** <a:cikis:780165054435426324> **${sayac}** Kişi Olmamıza **${sayac - member.guild.memberCount}** Kişi Kaldı
+**┊** <a:cikis:780165054435426324> Toplam **${member.guild.memberCount}** Kişiyiz !
+**╰−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−╯**
+   `)
+  skanal31.send(gitti)
+});
 
-//sayaç son
-
+//-----------------------Sayaç Son-----------------------\\
 
 
 
