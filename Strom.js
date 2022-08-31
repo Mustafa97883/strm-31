@@ -1042,9 +1042,9 @@ client.on("guildMemberAdd", async member => {
 .setThumbnail(member.user.displayAvatarURL({dynamic : true}))
 .addField( `***╭−−−−−−−−−−− \`『 °Spallers Sayaç° 』\` −−−−−−−−−−−−╮ ***`,
     `
-**┊** <a:giris:780165054112333875> **${member}** Sunucuya Katıldı
-**┊** <a:giris:780165054112333875> **${sayac}** Kişi Olmamıza **${sayac - member.guild.memberCount}** Kişi Kaldı
-**┊** <a:giris:780165054112333875> Toplam **${member.guild.memberCount}** Kişiyiz !
+**┊** 🚪 **${member}** Sunucuya Katıldı
+**┊** 🚪 **${sayac}** Kişi Olmamıza **${sayac - member.guild.memberCount}** Kişi Kaldı
+**┊** 🚪 Toplam **${member.guild.memberCount}** Kişiyiz !
 **╰−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−╯**
   `)
   skanal31.send(geldi)
