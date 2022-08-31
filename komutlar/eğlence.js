@@ -65,6 +65,11 @@ exports.run = async (client, message) => {
       `📯 \`${prefix}alivefa \` Sunucuda AliVefa Sen Olursun.`,
       true
     )
+   .addField(
+      `__gif sistem`,
+      `📯 \`${prefix}gif-yardım \` gif menüsüne bakarsınız..`,
+      true
+    )
     .addField(
       `__Bilgilendirme__`,
       `📙 \`${prefix}davet\` | Botu Sununuya Davet Edersiniz\n 📙 \`${prefix}botbilgi\` | Botun İstatistiklerini Görürsünüz \n 📙 \`${prefix}iletişim\` | Strom İletişim Bilgileri`
