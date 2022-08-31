@@ -62,7 +62,22 @@ exports.run = async (client, message) => {
     )
   .addField(
       `__pussy__`,
-      `🍑 \`${prefix}pussy\` pussy nsfw komutu`,
+      `🍑 \`${prefix}pussy\` pussy atar`,
+      true
+    )
+   .addField(
+      `__things__`,
+      `🍑 \`${prefix}things\` Kalça Resimleri Atar.`,
+      true
+    )
+   .addField(
+      `__panties__`,
+      `🍑 \`${prefix}panties\` no nude tarzı`,
+      true
+    )
+   .addField(
+      `__random__`,
+      `🍑 \`${prefix}random\` random nude atar`,
       true
     )
     .addField(
