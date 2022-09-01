@@ -135,7 +135,7 @@ client.elevation = message => {
     return permlvl;
 };
 
-client.login(process.env.token);
+client.login(process.env.Token);
 
 //----------komut------------//
 
